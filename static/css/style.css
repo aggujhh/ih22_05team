@@ -1,0 +1,139 @@
+/* 全体リセット ===========================================*/
+* {
+  margin: 0;
+  padding: 0;
+}
+/*=======================================================*/
+
+/* 変数=================================================*/
+:root {
+  --color-y:#F2FD6B; /* 黄色 */
+  --color-p: #EC7FB1; /* ピンク色 */
+  --color-r: #FF6B6B;  /* 赤色 */
+  --color-body: #F5F5F5;  /* bodyの基本色 */
+
+  --font-size-large: 24px;    /* 大きめ */
+  --font-size-semi-large: 20px; /* 少し大きめ */
+  --font-size-normal: 16px;   /* 普通 */
+  --font-size-semi-small: 14px; /* 少し小さめ */
+  --font-size-small: 12px;    /* 小さめ */
+}
+/*=======================================================*/
+
+/* 全体==================================================*/
+body{
+  background-color: var(--color-body);
+}
+/*=======================================================*/
+
+/* header ===============================================*/
+header{
+  width: 100%;
+}
+
+h1{
+  display: none;
+}
+
+#head_top{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 3vh 0;
+}
+
+#logo-container>img{
+  width: 40%;
+  height: auto;
+  margin: -8%;
+}
+
+#logo-container{
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+
+nav{
+  background-color: var(--color-p);
+  padding: 2vh 0;
+  align-items: center;
+}
+
+nav>ul{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  max-width: 90%;
+  margin: 0 5%;
+  list-style: none;
+  gap: 4%;
+}
+
+nav>ul>li {
+  margin-right: 3%;
+}
+
+nav>ul>li>a {
+  color: white;
+  text-decoration: none;
+  font-size: var(--font-size-semi-large);
+}
+
+#search_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  width: 40%;
+}
+
+#viewSelect,
+#search_box input[type="search"],
+#glass{
+  height: 5vh;
+  padding: 0 1em;
+  color: var(--color-p);
+  border-color: var(--color-p);
+  border: solid 1px;
+  margin-left: -1px;
+}
+
+#search_box input[type="search"]{
+  width: 50%;
+}
+
+#loginbox{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  width: 20%;
+  margin-left: 2%;
+  align-items: center;
+  gap: 5%;
+}
+
+#loginbox>button{
+  height: 5vh;
+  width: 40%;
+  padding: 0 2%;
+  font-size: var(--font-size-semi-large);
+  border-radius: 10px;
+}
+
+#registration{
+  box-sizing:border-box;
+  border: 2px solid  var(--color-p);
+  background-color: var(--color-y);
+  color: var(--color-p);
+}
+
+#login{
+  background-color: var(--color-p);
+  color: white;
+  border: none;
+}
+
+
+/*=======================================================*/

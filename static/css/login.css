@@ -19,7 +19,7 @@ main h3 {
 
 main > div > p {
     color: #818181;
-    line-height: 50px;
+    padding: 25px 0;
 }
 
 
@@ -45,7 +45,7 @@ main li:nth-of-type(3) > a {
 
 main input[type="text"] {
     width: 100%;
-    padding: 7px 0;
+    padding: 10px 0;
 }
 
 

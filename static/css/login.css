@@ -22,11 +22,8 @@ main > div > p {
     line-height: 50px;
 }
 
-main ul {
-    position: relative;
-}
 
-main ul>li>p{
+main ul > li > p {
     line-height: 30px;
     font-weight: bold;
 }
@@ -35,10 +32,15 @@ main li {
     padding: 15px 0;
 }
 
-main li:nth-of-type(4) {
+main li:nth-of-type(3) {
+    position: relative;
+}
+
+main li:nth-of-type(3) > a {
     position: absolute;
     right: 0;
-    top: 188px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 main input[type="text"] {
@@ -61,4 +63,8 @@ main button {
     font-weight: bold;
     border-radius: 5px;
     color: #fff;
+}
+
+.dis_btn{
+    background-color: #999;
 }

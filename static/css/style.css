@@ -42,12 +42,11 @@ small {
 }
 
 input[type="text"] {
-    color: #818181;
     text-indent: 15px;
     outline: none;
 }
 
-#site-search{
+#site-search {
     outline: none;
 }
 
@@ -55,6 +54,43 @@ input[type="text"] {
     border: 2px solid #EC7FB1;
 }
 
+.success,
+.danger {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 140px;
+    z-index: 99;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success > p,
+.danger > p {
+    width: 400px;
+    text-align: center;
+}
+
+.success {
+    background-color: #cbe3d9;
+}
+
+.danger {
+    background-color: #f6d2d6;
+}
+
+.close1, .close2 {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 30px;
+}
 
 /* 変数=================================================*/
 :root {

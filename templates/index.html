@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>COSBARA</title>
     <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="{% block style %}{% endblock %}">
@@ -33,7 +33,7 @@
             <form action="/registration">
                 <button id=registration>新規登録</button>
             </form>
-            <form action="/login">
+            <form action="/redirect_to_login">
                 <button id=login>ログイン</button>
             </form>
         </div>
@@ -51,7 +51,21 @@
         </ul>
     </nav>
 </header>
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category,message in messages %}
+        {% if category=='success' %}
+            <div class="success">
+                <p>{{ message }}</p>
+                <button class="close1">×</button>
+            </div>
+        {% elif category=='danger' %}
+            <div class="danger">
+                <p>{{ message }}</p>
+                <button class="close2">×</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endwith %}
 <main> {% block content %}{% endblock %} </main>
 
 <footer>

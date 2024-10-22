@@ -3,7 +3,13 @@ CREATE DATABASE ih22_db
 DEFAULT CHARACTER SET utf8mb4
 COLLATE utf8mb4_general_ci;
 
+CREATE USER 'ih05team'@'localhost' IDENTIFIED BY 'ih05_123456';
+GRANT ALL PRIVILEGES ON ih22_db.* TO 'ih05team'@'localhost';
+FLUSH PRIVILEGES;       
+
 USE ih22_db;
+
+
 #テーブル1
 CREATE TABLE USERM (
     user_id char(5) primary key COMMENT 'ユーザーID',

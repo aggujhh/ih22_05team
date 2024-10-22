@@ -7,24 +7,28 @@
     <div class="login">
         <h3>既にアカウントをお持ちの方</h3>
         <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
-        <form>
+        <form action="/login" method="post">
             <ul>
                 <li>
                     <p><small>*</small>メールアドレス</p>
-                    <input type="text" placeholder="メールアドレスを入力してください">
+                    <input type="text" placeholder="メールアドレスを入力してください" name="id">
+                    <small>{{ error_msg[0] }}</small>
                 </li>
                 <li>
                     <p><small>*</small>パスワード</p>
-                    <input type="text" placeholder="パスワードを入力してください">
+                    <input type="text" placeholder="パスワードを入力してください" name="password">
+                    <small>{{ error_msg[1] }}</small>
                 </li>
                 <li>
                     <label><input type="checkbox">次回から自動ログイン</label>
-                </li>
-                <li>
                     <a>パスワードを忘れた方はこちら</a>
                 </li>
                 <li>
-                    <button>ログイン</button>
+                    {% if global_data.incorrectPassword <= 2 %}
+                        <button type="submit">ログイン</button>
+                    {% else %}
+                        <button type="submit" class="dis_btn" disabled>ログイン</button>
+                    {% endif %}
                 </li>
             </ul>
         </form>
@@ -32,6 +36,8 @@
     <div class="registration">
         <h3>既にアカウントをお持ちの方</h3>
         <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
-        <form action=""><button>アカウント作成</button></form>
+        <form action="">
+            <button>アカウント作成</button>
+        </form>
     </div>
 {% endblock %}

@@ -3,59 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>{{ title }}</title>
     <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="{% block style %}{% endblock %}">
 </head>
 <body>
 <header>
 
-    <div id = head_top>
-    <h1>{{title}}</h1>
+    <div id=head_top>
+        <h1>{{ title }}</h1>
 
-    <div id = "logo-container">
-        <img src="static/img/logo.png" id = "logo">
-    </div>
+        <div id="logo-container">
+            <img src="static/img/logo.png" id="logo">
+        </div>
 
-    <div id = search_box>
-    <label class="select">
-		<select id="viewSelect">
-			<option value="creator" selected>製作者</option>
-			<option value="request">依頼</option>
-		</select>
-    </label>
-    <input type="search" id="site-search" name="q" placeholder="検索したいキーワードを入力してください"/>
-    <button id = glass>検索する</button>
-    </div>
+        <div id=search_box>
+            <label class="select">
+                <select id="viewSelect">
+                    <option value="creator" selected>製作者</option>
+                    <option value="request">依頼</option>
+                </select>
+            </label>
+            <input type="search" id="site-search" name="q" placeholder="検索したいキーワードを入力してください"/>
+            <button id=glass>検索する</button>
+        </div>
 
-    <div id = loginbox>
-    <button id = registration>新規登録</button>
-    <button id = login>ログイン</button>
-    </div>
+        <div id=loginbox>
+            <form action="/registration">
+                <button id=registration>新規登録</button>
+            </form>
+            <form action="/login">
+                <button id=login>ログイン</button>
+            </form>
+        </div>
 
     </div>
     <nav>
         <ul>
-          <li><a href="">ホームページ</a></li>
-          <li><a href="">依頼一覧</a></li>
-          <li><a href="">制作者一覧</a></li>
-          <li><a href="">ご利用案内</a></li>
-          <li><a href="">お知らせ</a></li>
-          <li><a href="">お問い合わせ</a></li>
-          <li><a href="">FAQ</a></li>
-        </ul>  
+            <li><a href="">ホームページ</a></li>
+            <li><a href="">依頼一覧</a></li>
+            <li><a href="">制作者一覧</a></li>
+            <li><a href="">ご利用案内</a></li>
+            <li><a href="">お知らせ</a></li>
+            <li><a href="">お問い合わせ</a></li>
+            <li><a href="">FAQ</a></li>
+        </ul>
     </nav>
 </header>
 
-<main>
-        
-</main>
+<main> {% block content %}{% endblock %} </main>
 
 <footer>
 
 </footer>
 
-    <script src="static/js/jquery-3.6.0.min.js"></script>
-    <script src="static/js/script.js"></script>
+<script src="static/js/jquery-3.6.0.min.js"></script>
+<script src="static/js/script.js"></script>
 </body>
 </html>

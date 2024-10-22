@@ -1,139 +1,192 @@
-/* 全体リセット ===========================================*/
+/* 内側および外側の余白をリセット */
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-/*=======================================================*/
+
+
+/* リストの丸い点を消す */
+li {
+    list-style: none;
+}
+
+/* 画像の下の余白を消す */
+img {
+    vertical-align: middle;
+}
+
+/* ボタンのマウスカーソルを手の形に設定 */
+button {
+    cursor: pointer;
+}
+
+/* リンクの色を設定し、下線を削除 */
+a {
+    color: #818181;;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c81623;
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+small {
+    color: #FF3578;
+    margin-right: 5px;
+}
+
+input[type="text"] {
+    color: #818181;
+    text-indent: 15px;
+    outline: none;
+}
+
+#site-search{
+    outline: none;
+}
+
+.search {
+    border: 2px solid #EC7FB1;
+}
+
 
 /* 変数=================================================*/
 :root {
-  --color-y:#F2FD6B; /* 黄色 */
-  --color-p: #EC7FB1; /* ピンク色 */
-  --color-bp: #D66F9E; /* 濃いピンク色 */
-  --color-r: #FF6B6B;  /* 赤色 */
-  --color-body: #F5F5F5;  /* bodyの基本色 */
+    --color-y: #F2FD6B; /* 黄色 */
+    --color-p: #EC7FB1; /* ピンク色 */
+    --color-bp: #D66F9E; /* 濃いピンク色 */
+    --color-r: #FF6B6B; /* 赤色 */
+    --color-body: #F5F5F5; /* bodyの基本色 */
 
-  --font-size-large: 24px;    /* 大きめ */
-  --font-size-semi-large: 20px; /* 少し大きめ */
-  --font-size-normal: 16px;   /* 普通 */
-  --font-size-semi-small: 14px; /* 少し小さめ */
-  --font-size-small: 12px;    /* 小さめ */
+    --font-size-large: 24px; /* 大きめ */
+    --font-size-semi-large: 20px; /* 少し大きめ */
+    --font-size-normal: 16px; /* 普通 */
+    --font-size-semi-small: 14px; /* 少し小さめ */
+    --font-size-small: 12px; /* 小さめ */
 }
+
 /*=======================================================*/
 
 /* 全体==================================================*/
-body{
-  background-color: var(--color-body);
+body {
+    /* アンチエイリアスを有効にする */
+    -webkit-font-smoothing: antialiased;
+    background-color: #F5F5F5;
 }
+
 /*=======================================================*/
 
 /* header ===============================================*/
-header{
-  width: 100%;
+header {
+    width: 100%;
 }
 
-h1{
-  display: none;
+h1 {
+    display: none;
 }
 
-#head_top{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  width: 100%;
-  padding: 3vh 0;
+#head_top {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 3vh 0;
 }
 
-#logo-container>img{
-  width: 40%;
-  height: auto;
-  margin: -8%;
+#logo-container > img {
+    width: 40%;
+    height: auto;
+    margin: -8%;
 }
 
-#logo-container{
-  display: grid;
-  place-content: center;
-  place-items: center;
+#logo-container {
+    display: grid;
+    place-content: center;
+    place-items: center;
 }
 
-nav{
-  background-color: var(--color-p);
-  padding: 2vh 0;
-  align-items: center;
+nav {
+    background-color: var(--color-p);
+    padding: 2vh 0;
+    align-items: center;
 }
 
-nav>ul{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  max-width: 90%;
-  margin: 0 5%;
-  list-style: none;
-  gap: 4%;
+nav > ul {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 5%;
+    list-style: none;
+    gap: 4%;
 }
 
-nav>ul>li {
-  margin-right: 3%;
+nav > ul > li {
+    margin-right: 3%;
 }
 
-nav>ul>li>a {
-  color: white;
-  text-decoration: none;
-  font-size: var(--font-size-semi-large);
+nav > ul > li > a {
+    color: white;
+    text-decoration: none;
+    font-size: var(--font-size-semi-large);
 }
 
 #search_box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
-  width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    width: 40%;
 }
 
 #viewSelect,
 #search_box input[type="search"],
-#glass{
-  height: 5vh;
-  padding: 0 1em;
-  color: var(--color-p);
-  border-color: var(--color-p);
-  border: solid 1px;
-  margin-left: -1px;
+#glass {
+    height: 5vh;
+    padding: 0 1em;
+    color: var(--color-p);
+    border: solid 1px var(--color-p);
+    margin-left: -1px;
 }
 
-#search_box input[type="search"]{
-  width: 50%;
+#search_box input[type="search"] {
+    width: 50%;
 }
 
-#loginbox{
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  width: 20%;
-  margin-left: 2%;
-  align-items: center;
-  gap: 5%;
+#loginbox {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    width: 20%;
+    margin-left: 2%;
+    align-items: center;
+    gap: 5%;
 }
 
-#loginbox>button{
-  height: 5vh;
-  width: 40%;
-  padding: 0 2%;
-  font-size: var(--font-size-semi-large);
-  border: solid 2px;
-  border-radius: 10px;
-  border-color: var(--color-bp);
+#loginbox button {
+    height: 5vh;
+    /*width: 40%;*/
+    padding: 5px 25px;
+    font-size: var(--font-size-semi-large);
+    border: solid 2px;
+    border-radius: 10px;
+    border-color: var(--color-bp);
 }
 
-#registration{
-  background-color: var(--color-y);
-  color: var(--color-p);
+#registration {
+    background-color: var(--color-y);
+    color: var(--color-p);
 }
 
-#login{
-  background-color: var(--color-p);
-  color: white;
+#login {
+    background-color: var(--color-p);
+    color: white;
 }
-
 
 /*=======================================================*/

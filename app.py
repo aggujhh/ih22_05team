@@ -7,7 +7,8 @@ import requests
 app = Flask("Helloapp")
 CORS(app)
 
-#処理
+
+# 処理
 # Flaskの動作確認。
 @app.route("/")
 def hello():
@@ -15,6 +16,15 @@ def hello():
         'index.html',
         title='COSBARA',
     )
+
+
+@app.route("/login")
+def login():
+    return render_template('login.html' )
+
+@app.route("/registration")
+def registration():
+    return render_template('registration.html' )
 
 # アプリケーションの実行
 if __name__ == '__main__':

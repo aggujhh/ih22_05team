@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+
+{% block style %}static/css/login.css{% endblock %}
+
+{% block content %}
+    <h2>ユーザーログイン</h2>
+    <div class="login">
+        <h3>既にアカウントをお持ちの方</h3>
+        <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
+        <form>
+            <ul>
+                <li>
+                    <p><small>*</small>メールアドレス</p>
+                    <input type="text" placeholder="メールアドレスを入力してください">
+                </li>
+                <li>
+                    <p><small>*</small>パスワード</p>
+                    <input type="text" placeholder="パスワードを入力してください">
+                </li>
+                <li>
+                    <label><input type="checkbox">次回から自動ログイン</label>
+                </li>
+                <li>
+                    <a>パスワードを忘れた方はこちら</a>
+                </li>
+                <li>
+                    <button>ログイン</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="registration">
+        <h3>既にアカウントをお持ちの方</h3>
+        <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
+        <form action=""><button>アカウント作成</button></form>
+    </div>
+{% endblock %}

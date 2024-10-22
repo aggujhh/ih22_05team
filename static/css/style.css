@@ -9,6 +9,7 @@
 :root {
   --color-y:#F2FD6B; /* 黄色 */
   --color-p: #EC7FB1; /* ピンク色 */
+  --color-bp: #D66F9E; /* 濃いピンク色 */
   --color-r: #FF6B6B;  /* 赤色 */
   --color-body: #F5F5F5;  /* bodyの基本色 */
 
@@ -119,12 +120,12 @@ nav>ul>li>a {
   width: 40%;
   padding: 0 2%;
   font-size: var(--font-size-semi-large);
+  border: solid 2px;
   border-radius: 10px;
+  border-color: var(--color-bp);
 }
 
 #registration{
-  box-sizing:border-box;
-  border: 2px solid  var(--color-p);
   background-color: var(--color-y);
   color: var(--color-p);
 }
@@ -132,7 +133,6 @@ nav>ul>li>a {
 #login{
   background-color: var(--color-p);
   color: white;
-  border: none;
 }
 
 

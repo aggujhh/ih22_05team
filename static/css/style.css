@@ -92,6 +92,7 @@ input[type="text"] {
     font-size: 30px;
 }
 
+
 /* 変数=================================================*/
 :root {
     --color-y: #F2FD6B; /* 黄色 */
@@ -149,22 +150,23 @@ h1 {
 
 nav {
     background-color: var(--color-p);
-    padding: 2vh 0;
-    align-items: center;
+    position: relative;
 }
 
 nav > ul {
+    height: 8vh;
     display: flex;
-    flex-flow: row wrap;
+    align-items: center;
     justify-content: center;
-    max-width: 90%;
-    margin: 0 5%;
-    list-style: none;
-    gap: 4%;
+    flex-flow: row wrap;
 }
 
 nav > ul > li {
-    margin-right: 3%;
+    width: 180px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 nav > ul > li > a {
@@ -223,6 +225,75 @@ nav > ul > li > a {
 #login {
     background-color: var(--color-p);
     color: white;
+}
+
+#loginbox > p {
+    font-weight: bold;
+}
+
+.user_icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1.5px solid var(--color-p);
+}
+
+.my_page_select {
+    position: relative;
+}
+
+#loginbox .my_page_btn {
+    background-color: #fff;
+    color: var(--color-p);
+    border-radius: 5px;
+    height: 40px;
+    width: 160px;
+    border: 1.5px solid var(--color-p);
+    font-size: 18px;
+}
+
+.option_list {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: #fff;
+    z-index: 99;
+}
+
+.option_list li {
+    height: 40px;
+    width: 160px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px dashed var(--color-p);
+}
+
+.option_list li:hover {
+    background-color: var(--color-p);
+
+}
+
+.option_list li:hover a {
+    color: #fff;
+}
+
+.line {
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    margin: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.short_line {
+    position: absolute;
+    width: calc(1260px / 7);
+    background-color: #F2FD6B;
+    height: 5px;
+    transition: 0.5s;
 }
 
 /*=======================================================*/

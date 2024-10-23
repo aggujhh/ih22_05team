@@ -29,14 +29,33 @@
             <button id=glass>検索する</button>
         </div>
 
-        <div id=loginbox>
-            <form action="/registration">
-                <button id=registration>新規登録</button>
-            </form>
-            <form action="/redirect_to_login">
-                <button id=login>ログイン</button>
-            </form>
-        </div>
+        {% if current_user.is_authenticated %}
+            <div id=loginbox>
+                <div class="user_icon"></div>
+                <p>{{ current_user.id }}</p>
+                <div class="my_page_select">
+                    <button class="my_page_btn">マイページ</button>
+                    <ul class="option_list">
+                        <li><a href="#">マイページ</a></li>
+                        <li><a href="#">新しい依頼投稿</a></li>
+                        <li><a href="#">依頼管理</a></li>
+                        <li><a href="#">履歴一覧</a></li>
+                        <li><a href="#">気に入れ制作者</a></li>
+                        <li><a href="#">設定</a></li>
+                        <li><a href="/logout">ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% else %}
+            <div id=loginbox>
+                <form action="/registration">
+                    <button id=registration>新規登録</button>
+                </form>
+                <form action="/redirect_to_login">
+                    <button id=login>ログイン</button>
+                </form>
+            </div>
+        {% endif %}
 
     </div>
     <nav>
@@ -49,6 +68,10 @@
             <li><a href="">お問い合わせ</a></li>
             <li><a href="">FAQ</a></li>
         </ul>
+        <div class="line">
+            <div class="short_line"></div>
+        </div>
+
     </nav>
 </header>
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -74,5 +97,6 @@
 
 <script src="static/js/jquery-3.6.0.min.js"></script>
 <script src="static/js/script.js"></script>
+<script src="{% block script  %}{% endblock %}"></script>
 </body>
 </html>

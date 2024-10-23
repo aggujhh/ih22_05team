@@ -22,7 +22,6 @@ main > div > p {
     padding: 25px 0;
 }
 
-
 main ul > li > p {
     line-height: 30px;
     font-weight: bold;
@@ -30,17 +29,6 @@ main ul > li > p {
 
 main li {
     padding: 15px 0;
-}
-
-main li:nth-of-type(3) {
-    position: relative;
-}
-
-main li:nth-of-type(3) > a {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 main input[type="text"] {
@@ -65,7 +53,28 @@ main button {
     color: #fff;
 }
 
-.dis_btn{
-    background-color: #999;
+#option {
+    width: 100%;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 40px;
+    border: 1.5px solid #EC7FB1;
+    font-weight: bold;
+    color: #EC7FB1;
+    background-color: #fff;
 }
 
+#option > label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 37px;
+}
+
+#option [for="requester_user"] {
+    height: 37px;
+    background-color: #EC7FB1;
+    color: #fff;
+    border-radius: 37px;
+}

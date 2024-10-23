@@ -1,13 +1,24 @@
 # flaskより必要なモジュールをインポートする
-from flask import Flask, render_template, request, redirect, flash
-from db.userm_model import Userm_model
+from flask import Flask, render_template, request, redirect, flash, make_response,jsonify
 import secrets
-
-# from flask_cors import CORS
+from severs.flask_login import Flask_login, User
+from flask_login import current_user, LoginManager, logout_user, login_required
+from flask_cors import CORS
 
 
 # Flaskアプリケーションオブジェクトを作成
-app = Flask("Helloapp")
+app = Flask(__name__)
+
+# LoginManagerクラスのインスタンスを作成（ユーザのログイン管理を行う）
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id) or None
+
 
 # secret_key を安全に生成
 app.secret_key = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
@@ -36,13 +47,15 @@ global_data = Global_data()
 def hello():
     return render_template('index.html')
 
-#ログインページ表示
+
+# ログインページ表示
 @app.route("/redirect_to_login")
 def redirect_to_login():
     error_msg = ["", ""]
     return render_template('login.html', error_msg=error_msg, global_data=global_data)
 
-#ログイン処理
+
+# ログイン処理
 @app.route("/login", methods=['POST'])
 def login():
     error_msg = ["", ""]
@@ -56,13 +69,14 @@ def login():
         error_msg[1] = "パスワードを空欄にしてはいけません。再入力してください。"
         count += 1
     if count != 0:
-        return render_template('login.html', error_msg=error_msg)
+        return render_template('login.html', error_msg=error_msg, global_data=global_data)
 
-    result = Userm_model().user_authentication(id, password)
+    print(id, password)
+    result = Flask_login().check_login(id, password)
     print(result)
     if result:
         global_data.incorrectPassword = 0
-        flash(f"おかえりなさい, {id}.", category='success')
+        flash(f"おかえりなさい, {current_user.id}.", category='success')
         return redirect('/')
     else:
         global_data.incorrectPassword += 1
@@ -82,7 +96,22 @@ def reset():
 
 @app.route("/registration")
 def registration():
-    return render_template('registration.html')
+    user_type = 0
+    return render_template('registration.html', user_type=user_type)
+
+
+# ログアウト
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
+
+
+@app.route('/change_user_type')
+def change_user_type():
+    user_type =int(request.args.get("user_type_data"))
+    return render_template('registration.html', user_type=user_type)
 
 
 # アプリケーションの実行

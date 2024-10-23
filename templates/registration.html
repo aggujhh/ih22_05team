@@ -7,31 +7,40 @@
     <div class="registration">
         <h3>新規ユーザー登録</h3>
         <p>アカウントを作ると多くのメリットがあります。決済が速く、複数の住所を保持し、注文を追跡するなどです。</p>
-        <div id="option">
-            <label for="requester_user">依頼者として登録！</label>
-            <label for="creator_user">制作者として登録！</label>
-        </div>
-        <input type="radio" name="user_type" id="requester_user" value="0" style="display: none">
-        <input type="radio" name="user_type" id="creator_user" value="1" style="display: none">
-        <form id="myForm" action="/change_user_type" method="GET" style="display: none" >
+        {% if  user_type == "requester_user" %}
+            <div id="option">
+                <label for="requester_user" class="checked">依頼者として登録！</label>
+                <label for="creator_user">制作者として登録！</label>
+            </div>
+        {% else %}
+            <div id="option">
+                <label for="requester_user">依頼者として登録！</label>
+                <label for="creator_user" class="checked">制作者として登録！</label>
+            </div>
+        {% endif %}
+        <input type="radio" name="user_type" id="requester_user" value="requester_user" style="display: none">
+        <input type="radio" name="user_type" id="creator_user" value="creator_user" style="display: none">
+        <form id="myForm" action="/change_user_type" method="GET" style="display: none">
             <input type="hidden" name="user_type_data" value="">
         </form>
-        {% if  user_type == 0 %}
+        {% if  user_type == "requester_user" %}
             <form action="/login" method="post">
                 <ul>
                     <li>
                         <p><small>*</small>ニックネーム</p>
-                        <input type="text" placeholder="ニックネームを入力してください" name="id">
+                        <input type="text" placeholder="ニックネームを入力してください" name="nickname">
                         {#<small>{{ error_msg[0] }}</small>#}
                     </li>
                     <li>
                         <p><small>*</small>メールアドレス</p>
-                        <input type="text" placeholder="パスワードを入力してください" name="password">
+                        <input type="text" placeholder="パスワードを入力してください" name="email">
+                        <a class="get_authentication_code">認証コードを取得する（45）</a>
+                        <small class="error_msg"></small>
                         {#<small>{{ error_msg[1] }}</small>#}
                     </li>
                     <li>
                         <p><small>*</small>メール認証コード</p>
-                        <input type="text" placeholder="メール認証コードを入力してください" name="password">
+                        <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code">
                         {# <small>{{ error_msg[1] }}</small>#}
                     </li>
                     <li>
@@ -41,7 +50,7 @@
                     </li>
                     <li>
                         <p><small>*</small>パスワード確認</p>
-                        <input type="text" placeholder="パスワード確認を入力してください" name="password">
+                        <input type="text" placeholder="パスワード確認を入力してください" name="confirm_password">
                         {#                    <small>{{ error_msg[1] }}</small>#}
                     </li>
                     <li>
@@ -53,6 +62,9 @@
         {% else %}
             123
         {% endif %}
+        <form  action="/send_email" method="POST" style="display: none">
+            <input type="hidden" name="email" value="">
+        </form>
     </div>
     <div class="login">
         <h3>既にアカウントをお持ちの方</h3>

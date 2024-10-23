@@ -72,9 +72,22 @@ main button {
     line-height: 37px;
 }
 
-#option [for="requester_user"] {
+.checked {
     height: 37px;
     background-color: #EC7FB1;
     color: #fff;
     border-radius: 37px;
 }
+
+main li:nth-of-type(2) {
+    position: relative;
+}
+
+main li:nth-of-type(2) a {
+    position: absolute;
+    right: 0 ;
+    top: 55px;
+    color: #FF3578;
+    cursor: pointer;
+}
+

@@ -39,11 +39,22 @@ lis.forEach(li => {
         if (e.target.tagName === "LI") {
             short_line.style.left = e.target.offsetLeft + 'px';
         } else {
-            short_line.style.left =  e.target.closest('li').offsetLeft + 'px';
+            short_line.style.left = e.target.closest('li').offsetLeft + 'px';
         }
         console.log(e.target.offsetLeft)
-
-        // short_line.style.transform = `translateX(${e.target.offsetLeft - 810}px)`
     })
 })
+
+const textBoxs = document.querySelectorAll('[type="text"]')
+
+textBoxs.forEach((textBox) => {
+    const error_msg = textBox.parentNode.querySelector(".error_msg")
+    textBox.addEventListener('focus', function () {
+        if (error_msg) {
+            error_msg.innerHTML = ""
+        }
+    })
+})
+
+
 

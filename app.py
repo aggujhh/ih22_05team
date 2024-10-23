@@ -1,13 +1,24 @@
 # flaskより必要なモジュールをインポートする
-from flask import Flask, render_template, request, redirect, flash, make_response,jsonify
+from flask import Flask, render_template, request, redirect, flash, make_response, jsonify
 import secrets
 from severs.flask_login import Flask_login, User
 from flask_login import current_user, LoginManager, logout_user, login_required
-from flask_cors import CORS
+from flask_mail import Mail, Message
 
+# from flask_cors import CORS
 
 # Flaskアプリケーションオブジェクトを作成
 app = Flask(__name__)
+
+# メールサーバ
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587  # TLSは587、SSLなら465
+app.config['MAIL_USERNAME'] = 'chinntaro31@gmail.com'
+app.config['MAIL_PASSWORD'] = 'qmwwwvxzmxicrkag'  # GmailのApp用のmパスワード設定をしておく必要あり
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEFAULT_SENDER'] = 'chinntaro31@gmail.com'    # これがあるとsender設定が不要になる
+mail = Mail(app)
 
 # LoginManagerクラスのインスタンスを作成（ユーザのログイン管理を行う）
 login_manager = LoginManager()
@@ -96,7 +107,7 @@ def reset():
 
 @app.route("/registration")
 def registration():
-    user_type = 0
+    user_type = "requester_user"
     return render_template('registration.html', user_type=user_type)
 
 
@@ -110,8 +121,18 @@ def logout():
 
 @app.route('/change_user_type')
 def change_user_type():
-    user_type =int(request.args.get("user_type_data"))
+    user_type = request.args.get("user_type_data")
     return render_template('registration.html', user_type=user_type)
+
+
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    email = request.form.get("email")
+    msg = Message('Test Mail', recipients=[email])
+    msg.body = "Hello Flask message sent from Flask-Mail"
+    mail.send(msg)
+    print("发送成功", email)
+    return redirect('/registration')
 
 
 # アプリケーションの実行

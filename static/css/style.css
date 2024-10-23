@@ -44,6 +44,7 @@ small {
 input[type="text"] {
     text-indent: 15px;
     outline: none;
+    border: 1.5px solid #979797;
 }
 
 #site-search {

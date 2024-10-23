@@ -13,3 +13,39 @@ user_types.forEach(user_type => {
     })
 })
 
+
+const get_authentication_code = document.querySelector(".get_authentication_code")
+let error_msg
+let count = 10
+get_authentication_code.innerHTML = `認証コードを取得する（${count}）`
+const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+get_authentication_code.addEventListener("click", () => {
+    const email = document.querySelector('[name="email"]').value;
+    if (email) {
+        if (!regex.test(email)) {
+            error_msg = "メールアドレスの形式が正しくありません。再入力してください。"
+            document.querySelector('main li:nth-of-type(2)>small').innerHTML = error_msg;
+            return
+        }
+        document.querySelector('[action="/send_email"] [name="email"]').value = email
+        document.querySelector('[action="/send_email"]').submit();
+    } else {
+        error_msg = "メールアドレスは空にできません。再入力してください。"
+        document.querySelector('main li:nth-of-type(2)>small').innerHTML = error_msg;
+        return
+    }
+    get_authentication_code.style.color = "#818181"
+    let intervalID = setInterval(function () {
+        count--
+        get_authentication_code.innerHTML = `認証コードを取得する（${count}）`
+        get_authentication_code.style.pointerEvents = "none"; // クリック無効化
+        if (count === 0) {
+            count = 10
+            get_authentication_code.innerHTML = `認証コードを取得する（${count}）`
+            clearInterval(intervalID);
+            get_authentication_code.style.color = "#FF3578"
+            get_authentication_code.style.pointerEvents = "auto";　//無効化解除
+        }
+    }, 1000)
+})
+

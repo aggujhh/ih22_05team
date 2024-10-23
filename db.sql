@@ -365,3 +365,399 @@ VALUES
 ('A0003', 'C003'),  -- CraftPro: 小道具制作
 ('A0004', 'C004'),  -- MakeupArt: 特殊メイク
 ('A0005', 'C005');  -- PhotoAce: 撮影依頼
+
+
+
+
+# テーブル21
+CREATE TABLE RATING(
+    rated_user_id char(5),
+    evaluator_user_id char(5),
+    delivery_deadline INT,
+    quality INT,
+    price INT,
+    responsiveness INT,
+    overall_rating INT,
+    review VARCHAR(1000),
+    helpfulness BOOLEAN,
+    PRIMARY KEY(rated_user_id, evaluator_user_id),
+    FOREIGN KEY(rated_user_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(evaluator_user_id) REFERENCES USERM(user_id)
+);
+INSERT INTO RATING (rated_user_id, evaluator_user_id, delivery_deadline, quality, price, responsiveness, overall_rating, review, helpfulness) VALUES
+('A0001', 'A0002', 5, 4, 5, 4, 4, 'Great service, would recommend!', TRUE),
+('A0002', 'A0003', 3, 3, 4, 3, 3, 'Satisfactory experience, but could improve.', FALSE),
+('A0003', 'A0001', 7, 5, 5, 5, 5, 'Excellent quality and timely delivery!', TRUE),
+('A0001', 'A0004', 2, 2, 3, 2, 2, 'Not satisfied with the service.', FALSE),
+('A0004', 'A0003', 6, 4, 4, 4, 4, 'Good overall experience, will use again.', TRUE);
+
+
+# テーブル22
+CREATE TABLE DESIGN_PREVIEW(
+    user_id char(5),
+    image_id INT,
+    image_url VARCHAR(1000),
+    PRIMARY KEY(user_id, image_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO DESIGN_PREVIEW (user_id, image_id, image_url) VALUES
+('A0001', 1, 'http://example.com/images/design1.jpg'),
+('A0002', 2, 'http://example.com/images/design2.jpg'),
+('A0003', 3, 'http://example.com/images/design3.jpg'),
+('A0004', 4, 'http://example.com/images/design4.jpg'),
+('A0005', 5, 'http://example.com/images/design5.jpg');
+
+
+# テーブル23
+CREATE TABLE REQUEST_APPLY(
+    creator_id char(5),
+    request_id char(5),
+    PRIMARY KEY(creator_id,request_id),
+    FOREIGN KEY(creator_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
+);
+## REQUEST(request_id)はPRIMARY KEY or UNIQUE制約が設定されているか？
+
+INSERT INTO REQUEST_APPLY (creator_id, request_id) VALUES
+('A0001', 'R0001'),
+('A0002', 'R0002'),
+('A0003', 'R0003'),
+('A0004', 'R0004'),
+('A0005', 'R0005');
+
+
+# テーブル24
+CREATE TABLE ORDER_MGR(
+    requester_id char(5),
+    request_id char(5),
+    PRIMARY KEY(requester_id, request_id),
+    FOREIGN KEY(requester_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
+);
+
+INSERT INTO ORDER_MGR (requester_id, request_id) VALUES
+('A0001', 'R0001'),
+('A0002', 'R0002'),
+('A0003', 'R0003'),
+('A0004', 'R0004'),
+('A0005', 'R0005');
+
+
+# テーブル25
+CREATE TABLE REQUEST_HISTORY(
+    requester_id char(5),
+    request_id char(5),
+    creator_id char(5),
+    contract_amount INT,
+    contract_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(requester_id, request_id, creator_id),
+    FOREIGN KEY(requester_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(creator_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
+);
+
+INSERT INTO REQUEST_HISTORY (requester_id, request_id, creator_id, contract_amount) VALUES
+('A0001', 'R0001', 'A0002', 10000),
+('A0002', 'R0002', 'A0003', 20000),
+('A0003', 'R0003', 'A0004', 15000),
+('A0004', 'R0004', 'A0001', 30000),
+('A0005', 'R0005', 'A0002', 25000);
+    
+
+# テーブル26
+CREATE TABLE ADMIN(
+    admin_id VARCHAR(50),
+    admin_password VARCHAR(64),
+    password_expiration_date DATETIME,
+    admin_permissions TINYINT,
+    PRIMARY KEY(admin_id)
+);
+
+INSERT INTO ADMIN (admin_id, admin_password, password_expiration_date, admin_permissions)
+VALUES 
+('admin1', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH), 1),
+('admin2', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH), 2),
+('admin3', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH), 3),
+('admin4', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH), 1),
+('admin5', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH), 2);
+
+
+# テーブル27
+CREATE TABLE INQUIRY(
+    inquiry_id INT AUTO_INCREMENT,
+    user_id char(5),
+    inquiry_name VARCHAR(50),
+    inquiry_mail VARCHAR(64),
+    inquiry_tel VARCHAR(15),
+    inquiry_category VARCHAR(100),
+    inquiry_contents TEXT,
+    inquiry_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    inquiry_status TINYINT,
+    PRIMARY KEY(inquiry_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+INSERT INTO INQUIRY (user_id, inquiry_name, inquiry_mail, inquiry_tel, inquiry_category, inquiry_contents, inquiry_status)
+VALUES
+('A0001', 'John Doe', 'john.doe@example.com', '123-456-7890', 'Service Inquiry', 'I would like to know more about your services.', 0),
+('A0002', 'Jane Smith', 'jane.smith@example.com', '234-567-8901', 'Technical Support', 'I am having trouble logging into my account.', 1),
+('A0003', 'Alice Brown', 'alice.brown@example.com', '345-678-9012', 'Billing Inquiry', 'Can I get a refund for my recent purchase?', 0),
+('A0004', 'Bob Johnson', 'bob.johnson@example.com', '456-789-0123', 'Feature Request', 'I would like to suggest a new feature.', 0),
+('A0005', 'Charlie Green', 'charlie.green@example.com', '567-890-1234', 'General Inquiry', 'Do you have any promotional offers?', 1);
+
+
+# テーブル28
+CREATE TABLE PRODUCER_APP(
+    creator_application_id INT AUTO_INCREMENT,
+    creator_nickname_id VARCHAR(12) not null,
+    creator_mail VARCHAR(64) not null unique,
+    creator_password VARCHAR(64) not null,
+    creator_tel VARCHAR(15) not null,
+    creator_history TEXT not null,
+    creator_application_status char(1) not null,
+    PRIMARY KEY(creator_application_id)
+);
+INSERT INTO PRODUCER_APP (creator_nickname_id, creator_mail, creator_password, creator_tel, creator_history, creator_application_status)
+VALUES
+('nick001', 'nick001@example.com', 'hashed_password_001', '123-456-7890', '5 years in graphic design.', 'P'),
+('nick002', 'nick002@example.com', 'hashed_password_002', '234-567-8901', '3 years in content creation.', 'A'),
+('nick003', 'nick003@example.com', 'hashed_password_003', '345-678-9012', 'Freelance artist for 2 years.', 'R'),
+('nick004', 'nick004@example.com', 'hashed_password_004', '456-789-0123', 'Digital marketing for 4 years.', 'P'),
+('nick005', 'nick005@example.com', 'hashed_password_005', '567-890-1234', '10 years in photography.', 'A');
+
+
+
+# テーブル29
+CREATE TABLE IMG_APP(
+    product_image_id INT AUTO_INCREMENT,
+    creator_application_id INT,
+    product_image_url VARCHAR(2048) not null unique,
+    PRIMARY KEY(product_image_id),
+    FOREIGN KEY(creator_application_id) REFERENCES PRODUCER_APP(creator_application_id)
+);
+INSERT INTO IMG_APP (creator_application_id, product_image_url)
+VALUES
+(1, 'https://example.com/image1.jpg'),
+(1, 'https://example.com/image2.jpg'),
+(2, 'https://example.com/image3.jpg'),
+(3, 'https://example.com/image4.jpg'),
+(3, 'https://example.com/image5.jpg');
+
+
+# テーブル31
+CREATE TABLE NOTIFICATION(
+    notification_id INT AUTO_INCREMENT,
+    notification_title TEXT,
+    notification_post_status char(1) not null,
+    notification_post_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    notification_content TEXT,
+    PRIMARY KEY(notification_id)
+);
+
+INSERT INTO NOTIFICATION (notification_title, notification_post_status, notification_content)
+VALUES
+('System Maintenance', '1', 'The system will undergo maintenance on October 25.'),
+('New Feature Released', '1', 'A new feature has been added to the dashboard.'),
+('Security Alert', '1', 'Please update your password to enhance security.'),
+('Weekly Newsletter', '0', 'Here is your weekly update of the top stories.'),
+('Holiday Notice', '1', 'The office will be closed during the national holiday.');
+
+
+# テーブル30
+CREATE TABLE NOTIFICATION_MGR(
+    notification_id INT,
+    user_id char(5),
+    notification_management char(1) not null,
+    PRIMARY KEY(notification_id, user_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(notification_id) REFERENCES NOTIFICATION(notification_id)
+);
+
+INSERT INTO NOTIFICATION_MGR (notification_id, user_id, notification_management)
+VALUES
+(1, 'A0001', '1'),  
+(2, 'A0002', '0'),  
+(3, 'A0001', '1'),  
+(4, 'A0003', '0'),  
+(5, 'A0002', '1');  
+
+
+
+# テーブル32
+CREATE TABLE REPORT_FRAU(
+    fraud_report_id INT AUTO_INCREMENT,
+    reporter_user_id char(5) not null,
+    detection_type char(1) not null,
+    violation_reason TEXT,
+    violation_judgment char(1) not null,
+    reported_user_id char(5) not null,
+    reported_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(fraud_report_id),
+    FOREIGN KEY(reporter_user_id) REFERENCES USERM(user_id),
+    FOREIGN KEY(reported_user_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO REPORT_FRAU (reporter_user_id, detection_type, violation_reason, violation_judgment, reported_user_id)
+VALUES
+('A0001', '1', 'Inappropriate content', '1', 'A0002'),  
+('A0003', '2', 'Harassment in messages', '1', 'A0004'), 
+('A0005', '3', 'Spam advertising', '0', 'A0005'),       
+('A0002', '1', 'False information', '0', 'A0003'),      
+('A0004', '2', 'Threatening behavior', '0', 'A0005');   
+
+
+# テーブル38
+CREATE TABLE CHAT(
+    chat_id int AUTO_INCREMENT,
+    user_id char(5),
+    PRIMARY KEY(chat_id,user_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+INSERT INTO CHAT (user_id) VALUES
+('A0001'),
+('A0002'),
+('A0003'),
+('A0004'),
+('A0005');
+
+
+
+# テーブル33
+CREATE TABLE CHANNELS(
+    channel_id INT AUTO_INCREMENT,
+    chat_id int,
+    channel_status char(1) not null,
+    PRIMARY KEY(channel_id,chat_id),
+    FOREIGN KEY(chat_id) REFERENCES CHAT(chat_id)
+);
+INSERT INTO CHANNELS (chat_id, channel_status) VALUES
+(1, '1'),  -- チャットID 1に対するチャネル
+(1, '0'),  -- チャットID 1に別のチャネル
+(2, '1'),  -- チャットID 2に対するチャネル
+(3, '1'),  -- チャットID 3に対するチャネル
+(4, '0');  -- チャットID 4に対するチャネル
+
+
+
+# テーブル34
+CREATE TABLE MESSAGE(
+    message_id BIGINT UNSIGNED AUTO_INCREMENT,
+    chat_id INT,
+    channel_id INT,
+    message_content TEXT,
+    message_sent_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(message_id,channel_id),
+    FOREIGN KEY(chat_id,channel_id) REFERENCES CHANNELS(chat_id,channel_id)
+);
+INSERT INTO MESSAGE (chat_id, channel_id, message_content) VALUES
+(1, 1, 'Hello, how are you?'),
+(1, 1, 'What time is the meeting?'),
+(1, 2, 'Can anyone share the document?'),
+(2, 3, 'Looking forward to our project.'),
+(3, 4, 'Please confirm your attendance.'); 
+
+
+
+
+
+# テーブル35
+CREATE TABLE THAW_REQ(
+    unfreeze_request_id INT AUTO_INCREMENT,
+    user_id char(5),
+    unfreeze_request_email VARCHAR(64) not null,
+    unfreeze_request_reason TEXT,
+    unfreeze_request_status char(1) not null,
+    PRIMARY KEY(unfreeze_request_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO THAW_REQ (user_id, unfreeze_request_email, unfreeze_request_reason, unfreeze_request_status)
+VALUES
+('A0001', 'user1@example.com', 'I would like to reactivate my account.', 0),
+('A0002', 'user2@example.com', 'Mistakenly froze my account.', 1),
+('A0003', 'user3@example.com', 'Account was frozen due to inactivity.', 0),
+('A0004', 'user4@example.com', 'Need access to my account urgently.', 2),
+('A0005', 'user5@example.com', 'I have resolved the issues that led to freezing.', 1);
+
+
+
+# テーブル36
+CREATE TABLE FROZEN_USER(
+    user_id char(5),
+    freeze_reason TEXT,
+    freeze_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO FROZEN_USER (user_id, freeze_reason)
+VALUES
+('A0001', 'Account frozen due to multiple failed login attempts.'),
+('A0002', 'User requested account freeze for security reasons.'),
+('A0003', 'Account inactive for over 6 months.'),
+('A0004', 'Fraudulent activity detected on the account.'),
+('A0005', 'User reported lost access and requested freeze.');
+
+
+
+# テーブル37
+CREATE TABLE DEL_USER(
+    user_id char(5),
+    deletion_reason TEXT,
+    deletion_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id),
+    FOREIGN KEY(user_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO DEL_USER (user_id, deletion_reason)
+VALUES
+('A0001', 'User requested account deletion.'),
+('A0002', 'User inactive for over 1 year.'),
+('A0003', 'Account compromised, user requested deletion.'),
+('A0004', 'User switched to a competitors service.'),
+('A0005', 'User reported issues and chose to delete account.');
+
+
+
+# テーブル39
+CREATE TABLE DEALCONFIRMATION(
+    contract_id INT AUTO_INCREMENT,
+    request_id char(5) not null,
+    creator_id char(5) not null,
+    payment_amount INT,
+    contract_details TEXT,
+    contract_stage char(1) not null,
+    PRIMARY KEY(contract_id),
+    FOREIGN KEY(request_id) REFERENCES REQUEST(request_id),
+    FOREIGN KEY(creator_id) REFERENCES USERM(user_id)
+);
+
+INSERT INTO DEALCONFIRMATION (contract_id, request_id, creator_id, payment_amount, contract_details, contract_stage)
+VALUES
+(1, 'R0001', 'A0001', 5000, 'Contract for web development services.', '0'),
+(2, 'R0002', 'A0002', 3000, 'Design contract for marketing materials.', '1'),
+(3, 'R0003', 'A0003', 7500, 'Consultation services contract.', '2'),
+(4, 'R0004', 'A0004', 15000, 'Software development agreement.', '1'),
+(5, 'R0005', 'A0005', 2000, 'SEO services contract.', '2');
+
+
+
+
+# テーブル40
+CREATE TABLE TRANSACTION_MGR(
+    contract_id INT,
+    payment_date DATE,
+    transfer_date DATE,
+    transfer_status char(1) not null,
+    PRIMARY KEY(contract_id),
+    FOREIGN KEY(contract_id) REFERENCES DEALCONFIRMATION(contract_id)
+);
+
+INSERT INTO TRANSACTION_MGR (contract_id, payment_date, transfer_date, transfer_status)
+VALUES
+(1, '2024-10-01', '2024-10-02', '1'),
+(2, '2024-10-03', '2024-10-04', '1'),
+(3, '2024-10-05', NULL, '0'),
+(4, '2024-10-06', NULL, '0'),
+(5, '2024-10-07', '2024-10-08', '1');
+

@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 import secrets
+from datetime import timedelta, datetime
 
 # Flaskアプリケーションオブジェクトを作成
 app = Flask(__name__,
@@ -8,6 +9,26 @@ app = Flask(__name__,
 
 # secret_key を安全に生成
 app.secret_key = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
+
+
+class Session:
+    # 特定のセッションキーに有効期限を設定
+    def set_session_with_expiry(self, key, value, lifetime_seconds):
+        session[key] = {
+            'value': value,
+            'expiry': (datetime.now() + timedelta(seconds=lifetime_seconds)).timestamp()
+        }
+
+    # 特定のセッションキーの有効期限をチェック
+    def get_session_with_expiry(self, key):
+        item = session.get(key)
+        if item:
+            expiry = item['expiry']
+            if datetime.now().timestamp() > expiry:
+                session.pop(key, None)  # 有効期限切れの場合、キーを削除
+                return None
+            return item['value']
+        return None
 
 
 # Global_dataクラスは、パスワードの間違い回数を記録するためのクラスです。
@@ -22,6 +43,7 @@ class Global_data():
 
 
 global_data = Global_data()
+
 
 @app.route("/")
 def hello():

@@ -42,7 +42,7 @@ main li:nth-of-type(3) > a {
     top: 50%;
     transform: translateY(-50%);
 }
-
+main input[type="password"],
 main input[type="text"] {
     width: 100%;
     padding: 10px 0;
@@ -65,7 +65,5 @@ main button {
     color: #fff;
 }
 
-.dis_btn{
-    background-color: #999;
-}
+
 

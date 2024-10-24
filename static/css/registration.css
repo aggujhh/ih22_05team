@@ -30,7 +30,7 @@ main ul > li > p {
 main li {
     padding: 15px 0;
 }
-
+main input[type="password"],
 main input[type="text"] {
     width: 100%;
     padding: 10px 0;

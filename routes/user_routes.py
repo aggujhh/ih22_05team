@@ -1,9 +1,13 @@
+import random
+
 from . import app, global_data
 from flask import render_template, request, flash, redirect
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
 from flask_mail import Message
+import random
+
 
 # ログインページ表示
 @app.route("/redirect_to_login")
@@ -50,6 +54,7 @@ def reset():
     global_data.incorrectPassword = 0
     return redirect('/redirect_to_login')
 
+
 # アカウント作成ページへ
 @app.route("/registration")
 def registration():
@@ -64,16 +69,19 @@ def logout():
     logout_user()
     return redirect('/')
 
+
 # 登録する時、依頼者と制作者をチェンジする
 @app.route('/change_user_type')
 def change_user_type():
     user_type = request.args.get("user_type_data")
     return render_template('registration.html', user_type=user_type)
 
+
 # メールに認証コードを送信する
 @app.route('/send_email', methods=['POST'])
 def send_email():
     email = request.form.get("email")
+    rand_gen = random.Random(10000)
     msg = Message('Test Mail', recipients=[email])
     msg.body = "Hello Flask message sent from Flask-Mail"
     mail.send(msg)

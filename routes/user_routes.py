@@ -1,12 +1,15 @@
-import random
-
 from . import app, global_data, Session
 from flask import render_template, request, flash, redirect, session
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
 from flask_mail import Message
+from db.userm_model import Userm_model
+from werkzeug.security import generate_password_hash
 import random
+import re
+import logging
+import secrets
 
 
 # ログインページ表示
@@ -58,8 +61,9 @@ def reset():
 # アカウント作成ページへ
 @app.route("/registration")
 def registration():
+    error_msg = ["", "", ""]
     user_type = "requester_user"
-    return render_template('registration.html', user_type=user_type)
+    return render_template('registration.html', user_type=user_type, error_msg=error_msg)
 
 
 # ログアウト
@@ -73,19 +77,18 @@ def logout():
 # 登録する時、依頼者と制作者をチェンジする
 @app.route('/change_user_type')
 def change_user_type():
+    error_msg = ["", "", ""]
     user_type = request.args.get("user_type_data")
-    return render_template('registration.html', user_type=user_type)
+    return render_template('registration.html', user_type=user_type, error_msg=error_msg)
 
 
 # メールに認証コードを送信する
 @app.route('/send_email', methods=['POST'])
 def send_email():
-    authentication_code = ""
     email = request.form.get("email")
     rand_gen = random.Random()
     random_number = rand_gen.randint(1, 9999)
     digit_count = len(str(random_number))
-
     match digit_count:
         case 1:
             authentication_code = "000" + str(random_number)
@@ -95,7 +98,6 @@ def send_email():
             authentication_code = "0" + str(random_number)
         case _:
             authentication_code = str(random_number)
-
     Session().set_session_with_expiry(email, authentication_code, 600)
     print(session)
     msg = Message('[COSBARA]認証コードをご確認ください。', recipients=[email])
@@ -118,6 +120,45 @@ def send_email():
 
 # アカウント作成したフォームの正解性チェック
 @app.route('/check_registration/<user_type>', methods=['POST'])
-def change_registration(user_type):
-    print("ok")
-    return user_type
+def check_registration(user_type):
+    error_msg = ["", "", ""]
+    count = 0
+    user_id = secrets.token_hex(5)
+    while Userm_model().user_authentication(user_id):
+        user_id = secrets.token_hex(5)
+    password = request.form.get("password")
+    # パスワードをハッシュ化する
+    hashed_password = generate_password_hash(password)
+    user = {
+        "user_id": user_id,
+        "nickname": request.form.get("nickname"),
+        "user_email_address": request.form.get("email"),
+        "authentication_code": request.form.get("authentication_code"),
+        "user_password": hashed_password,
+        "confirm_password": request.form.get("confirm_password"),
+        "user_type": 0
+    }
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if not re.match(pattern, user["user_email_address"]):
+        error_msg[0] = "メールアドレスの形式が正しくありません。再入力してください。"
+        count += 1
+    session_code = Session().get_session_with_expiry(user["user_email_address"])
+    if session_code is None:
+        error_msg[1] = "認証コードが無効です。もう一度ログインしてください。"
+        count += 1
+    elif user["authentication_code"] != session_code:
+        error_msg[1] = "認証コードが間違っています。もう一度入力してください。"
+        count += 1
+    if password != user["confirm_password"]:
+        error_msg[2] = "パスワードが一致しません。もう一度入力してください。"
+        count += 1
+    if count == 0:
+        try:
+            Userm_model().add_user(user)
+            return "登録完成"
+        except Exception as e:
+            # エラーが発生した場合、エラーログを記録
+            logging.error(f"Error occurred: {e}")
+            return "登録失败"  # 登録が失敗した場合のメッセージ
+    else:
+        return render_template('registration.html', user_type=user_type, error_msg=error_msg)

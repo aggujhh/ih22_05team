@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block style %}static/css/registration.css{% endblock %}
+{% block style %}{{ url_for('static', filename='css/registration.css') }}{% endblock %}
 
 {% block content %}
     <h2>ユーザー登録</h2>
@@ -30,32 +30,27 @@
                         <p><small>*</small>ニックネーム</p>
                         <input type="text" placeholder="ニックネームを入力してください" name="nickname">
                         <small class="error_msg"></small>
-                        {#<small>{{ error_msg[0] }}</small>#}
                     </li>
                     <li>
                         <p><small>*</small>メールアドレス</p>
                         <input type="text" placeholder="メールアドレスを入力してください" name="email">
                         <a class="get_authentication_code">認証コードを取得する（45）</a>
-                        <small class="error_msg"></small>
-                        {#<small>{{ error_msg[1] }}</small>#}
+                        <small class="error_msg">{{ error_msg[0] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>メール認証コード</p>
                         <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code">
-                        <small class="error_msg"></small>
-                        {# <small>{{ error_msg[1] }}</small>#}
+                        <small class="error_msg">{{ error_msg[1] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード</p>
                         <input type="password" placeholder="パスワードを入力してください" name="password">
                         <small class="error_msg"></small>
-                        {#                    <small>{{ error_msg[1] }}</small>#}
                     </li>
                     <li>
                         <p><small>*</small>パスワード確認</p>
                         <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password">
-                        <small class="error_msg"></small>
-                        {#                    <small>{{ error_msg[1] }}</small>#}
+                        <small class="error_msg">{{ error_msg[2] }}</small>
                     </li>
                     <li>
                         <label><input type="checkbox"><a>利用規約に同意する</a></label>
@@ -80,4 +75,4 @@
     </div>
 {% endblock %}
 
-{% block script %}static/js/registration.js{% endblock %}
+{% block script %}{{ url_for('static', filename='js/registration.js') }}{% endblock %}

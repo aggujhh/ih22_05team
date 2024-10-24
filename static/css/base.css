@@ -95,7 +95,7 @@ input[type="text"].pink_border {
     font-size: 30px;
 }
 
-.dis_btn{
+.dis_btn {
     background-color: #999 !important;;
 }
 
@@ -300,6 +300,74 @@ nav > ul > li > a {
     background-color: #F2FD6B;
     height: 5px;
     transition: 0.5s;
+}
+
+footer {
+    height: 35vh;
+    width: 100%;
+    background-color: var(--color-p);
+    display: grid;
+    grid-template-rows:85% 15%;
+    margin-top: 8vh;
+}
+
+footer > .footer-section {
+    height: 85%;
+    width: 75%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid #fff;
+    margin: auto;
+}
+
+footer > .footer-bottom {
+    text-align: center;
+
+}
+
+footer > .footer-section a {
+    color: #fff;
+}
+
+footer > .footer-section a:hover {
+    color: #818181;
+}
+
+footer > .footer-section h3 {
+    line-height: 50px;
+}
+
+footer > .footer-section li {
+    line-height: 40px;
+}
+
+
+footer .help,
+footer .support,
+footer .operation-policy,
+footer .social-media {
+    text-align: center;
+    color: #fff;
+}
+
+footer .social-media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 15px 100px 65px 100px;
+}
+
+
+.icon {
+    fill: #fff;
+    height: 40px;
+}
+
+.icon :hover{
+    fill:  #818181;
+}
+
+footer > .footer-bottom > small {
+    color: #fff;
 }
 
 /*=======================================================*/

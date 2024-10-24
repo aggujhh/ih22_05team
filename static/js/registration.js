@@ -27,8 +27,24 @@ get_authentication_code.addEventListener("click", () => {
             document.querySelector('main li:nth-of-type(2)>small').innerHTML = error_msg;
             return
         }
-        document.querySelector('[action="/send_email"] [name="email"]').value = email
-        document.querySelector('[action="/send_email"]').submit();
+        $.ajax({
+            url: 'http://127.0.0.1:5000/send_email',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                email: email
+            },
+            success: function (response) {
+                // 请求成功时执行的函数
+                console.log('Reset successful');
+                window.location.href = '/redirect_to_login';
+            },
+            error: function (xhr, status, error) {
+                // 请求失败时执行的函数
+                console.error('Error response:', error.response);
+                console.error('Error message:', error.message);
+            }
+        });
     } else {
         error_msg = "メールアドレスは空にできません。再入力してください。"
         document.querySelector('main li:nth-of-type(2)>small').innerHTML = error_msg;
@@ -79,8 +95,8 @@ requester_btn.addEventListener(("click"), () => {
     }
 })
 requester_checkBox.addEventListener("click", (e) => {
-    if(e.target.checked){
-         requester_checkBox.parentNode.parentNode.querySelector(".error_msg").innerText =""
+    if (e.target.checked) {
+        requester_checkBox.parentNode.parentNode.querySelector(".error_msg").innerText = ""
     }
     if (e.target.checked && !not_full()) {
         requester_btn.classList.remove("dis_btn")

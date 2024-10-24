@@ -1,5 +1,6 @@
 from flask_login import UserMixin, login_user, LoginManager
 from db.userm_model import Userm_model
+from werkzeug.security import check_password_hash
 from routes import app
 
 # LoginManagerクラスのインスタンスを作成（ユーザのログイン管理を行う）
@@ -24,8 +25,9 @@ class User(UserMixin):
 class Flask_login:
     def check_login(self, id: str, password: str) -> bool:
         # Userm_modelのuser_authenticationメソッドで認証を行う
-        result = Userm_model().user_authentication(id, password)
-        if result:  # 認証成功時
+        result = Userm_model().user_authentication(id)
+        print("result:", result)
+        if result and check_password_hash(result["user_password"], password):  # 認証成功時
             login_user(User(id))  # ユーザをログイン状態にする
             return True  # ログイン成功を返す
         return False  # ログイン失敗を返す

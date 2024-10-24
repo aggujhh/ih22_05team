@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session
 import secrets
 from datetime import timedelta, datetime
+import logging
 
 # Flaskアプリケーションオブジェクトを作成
 app = Flask(__name__,
@@ -10,6 +11,9 @@ app = Flask(__name__,
 # secret_key を安全に生成
 app.secret_key = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
 
+
+# ログの設定
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Session:
     # 特定のセッションキーに有効期限を設定

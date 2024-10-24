@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSBARA</title>
+    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="{% block style %}{% endblock %}">
+</head>
+<body>
+<header>
+
+    <div id=head_top>
+        <h1>{{ title }}</h1>
+
+        <div id="logo-container">
+            <img src="static/img/logo.png" id="logo">
+        </div>
+
+        <div id=search_box>
+            <label class="select">
+                <select id="viewSelect">
+                    <option value="creator" selected>製作者</option>
+                    <option value="request">依頼</option>
+                </select>
+            </label>
+            <input type="search" id="site-search" name="q" placeholder="検索したいキーワードを入力してください"/>
+            <button id=glass>検索する</button>
+        </div>
+
+        {% if current_user.is_authenticated %}
+            <div id=loginbox>
+                <div class="user_icon"></div>
+                <p>{{ current_user.id }}</p>
+                <div class="my_page_select">
+                    <button class="my_page_btn">マイページ</button>
+                    <ul class="option_list">
+                        <li><a href="#">マイページ</a></li>
+                        <li><a href="#">新しい依頼投稿</a></li>
+                        <li><a href="#">依頼管理</a></li>
+                        <li><a href="#">履歴一覧</a></li>
+                        <li><a href="#">気に入れ制作者</a></li>
+                        <li><a href="#">設定</a></li>
+                        <li><a href="/logout">ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% else %}
+            <div id=loginbox>
+                <form action="/registration">
+                    <button id=registration>新規登録</button>
+                </form>
+                <form action="/redirect_to_login">
+                    <button id=login>ログイン</button>
+                </form>
+            </div>
+        {% endif %}
+
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/">ホームページ</a></li>
+            <li><a href="">依頼一覧</a></li>
+            <li><a href="">制作者一覧</a></li>
+            <li><a href="">ご利用案内</a></li>
+            <li><a href="">お知らせ</a></li>
+            <li><a href="">お問い合わせ</a></li>
+            <li><a href="">FAQ</a></li>
+        </ul>
+        <div class="line">
+            <div class="short_line"></div>
+        </div>
+
+    </nav>
+</header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category,message in messages %}
+        {% if category=='success' %}
+            <div class="success">
+                <p>{{ message }}</p>
+                <button class="close1">×</button>
+            </div>
+        {% elif category=='danger' %}
+            <div class="danger">
+                <p>{{ message }}</p>
+                <button class="close2">×</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endwith %}
+<main> {% block content %}{% endblock %} </main>
+
+<footer>
+
+</footer>
+
+<script src="static/js/jquery-3.6.0.min.js"></script>
+<script src="static/js/base.js"></script>
+<script src="{% block script  %}{% endblock %}"></script>
+</body>
+</html>

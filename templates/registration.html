@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
 {% block style %}static/css/registration.css{% endblock %}
 
@@ -74,7 +74,7 @@
     <div class="login">
         <h3>既にアカウントをお持ちの方</h3>
         <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
-        <form action="">
+        <form action="/redirect_to_login">
             <button>ログインする</button>
         </form>
     </div>

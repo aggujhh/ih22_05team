@@ -1,4 +1,4 @@
-console.log("script.js");
+console.log("base.js");
 
 const logo = document.querySelector("#logo-container")
 logo.addEventListener("click", () => window.location.href = '/')

@@ -19,7 +19,7 @@ def load_user(user_id):
 class User(UserMixin):
     def __init__(self, id):
         self.id = id  # ユーザIDをセット
-
+        self.role = role # ユーザの役割('admin' or 'user')
 
 # ログイン機能を提供するクラス
 class Flask_login:

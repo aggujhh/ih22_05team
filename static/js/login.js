@@ -27,13 +27,3 @@ if (dis_btn) {
     }, 1000)
 }
 
-// テキストボックスのborder色チェンジ
-const inputList = document.querySelectorAll('[type=text]')
-inputList.forEach(function (element) {
-    element.addEventListener('focus', function () {
-        element.classList.add('search')
-    })
-    element.addEventListener('blur', function () {
-        element.classList.remove('search')
-    })
-});

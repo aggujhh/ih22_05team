@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
 {% block style %}static/css/login.css{% endblock %}
 
@@ -16,7 +16,7 @@
                 </li>
                 <li>
                     <p><small>*</small>パスワード</p>
-                    <input type="text" placeholder="パスワードを入力してください" name="password">
+                    <input type="password" placeholder="パスワードを入力してください" name="password">
                     <small class="error_msg">{{ error_msg[1] }}</small>
                 </li>
                 <li>
@@ -36,7 +36,7 @@
     <div class="registration">
         <h3>新規ユーザー登録</h3>
         <p>アカウントを作ると多くのメリットがあります。決済が速く、複数の住所を保持し、注文を追跡するなどです。</p>
-        <form action="">
+        <form action="/registration">
             <button>アカウント作成</button>
         </form>
     </div>

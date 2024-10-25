@@ -1,6 +1,6 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
-{% block style %}static/css/registration.css{% endblock %}
+{% block style %}{{ url_for('static', filename='css/registration.css') }}{% endblock %}
 
 {% block content %}
     <h2>ユーザー登録</h2>
@@ -24,55 +24,55 @@
             <input type="hidden" name="user_type_data" value="">
         </form>
         {% if  user_type == "requester_user" %}
-            <form action="/login" method="post">
+            <form action="/check_registration/requester_user" method="post" id="requester_form">
                 <ul>
                     <li>
                         <p><small>*</small>ニックネーム</p>
                         <input type="text" placeholder="ニックネームを入力してください" name="nickname">
-                        {#<small>{{ error_msg[0] }}</small>#}
+                        <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>メールアドレス</p>
-                        <input type="text" placeholder="パスワードを入力してください" name="email">
+                        <input type="text" placeholder="メールアドレスを入力してください" name="email">
                         <a class="get_authentication_code">認証コードを取得する（45）</a>
-                        <small class="error_msg"></small>
-                        {#<small>{{ error_msg[1] }}</small>#}
+                        <small class="error_msg">{{ error_msg[0] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>メール認証コード</p>
                         <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code">
-                        {# <small>{{ error_msg[1] }}</small>#}
+                        <small class="error_msg">{{ error_msg[1] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード</p>
-                        <input type="text" placeholder="パスワードを入力してください" name="password">
-                        {#                    <small>{{ error_msg[1] }}</small>#}
+                        <input type="password" placeholder="パスワードを入力してください" name="password">
+                        <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード確認</p>
-                        <input type="text" placeholder="パスワード確認を入力してください" name="confirm_password">
-                        {#                    <small>{{ error_msg[1] }}</small>#}
+                        <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password">
+                        <small class="error_msg">{{ error_msg[2] }}</small>
                     </li>
                     <li>
-                        <label><input type="checkbox">利用規約に同意する</label>
+                        <label><input type="checkbox"><a>利用規約に同意する</a></label>
+                        <small class="error_msg"></small>
                     </li>
                 </ul>
-                <button>登　録</button>
+                <button class="requester_btn dis_btn" type="button">登　録</button>
             </form>
         {% else %}
             123
         {% endif %}
-        <form  action="/send_email" method="POST" style="display: none">
+        <form action="/send_email" method="POST" style="display: none">
             <input type="hidden" name="email" value="">
         </form>
     </div>
     <div class="login">
         <h3>既にアカウントをお持ちの方</h3>
         <p>アカウントをお持ちでしたら、メールアドレスでログインしてください。</p>
-        <form action="">
+        <form action="/redirect_to_login">
             <button>ログインする</button>
         </form>
     </div>
 {% endblock %}
 
-{% block script %}static/js/registration.js{% endblock %}
+{% block script %}{{ url_for('static', filename='js/registration.js') }}{% endblock %}

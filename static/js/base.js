@@ -1,4 +1,4 @@
-console.log("script.js");
+console.log("base.js");
 
 const logo = document.querySelector("#logo-container")
 logo.addEventListener("click", () => window.location.href = '/')
@@ -45,7 +45,7 @@ lis.forEach(li => {
     })
 })
 
-const textBoxs = document.querySelectorAll('[type="text"]')
+const textBoxs = document.querySelectorAll('[type="text"],[type="password"]')
 
 textBoxs.forEach((textBox) => {
     const error_msg = textBox.parentNode.querySelector(".error_msg")
@@ -53,6 +53,10 @@ textBoxs.forEach((textBox) => {
         if (error_msg) {
             error_msg.innerHTML = ""
         }
+        textBox.classList.add('pink_border')
+    })
+    textBox.addEventListener('blur', function () {
+        textBox.classList.remove('pink_border')
     })
 })
 

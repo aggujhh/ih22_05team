@@ -42,8 +42,16 @@ small {
 }
 
 input[type="password"],
-input[type="text"] {
+input[type="text"]{
     text-indent: 15px;
+    outline: none;
+    border: 1.5px solid #979797;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
+    overflow: auto;
     outline: none;
     border: 1.5px solid #979797;
 }
@@ -52,9 +60,9 @@ input[type="text"] {
     outline: none;
 }
 
-input[type="password"].pink_border,
-input[type="text"].pink_border {
-    border: 2px solid #EC7FB1;
+
+.pink_border {
+    border: 2px solid #EC7FB1 !important;
 }
 
 .success,
@@ -96,7 +104,7 @@ input[type="text"].pink_border {
 }
 
 .dis_btn {
-    background-color: #999 !important;;
+    background-color: #999 !important;
 }
 
 /* 変数=================================================*/
@@ -362,8 +370,8 @@ footer .social-media {
     height: 40px;
 }
 
-.icon :hover{
-    fill:  #818181;
+.icon :hover {
+    fill: #818181;
 }
 
 footer > .footer-bottom > small {

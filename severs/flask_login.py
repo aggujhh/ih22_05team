@@ -23,11 +23,11 @@ class User(UserMixin):
 
 # ログイン機能を提供するクラス
 class Flask_login:
-    def check_login(self, id: str, password: str) -> bool:
+    def check_login(self, mail_address: str, password: str) -> bool:
         # Userm_modelのuser_authenticationメソッドで認証を行う
-        result = Userm_model().user_authentication(id)
+        result = Userm_model().login(mail_address)
         print("result:", result)
         if result and check_password_hash(result["user_password"], password):  # 認証成功時
-            login_user(User(id))  # ユーザをログイン状態にする
+            login_user(User(result["nickname"]))  # ユーザをログイン状態にする
             return True  # ログイン成功を返す
         return False  # ログイン失敗を返す

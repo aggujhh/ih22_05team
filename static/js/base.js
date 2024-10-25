@@ -45,8 +45,9 @@ lis.forEach(li => {
     })
 })
 
-const textBoxs = document.querySelectorAll('[type="text"],[type="password"]')
+const textBoxs = document.querySelectorAll('[type="text"],[type="password"],textarea')
 
+// テキスト入力チェック
 textBoxs.forEach((textBox) => {
     const error_msg = textBox.parentNode.querySelector(".error_msg")
     textBox.addEventListener('focus', function () {
@@ -59,6 +60,28 @@ textBoxs.forEach((textBox) => {
         textBox.classList.remove('pink_border')
     })
 })
+
+
+// テキストエリアの入力した文字制限
+const textarea = document.querySelector("textarea")
+const count_text = document.querySelector('.count_text')
+
+if (textarea) {
+    textarea.addEventListener("input", (e) => {
+        count_text.innerHTML = `${e.target.value.length}/1200文字`
+        if (e.target.value.length > 1200) {
+            count_text.style.color = "red"
+            textarea.style.color = "red"
+            textarea.parentNode.querySelector(".error_msg").innerText = `文字数は1200字を超えてはいけません。`
+        } else {
+            count_text.style.color = "#818181"
+            textarea.style.color = "#111"
+            textarea.parentNode.querySelector(".error_msg").innerText = ""
+        }
+
+    })
+}
+
 
 
 

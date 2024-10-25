@@ -2,6 +2,7 @@ from flask import Flask, render_template, session
 import secrets
 from datetime import timedelta, datetime
 import logging
+import os
 
 # Flaskアプリケーションオブジェクトを作成
 app = Flask(__name__,
@@ -11,9 +12,24 @@ app = Flask(__name__,
 # secret_key を安全に生成
 app.secret_key = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
 
+# ファイルサイズ制限、最大2MB
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+
+# Flask アプリの static フォルダのパスを取得
+static_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static')
+# 'static/uploads' フォルダに保存する場合
+upload_folder = os.path.join(os.path.join(static_dir, 'img'), 'uploads_creator_image')
+# 'static/uploads' フォルダが存在しない場合は作成
+if not os.path.exists(upload_folder):
+    os.makedirs(upload_folder)
+print(f"ファイルの保存先: {upload_folder}")
+
+# 許可されているファイル拡張子
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # ログの設定
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 class Session:
     # 特定のセッションキーに有効期限を設定

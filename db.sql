@@ -17,7 +17,7 @@ CREATE TABLE USERM
     user_password varchar(255) not null COMMENT 'パスワード',
     user_type     char(1) DEFAULT '0' COMMENT 'ユーザー種類',
     user_status   char(1) DEFAULT '0' COMMENT 'ユーザー状態',
-    create_time   datetime    not null COMMENT '作成時間',
+    create_time   datetime     not null COMMENT '作成時間',
     login_time    datetime COMMENT 'ログイン時間'
 );
 
@@ -33,7 +33,7 @@ VALUES ('U_00000001', '123456', NOW()),
 CREATE TABLE USER_INFOM
 (
     user_id             char(10) primary key,
-    user_name_kanji     varchar(50) ,
+    user_name_kanji     varchar(50),
     user_name_katakana  varchar(50),
     user_phone_number   char(11) unique,
     user_email_address  varchar(64) unique,
@@ -348,7 +348,7 @@ CREATE TABLE PROFILE
     profile              varchar(1000),
     hobby                varchar(200),
     icon_url             varchar(200),
-    background_photo_url varchar(200),
+    background_photo_url varchar(200)
 );
 INSERT INTO PROFILE (user_id, nickname, gender, profile, hobby, icon_url, background_photo_url)
 VALUES ('U_00000001', 'CosTaro', '1', 'プロのコスプレ衣装制作経験10年。', 'コスプレ、縫製',
@@ -532,39 +532,26 @@ VALUES ('U_00000001', 'John Doe', 'john.doe@example.com', '123-456-7890', 'Servi
 # テーブル28
 CREATE TABLE PRODUCER_APP
 (
-    creator_application_id     INT AUTO_INCREMENT,
+    creator_application_id     char(12) primary key ,
     creator_nickname_id        VARCHAR(12) not null,
     creator_mail               VARCHAR(64) not null unique,
-    creator_password           VARCHAR(64) not null,
+    creator_password           VARCHAR(255) not null,
     creator_tel                VARCHAR(15) not null,
     creator_history            TEXT        not null,
-    creator_application_status char(1)     not null,
-    PRIMARY KEY (creator_application_id)
+    creator_application_status char(1)     not null
 );
-INSERT INTO PRODUCER_APP (creator_nickname_id, creator_mail, creator_password, creator_tel, creator_history,
-                          creator_application_status)
-VALUES ('nick001', 'nick001@example.com', 'hashed_password_001', '123-456-7890', '5 years in graphic design.', 'P'),
-       ('nick002', 'nick002@example.com', 'hashed_password_002', '234-567-8901', '3 years in content creation.', 'A'),
-       ('nick003', 'nick003@example.com', 'hashed_password_003', '345-678-9012', 'Freelance artist for 2 years.', 'R'),
-       ('nick004', 'nick004@example.com', 'hashed_password_004', '456-789-0123', 'Digital marketing for 4 years.', 'P'),
-       ('nick005', 'nick005@example.com', 'hashed_password_005', '567-890-1234', '10 years in photography.', 'A');
 
 
 # テーブル29
 CREATE TABLE IMG_APP
 (
     product_image_id       INT AUTO_INCREMENT,
-    creator_application_id INT,
-    product_image_url      VARCHAR(512) not null unique,
+    creator_application_id char(12),
+    product_image_url      VARCHAR(255) not null unique,
     PRIMARY KEY (product_image_id),
     FOREIGN KEY (creator_application_id) REFERENCES PRODUCER_APP (creator_application_id)
 );
-INSERT INTO IMG_APP (creator_application_id, product_image_url)
-VALUES (1, 'https://example.com/image1.jpg'),
-       (1, 'https://example.com/image2.jpg'),
-       (2, 'https://example.com/image3.jpg'),
-       (3, 'https://example.com/image4.jpg'),
-       (3, 'https://example.com/image5.jpg');
+
 
 
 # テーブル31

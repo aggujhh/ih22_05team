@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block style %}static/css/register_completion.css{% endblock %}
+
+{% block content %}
+    {% if user_type=="requester_user" %}
+        <h2>本会員登録完了</h2>
+    {% else %}
+        <h2>審査待つ</h2>
+    {% endif %}
+    <section class="register_completion">
+        {% if user_type=="requester_user" %}
+            <p class="title">ご登録ありがとうございました。</p>
+            <p class="message">会員登録が完了いたしました。引き続き「COSBARA」をご利用ください。</p>
+        {% else %}
+            <p class="title">仮登録が完了しました。</p>
+            <p class="message">
+                当ホームページでは、より良いサービスを提供するため、制作者による審査を行っております。審査結果は3日以内にご登録のメールアドレス宛に通知いたしますので、今しばらくお待ちください。
+            </p>
+        {% endif %}
+        <small>※5秒後に自動「COSBARA」トップページへ遷移します。遷移しない場合は、下のボタンをクリックしてください。</small>
+        <form action="/">
+            <button class="back_top_btn">トップページへ</button>
+        </form>
+        <div class="kapibara_images">
+            <img src="{{ url_for('static', filename='img/kapibara1.png') }}">
+            <img src="{{ url_for('static', filename='img/kapibara2.png') }}">
+            <img src="{{ url_for('static', filename='img/kapibara3.png') }}">
+            <img src="{{ url_for('static', filename='img/kapibara4.png') }}">
+            <img src="{{ url_for('static', filename='img/kapibara5.png') }}">
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}static/js/register_completion.js{% endblock %}

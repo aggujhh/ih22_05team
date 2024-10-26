@@ -151,13 +151,14 @@ function updatePreview() {
     } else {
         creator_image.value = "have_img"
     }
-    imagesArray.forEach((imageData, index) => {
-        // 各画像をプレビューエリアに表示し、削除ボタンを追加
+    for (let index = imagesArray.length - 1; index >= 0; index--) {
+        const imageData = imagesArray[index];
         preview_area.insertAdjacentHTML('afterbegin',
             `<div class="preview" style="background-image:url(${imageData})">
-                        <button class="close_btn" onclick="deleteImage(${index})">✖</button>
-                  </div>`);
-    });
+            <button class="close_btn" onclick="deleteImage(${index})">✖</button>
+        </div>`
+        );
+    }
 }
 
 // 画像を削除する関数

@@ -1,0 +1,89 @@
+main > h2 {
+    grid-column: 1 / -1;
+    line-height: 100px;
+}
+
+.register_completion {
+    position: relative;
+    width: 65vw;
+    height: 60vh;
+    background-color: #f3fb96;
+    border: 2px solid #8A573E;
+    margin-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register_completion p {
+    color: #8A573E;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.register_completion .title {
+    font-size: 30px;
+    line-height: 120px;
+    margin-bottom: 10px;
+}
+
+.register_completion small {
+    margin-bottom: 50px;
+    width: 500px;
+}
+
+.register_completion button {
+    padding: 10px 60px;
+    border: none;
+    background-color: #EC7FB1;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #fff;
+    transform: translateX(150px);
+}
+
+.register_completion .kapibara_images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    pointer-events: none;
+}
+
+.register_completion .kapibara_images img {
+    width: auto;
+    height: 200px;
+    position: absolute;
+}
+
+.register_completion .kapibara_images img:nth-of-type(1) {
+    top: 20px;
+    left: 0;
+}
+
+.register_completion .kapibara_images img:nth-of-type(2) {
+    left: 0;
+    bottom: 0;
+}
+
+.register_completion .kapibara_images img:nth-of-type(3) {
+    width: auto;
+    height: 160px;
+    left: 300px;
+    bottom: 0;
+}
+
+.register_completion .kapibara_images img:nth-of-type(4) {
+    right: 0;
+    bottom: 0;
+}
+
+.register_completion .kapibara_images img:nth-of-type(5) {
+    width: auto;
+    height: 160px;
+    top: 0;
+    right: 0;
+}

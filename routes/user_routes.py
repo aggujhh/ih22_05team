@@ -106,7 +106,7 @@ def send_email():
     print(session)
     msg = Message('[COSBARA]認証コードをご確認ください。', recipients=[email])
     msg.body = (
-        f"""メールには「アイディー」の認証コード送信メールで、
+        f"""メールには「COSBARA」の認証コード送信メールで、
 下記の認証コードをプロフィール設定画面に表示されている
 4桁の数字を入力してメールアドレスの認証手続きを完了してください。
 
@@ -155,7 +155,6 @@ def check_registration(user_type):
         if not re.match(phone_pattern, user["tel"]):
             error_msg[3] = "電話番号の形式が正しくありません。再入力してください。"
             count += 1
-    print(user)
     mail_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     if not re.match(mail_pattern, user["user_email_address"]):
         error_msg[0] = "メールアドレスの形式が正しくありません。再入力してください。"
@@ -170,17 +169,15 @@ def check_registration(user_type):
     if password != user["confirm_password"]:
         error_msg[2] = "パスワードが一致しません。もう一度入力してください。"
         count += 1
-    print("yes", count)
     if count == 0:
         try:
             print("user_type", user_type)
             if user_type == "requester_user":
-                print("no")
                 Userm_model().add_user(user)
             else:
-                print("hehe")
                 Userm_model().add_creator_application(user)
-            return "登録完成"
+            print("登録完成")
+            return render_template('register_completion.html', user_type=user_type)
         except Exception as e:
             # エラーが発生した場合、エラーログを記録
             logging.error(f"Error occurred: {e}")
@@ -219,3 +216,9 @@ def upload_img():
             return jsonify({'error': f'Failed to process image {idx}: {str(e)}'}), 500
     # 画像が正常にアップロードされた場合の応答
     return jsonify({'message': 'Images uploaded successfully', 'urls': saved_files})
+
+
+#  登録完成画面
+@app.route("/register_completion")
+def register_completion():
+    return render_template('register_completion.html', user_type="creator_user")

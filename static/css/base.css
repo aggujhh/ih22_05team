@@ -109,6 +109,7 @@ textarea {
 
 main {
     width: 70%;
+    min-height: 60vh;
     margin: auto;
 }
 
@@ -312,7 +313,7 @@ nav > ul > li > a {
     width: calc(1260px / 7);
     background-color: #F2FD6B;
     height: 5px;
-    transition: 0.5s;
+    transition: 0.4s;
 }
 
 footer {

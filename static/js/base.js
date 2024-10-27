@@ -31,17 +31,28 @@ if (my_page_select) {
 
 const lis = document.querySelectorAll('nav li')
 const short_line = document.querySelector('.short_line')
+let nav_name;
+let left;
 
-short_line.style.left = lis[0].offsetLeft + 'px';
 lis.forEach(li => {
     li.addEventListener("click", (e) => {
         e.preventDefault();
         if (e.target.tagName === "LI") {
-            short_line.style.left = e.target.offsetLeft + 'px';
+            nav_name = e.target.classList
+            left = e.target.offsetLeft + 'px';
+            if (short_line) short_line.style.left = left
         } else {
-            short_line.style.left = e.target.closest('li').offsetLeft + 'px';
+            nav_name = e.target.closest('li').classList
+            left = e.target.closest('li').offsetLeft + 'px';
+            if (short_line) short_line.style.left = left
         }
         console.log(e.target.offsetLeft)
+        document.querySelector('[name="left_margin"]').value = left
+        const nav_redirect_form = document.querySelector(".nav_redirect")
+        nav_redirect_form.action = `/redirect/<${nav_name}>`
+        setTimeout(function () {
+            nav_redirect_form.submit();
+        }, 400);
     })
 })
 

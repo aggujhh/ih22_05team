@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request
 import secrets
 from datetime import timedelta, datetime
 import logging
@@ -67,9 +67,5 @@ class Global_data():
 global_data = Global_data()
 
 
-@app.route("/")
-def hello():
-    return render_template('index.html')
-
-
 from . import user_routes
+from . import nav_routes

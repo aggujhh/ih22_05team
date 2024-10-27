@@ -60,19 +60,23 @@
     </div>
     <nav>
         <ul>
-            <li><a href="/">ホームページ</a></li>
-            <li><a href="">依頼一覧</a></li>
-            <li><a href="">制作者一覧</a></li>
-            <li><a href="">ご利用案内</a></li>
-            <li><a href="">お知らせ</a></li>
-            <li><a href="">お問い合わせ</a></li>
-            <li><a href="">FAQ</a></li>
+            <li class="0"><a href="/" class="1">ホームページ</a></li>
+            <li class="1"><a href="/redirect_requests" class="2">依頼一覧</a></li>
+            <li class="2"><a href="/redirect_creators" class="3">制作者一覧</a></li>
+            <li class="3"><a href="/redirect_guide" class="4">ご利用案内</a></li>
+            <li class="4"><a href="/redirect_news" class="5">お知らせ</a></li>
+            <li class="5"><a href="/redirect_contact" class="6">お問い合わせ</a></li>
+            <li class="6"><a href="/redirect_faq" class="7">FAQ</a></li>
         </ul>
-        <div class="line">
-            <div class="short_line"></div>
-        </div>
-
+        {% if left_margin %}
+            <div class="line">
+                <div class="short_line" style="left: {{ left_margin }}"></div>
+            </div>
+        {% endif %}
     </nav>
+    <form action="" class="nav_redirect" style="display: none">
+        <input type="hidden" name="left_margin">
+    </form>
 </header>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% for category,message in messages %}

@@ -1,5 +1,5 @@
 from . import app, global_data, Session, upload_folder
-from flask import render_template, request, flash, redirect, session, jsonify, url_for
+from flask import render_template, request, flash, redirect,jsonify
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
@@ -235,11 +235,6 @@ def upload_img():
             return jsonify({'error': f'Failed to process image {idx}: {str(e)}'}), 500
     # 画像が正常にアップロードされた場合の応答
     return jsonify({'message': 'Images uploaded successfully', 'urls': saved_files})
-
-
-@app.route('/register_completion')
-def register_completion():
-    return render_template('register_completion.html', user_type="creator_user")
 
 
 # パスワードを再設定ページへ

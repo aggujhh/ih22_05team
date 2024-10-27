@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block style %}static/css/register_completion.css{% endblock %}
+{% block style %}{{ url_for('static', filename='css/register_completion.css') }}{% endblock %}
 
 {% block content %}
     {% if user_type=="requester_user" %}
@@ -32,4 +32,4 @@
     </section>
 {% endblock %}
 
-{% block script %}static/js/register_completion.js{% endblock %}
+{% block script %}{{ url_for('static', filename='js/register_completion.js') }}{% endblock %}

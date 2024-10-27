@@ -21,7 +21,7 @@
                 </li>
                 <li>
                     <label><input type="checkbox">次回から自動ログイン</label>
-                    <a>パスワードを忘れた方はこちら</a>
+                    <a href="/forgot_password">パスワードを忘れた方はこちら</a>
                 </li>
                 <li>
                     {% if global_data.incorrectPassword <= 2 %}
@@ -40,6 +40,7 @@
             <button>アカウント作成</button>
         </form>
     </div>
+    {% block overlay %}{% endblock %}
 {% endblock %}
 
 {% block script %}static/js/login.js{% endblock %}

@@ -1,4 +1,5 @@
 from . import db
+from routes import logger
 
 
 class Userm_model:
@@ -58,3 +59,15 @@ class Userm_model:
             cursor.execute("SELECT * FROM producer_app WHERE creator_application_id = %s", id)
             result = cursor.fetchone()
         return result
+
+    def reset_ps(self, mail, ps):
+        print("reset_ps", mail, ps)
+        with db as cursor:
+            cursor.execute("SELECT user_id "
+                           "FROM user_infom "
+                           "WHERE user_email_address= %s", mail)
+            result = cursor.fetchone()
+            cursor.execute("UPDATE userm "
+                           "SET user_password= %s "
+                           "WHERE user_id= %s ", (ps, result["user_id"]))
+        logger.info("パスワードの再設定が成功しました")

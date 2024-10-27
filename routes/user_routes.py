@@ -1,5 +1,5 @@
 from . import app, global_data, Session, upload_folder
-from flask import render_template, request, flash, redirect, session, jsonify
+from flask import render_template, request, flash, redirect, session, jsonify, url_for
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
@@ -103,7 +103,6 @@ def send_email():
         case _:
             authentication_code = str(random_number)
     Session().set_session_with_expiry(email, authentication_code, 600)
-    print(session)
     msg = Message('[COSBARA]認証コードをご確認ください。', recipients=[email])
     msg.body = (
         f"""メールには「COSBARA」の認証コード送信メールで、
@@ -120,6 +119,26 @@ def send_email():
     mail.send(msg)
     print("发送成功", email)
     return jsonify({'message': '发送成功'})
+
+
+# 認証コードを確認する
+@app.route('/check_authentication_code', methods=['POST'])
+def check_authentication_code():
+    error_msg = ["", ""]
+    count = 0
+    mail_address = request.form.get("mail_address")
+    session_code = Session().get_session_with_expiry(mail_address)
+    if session_code is None:
+        error_msg[1] = "認証コードが無効です。もう一度ログインしてください。"
+        count += 1
+    elif request.form.get("code") != session_code:
+        error_msg[1] = "認証コードが間違っています。もう一度入力してください。"
+        count += 1
+    if count == 0:
+        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data,
+                               mail_address=mail_address)
+    else:
+        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data)
 
 
 # アカウント作成したフォームの正解性チェック
@@ -171,12 +190,12 @@ def check_registration(user_type):
         count += 1
     if count == 0:
         try:
-            print("user_type", user_type)
             if user_type == "requester_user":
                 Userm_model().add_user(user)
             else:
                 Userm_model().add_creator_application(user)
             print("登録完成")
+            Flask_login().check_login(user["user_email_address"], password)
             return render_template('register_completion.html', user_type=user_type)
         except Exception as e:
             # エラーが発生した場合、エラーログを記録
@@ -218,7 +237,42 @@ def upload_img():
     return jsonify({'message': 'Images uploaded successfully', 'urls': saved_files})
 
 
-#  登録完成画面
-@app.route("/register_completion")
+@app.route('/register_completion')
 def register_completion():
     return render_template('register_completion.html', user_type="creator_user")
+
+
+# パスワードを再設定ページへ
+@app.route('/forgot_password')
+def forgot_password():
+    error_msg = ["", ""]
+    return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data)
+
+
+# パスワードを再設定
+@app.route('/reset_password', methods=['POST'])
+def reset_password():
+    count = 0
+    error_msg = ["", ""]
+    password = request.form.get("password")
+    confirm_password = request.form.get("confirm_password")
+    mail_address = request.form.get("mail_address")
+    print("get_____", password, confirm_password, mail_address)
+    if password == "":
+        error_msg[0] = "新しいパスワードを空欄にしてはいけません。再入力してください。"
+        count += 1
+    if confirm_password == "":
+        error_msg[1] = "パスワード確認を空欄にしてはいけません。再入力してください。"
+        count += 1
+    if password != confirm_password:
+        error_msg[1] = "パスワードが一致しません。もう一度入力してください。"
+        count += 1
+    if count != 0:
+        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data,
+                               mail_address=mail_address)
+    # パスワードをハッシュ化する
+    hashed_password = generate_password_hash(password)
+    Userm_model().reset_ps(mail_address, hashed_password)
+    Flask_login().check_login(mail_address, password)
+    flash(f"おかえりなさい, {current_user.id}.", category='success')
+    return redirect('/')

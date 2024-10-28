@@ -1,5 +1,5 @@
-from . import app, global_data, Session, upload_folder
-from flask import render_template, request, flash, redirect,jsonify
+from . import app, global_data, Session
+from flask import render_template, request, flash, redirect, jsonify
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
@@ -40,7 +40,8 @@ def login():
         return render_template('login.html', error_msg=error_msg, global_data=global_data)
 
     print(mail_address, password)
-    result = Flask_login().check_login(mail_address, password)
+    remember_me = 'remember' in request.form
+    result = Flask_login().check_login(mail_address, password, remember_me)
     print(result)
     if result:
         global_data.incorrectPassword = 0
@@ -225,7 +226,7 @@ def upload_img():
             img_data = base64.b64decode(image_data)
             # 保存する画像のファイル名を生成
             file_name = f'image_{uuid.uuid4()}.png'  # 必要に応じてファイル形式や命名を変更可能
-            file_path = os.path.join(upload_folder, file_name)
+            file_path = os.path.join(app.config['CREATOR_IMG'], file_name)
             # バイナリデータをファイルに書き込む
             with open(file_path, 'wb') as img_file:
                 img_file.write(img_data)

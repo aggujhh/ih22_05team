@@ -49,10 +49,14 @@ lis.forEach(li => {
         console.log(e.target.offsetLeft)
         document.querySelector('[name="left_margin"]').value = left
         const nav_redirect_form = document.querySelector(".nav_redirect")
-        nav_redirect_form.action = `/redirect/<${nav_name}>`
-        setTimeout(function () {
+        nav_redirect_form.action = `<${nav_name}>`
+        if (short_line) {
+            setTimeout(function () {
+                nav_redirect_form.submit();
+            }, 400);
+        } else {
             nav_redirect_form.submit();
-        }, 400);
+        }
     })
 })
 

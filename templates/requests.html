@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
+{% block style %}{{ url_for('static', filename='css/requests.css') }}{% endblock %}
+
 
 {% block content %}
-依頼一覧
+<section id="requests">
+        <div class="title">
+            <h2>依頼一覧</h2>
+            <p class="request_count">999</p>
+        </div>
+        <div class="filter-options">
+            <ul>
+                <li><input type="checkbox" id="clothing"> 衣装</li>
+                <li><input type="checkbox" id="modeling"> 造形</li>
+                <li><input type="checkbox" id="props"> 小道具</li>
+                <li><input type="checkbox" id="wig"> ウィッグ</li>
+                <li><input type="checkbox" id="accessory"> アクセサリー</li>
+                <li><input type="checkbox" id="others"> その他</li>
+            </ul>
+        </div>
+    </section>
 {% endblock %}
+

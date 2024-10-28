@@ -1,5 +1,6 @@
 from flask_login import UserMixin, login_user, LoginManager
 from db.userm_model import Userm_model
+from db.admin_model import admin_model
 from werkzeug.security import check_password_hash
 from routes import app
 
@@ -31,3 +32,9 @@ class Flask_login:
             login_user(User(result["nickname"]), remember=remember)  # ユーザをログイン状態にする
             return True  # ログイン成功を返す
         return False  # ログイン失敗を返す
+
+    def check_admin_login(self, id: str, password: str) -> bool:
+        # admin_modelのadmin_authenticationで認証
+        result = admin_model().login(id)
+        print("result",result)
+        

@@ -23,7 +23,7 @@ button {
 
 /* リンクの色を設定し、下線を削除 */
 a {
-    color: #818181;;
+    color: #818181;
     text-decoration: none;
 }
 
@@ -187,6 +187,11 @@ nav > ul > li {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+nav > ul > li:hover a{
+     color: #818181;
 }
 
 nav > ul > li > a {

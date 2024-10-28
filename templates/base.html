@@ -77,6 +77,19 @@
     <form action="" class="nav_redirect" style="display: none" method="post">
         <input type="hidden" name="left_margin">
     </form>
+    <section id="chat_box">
+        <div class="chat_title">
+            <div>▼</div>
+            <div>C</div>
+            <div>H</div>
+            <div>A</div>
+            <div>T</div>
+        </div>
+        <div class="img_box">
+            <img src="{{ url_for('static', filename='img/chat_icon.svg') }}">
+        </div>
+        <div class="back_top">＞</div>
+    </section>
 </header>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% for category,message in messages %}

@@ -1,5 +1,5 @@
 from flask_login import UserMixin, login_user, LoginManager
-from db.userm_model import Userm_model
+from db.admin_model import admin_model
 from werkzeug.security import check_password_hash
 from routes import app
 

@@ -1,0 +1,22 @@
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Backend",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/app.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "front",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/front/app.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

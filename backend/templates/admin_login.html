@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ログイン</title>
+</head>
+<body>
+    <h2>管理者ログイン画⾯</h2>
+    ログインしてください。<BR>
+    <BR>
+    <form action = "/admin_menu" method = "post">
+        <table border = "1">
+            <tr>
+                <td>管理者ID</td>
+                <td><input type = "text" name = "adminid" value=""></td>
+                <td>{{error_msg[0]}}</td>
+            </tr>
+        <tr>
+            <td>パスワード</td>
+            <td><input type = "password" name = "adminps" value=""></td>
+            <td>{{error_msg[1]}}</td>
+        </tr>
+        </table>
+    <br><br>
+    <input type = "submit" VALUE = "ログイン">
+    </form>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, send_from_directory
 from datetime import timedelta, datetime
 import logging
 import os
@@ -54,6 +54,12 @@ class Global_data():
 
 
 global_data = Global_data()
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 from . import user_routes
 from . import nav_routes

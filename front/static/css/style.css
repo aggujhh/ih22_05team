@@ -1,0 +1,125 @@
+/* 内側および外側の余白をリセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* リストの丸い点を消す */
+li {
+    list-style: none;
+}
+
+/* 画像の下の余白を消す */
+img {
+    vertical-align: middle;
+}
+
+/* ボタンのマウスカーソルを手の形に設定 */
+button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+/* リンクの色を設定し、下線を削除 */
+a {
+    color: #818181;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c81623;
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+small {
+    color: #FF3578;
+    margin-right: 5px;
+}
+
+input[type="password"],
+input[type="text"] {
+    text-indent: 15px;
+    outline: none;
+    border: 1.5px solid #979797;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
+    overflow: auto;
+    outline: none;
+    border: 1.5px solid #979797;
+}
+
+#site-search {
+    outline: none;
+}
+
+
+.pink_border {
+    border: 2px solid #EC7FB1 !important;
+}
+
+.success,
+.danger {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 140px;
+    z-index: 99;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success > p,
+.danger > p {
+    width: 400px;
+    text-align: center;
+}
+
+.success {
+    background-color: #cbe3d9;
+}
+
+.danger {
+    background-color: #f6d2d6;
+}
+
+.close1, .close2 {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 30px;
+}
+
+.dis_btn {
+    background-color: #999 !important;
+}
+
+main {
+    width: 70%;
+    min-height: 60vh;
+    margin: auto;
+}
+
+/* スクロールバーの幅を0に設定し、非表示にする。Webkit系ブラウザに適用される */
+::-webkit-scrollbar {
+    width: 0;
+}
+
+select{
+    outline: none;
+}

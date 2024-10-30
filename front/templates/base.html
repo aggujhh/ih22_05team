@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COSBARA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
     <link rel="stylesheet" href="{% block style %}{% endblock %}">
     <link rel="stylesheet" href="{% block overlay_style %}{% endblock %}">
 </head>
 <body>
 <header>
-
     <div id=head_top>
         <h1>{{ title }}</h1>
 
@@ -77,83 +78,6 @@
     <form action="" class="nav_redirect" style="display: none" method="post">
         <input type="hidden" name="left_margin">
     </form>
-    <section id="chat_box">
-        <div class="chat_content">
-            <div class="chat_area">
-                <div class="chat_search_box">
-                    <input type="search">
-                    <img src="{{ url_for('static', filename='img/search_icon.svg') }}">
-                </div>
-                <div class="channel_area">
-                    <ul class="channel_boxes">
-                        <li>
-                            <div class="channel_icon">
-                                <div class="unread_msg_count"></div>
-                            </div>
-                            <div>
-                                <div class="channel_name">COSBARA</div>
-                                <div class="channel_time">19:02</div>
-                                <div class="channel_msg">
-                                    <p>こんにちは。このたびは、当店のサービスをご利用ありがとうございます。</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-                <div class="chat_user_box">
-                    <div class="chat_user_box_btn"><p>▶</p></div>
-                    <div>
-                        <img class="user_icon_img" src="{{ url_for('static', filename='img/user_icon.svg') }}">
-                        <ul class="users">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                        <div class="add_user">
-                            <img src="{{ url_for('static', filename='img/add_user_icon.svg') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="add_user_area">
-                    <h3>友たち追加</h3>
-                    <ul>
-                        <li><label><input type="radio" name="add_user">ID</label></li>
-                        <li><label><input type="radio" name="add_user">メールアドレス</label></li>
-                    </ul>
-                    <input type="text" name="user">
-                    <button>検索する</button>
-                    <button class="close_btn">×</button>
-                </div>
-            </div>
-            <div class="chat_title">
-                <div>▼</div>
-                <div>C</div>
-                <div>H</div>
-                <div>A</div>
-                <div>T</div>
-            </div>
-            <div class="img_box">
-                <img src="{{ url_for('static', filename='img/chat_icon.svg') }}">
-            </div>
-        </div>
-        <div class="back_top"><p>＞</p></div>
-    </section>
 </header>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% for category,message in messages %}
@@ -171,6 +95,7 @@
     {% endfor %}
 {% endwith %}
 <main> {% block content %}{% endblock %} </main>
+<section id="chat_box">{% include 'chat.html' %} </section>
 
 <footer>
     <div class="footer-section">
@@ -230,6 +155,7 @@
 
 <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 <script src="{% block script %}{% endblock %}"></script>
 <script src="{% block overlay_script %}{% endblock %}"></script>
 </body>

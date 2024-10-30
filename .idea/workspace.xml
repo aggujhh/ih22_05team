@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d58c5201-fc16-4b75-99b4-7dd990c8bf8a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/img/add_user_icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/search_icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/uploads/user_icon/88d826498f1f34f760eaf2ba1bd53530.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/user_icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/base.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/css/chat.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/cyonncyonn1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/cyonncyonn2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/send_icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/js/chat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c98f57ab-4dd3-4f05-8c83-3cd6b3abddd0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c98f57ab-4dd3-4f05-8c83-3cd6b3abddd0/storage_v2/_src_/schema/ih22_db.HhG_Zg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ih22_05team.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ih22_05team.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/routes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/front/routes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/css/requests.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/requests.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/js/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/js/base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +31,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
         <option value="CSS File" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -54,11 +64,14 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.base.html.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.app (2).executor&quot;: &quot;Run&quot;,
     &quot;Python.app.executor&quot;: &quot;Run&quot;,
     &quot;Python.user_routes.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cheny/OneDrive/桌面/課題01【MySQLの利用】&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -75,13 +88,65 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Documents\GitHub\ih22_05team\front\static\img" />
       <recent name="F:\Documents\GitHub\ih22_05team\static\img" />
       <recent name="F:\Documents\GitHub\ih22_05team\static\img\uploads\user_icon" />
       <recent name="F:\Documents\GitHub\ih22_05team\static\img\uploads" />
       <recent name="F:\Documents\GitHub\ih22_05team\static\img\uploads_creator_image" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.app (1)">
+    <configuration name="base.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ih22_05team/front/templates/base.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ih22_05team" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (PY24)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/front" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/front/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ih22_05team" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (PY24)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ih22_05team" />
       <option name="ENV_FILES" value="" />
@@ -130,6 +195,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app (1)" />
+        <item itemvalue="JavaScript Debug.base.html" />
+        <item itemvalue="Python.app (2)" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.user_routes" />
       </list>
@@ -200,6 +268,15 @@
       <workItem from="1730115887388" duration="2459000" />
       <workItem from="1730124546921" duration="12188000" />
       <workItem from="1730169135240" duration="32494000" />
+      <workItem from="1730214391951" duration="5202000" />
+      <workItem from="1730219901503" duration="16596000" />
+      <workItem from="1730264779428" duration="27000" />
+      <workItem from="1730264852596" duration="211000" />
+      <workItem from="1730267767036" duration="25000" />
+      <workItem from="1730269166694" duration="20000" />
+      <workItem from="1730274130007" duration="819000" />
+      <workItem from="1730276805814" duration="507000" />
+      <workItem from="1730278440736" duration="4896000" />
     </task>
     <servers />
   </component>
@@ -219,7 +296,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ih22_05team$app.coverage" NAME="app Coverage Results" MODIFIED="1729878023287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ih22_05team$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1730214484744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
     <SUITE FILE_PATH="coverage/ih22_05team$user_routes.coverage" NAME="user_routes Coverage Results" MODIFIED="1729783087612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/routes" />
     <SUITE FILE_PATH="coverage/__init___cpython_312_pyc$app.coverage" NAME="app Coverage Results" MODIFIED="1730189079425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ih22_05team$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1730278557209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/front" />
   </component>
 </project>

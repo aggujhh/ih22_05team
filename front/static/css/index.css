@@ -5,44 +5,182 @@ main {
     width: 100%;
 }
 
-#top_image{
+#top_image {
     width: 100%;
     height: 70vh;
-    background-image: url(/static/img/index_image/image.png);
+    background-image: url("../img/index_image/image.png");
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
-    background-size: 100%;
+    margin-bottom: 40px;
 }
 
-#search_container{
+#search_container {
+    height: 25vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 300px;
+    width: 75%;
+    margin: 0 auto 60px;
+    overflow: hidden;
+    transition: 0.6s;
+    border-radius: 20px;
+}
+
+#irai_search {
+    position: relative;
+    background: #f2fd6b;
+    border-radius: 20px;
+    cursor: pointer;
+
+    div:first-of-type {
+        height: 100%;
+        width: 100%;
+        background: #f2fd6b;
+        transform: translateX(25%) skew(45deg);
+        border-radius: 20px;
+        transition: 0.6s;
+    }
+
+    .img {
+        background-image: url("../img/index_image/依頼を探す.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: -10%;
+        top: 5%;
+        height: 80%;
+        width: 100%;
+    }
+
+}
+
+
+#seisaku_search {
+    position: relative;
+    background: #ec7fb1;
+    border-radius: 20px;
+    cursor: pointer;
+
+    div:first-of-type {
+        height: 100%;
+        width: 100%;
+        background: #ec7fb1;
+        transform: translateX(-25%) skew(45deg);
+        border-radius: 20px;
+
+    }
+
+    .img {
+        background-image: url("../img/index_image/制作者を探す.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: 10%;
+        top: 0;
+        height: 80%;
+        width: 100%;
+    }
+
+}
+
+#search_container:hover .search_img {
+    filter: grayscale(100%) opacity(50%);
+}
+
+#search_container .search_img:hover {
+    filter: grayscale(0%) opacity(100%);
+}
+
+#search_container:has(#irai_search:hover) {
+    grid-template-columns: 1.5fr 1fr;
+}
+
+#search_container:has(#seisaku_search:hover) {
+    grid-template-columns: 1fr 1.5fr;
+}
+
+
+#wave {
+    position: relative;
     width: 100%;
-    height: 30vh;
-    background-color: aqua;
-    display: flex;
-    flex-flow: row nowrap ;
-    justify-content: center;
+    height: 20vh;
+
+    .waveWrapper {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+    }
+
+    .bgTop {
+        z-index: 15;
+        /*opacity: 0.5;*/
+    }
+
+    .bgMiddle {
+        z-index: 10;
+        opacity: 0.75;
+    }
+
+    .bgBottom {
+        z-index: 5;
+    }
+
+    .wave {
+        position: absolute;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background-repeat: repeat no-repeat;
+        background-position: 0 bottom;
+        transform-origin: center bottom;
+    }
+
+    .waveTop {
+        background-size: 50% 150px;
+    }
+
+    .waveAnimation .waveTop {
+        animation: move_wave 20s linear infinite;
+    }
+
+    .waveMiddle {
+        background-size: 50% 150px;
+    }
+
+    .waveAnimation .waveMiddle {
+        animation: move_wave 10s linear infinite;
+    }
+
+    .waveBottom {
+        background-size: 50% 100px;
+    }
+
+    .waveAnimation .waveBottom {
+        animation: move_wave 15s linear infinite;
+    }
 }
 
-#irai_search{
-    flex: 0 1 40%;
-    margin-left: 9%;
-    background-image: url(/static/img/index_image/image.webp);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin-right: -4%;
+@keyframes move_wave {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(1)
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.55)
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(1)
+    }
 }
 
-#seisaku_search{
-    flex:0 1 40%;
-    margin-right: 9%;
-    background-image: url(/static/img/index_image/image2.webp);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin-left: -4%;
+#requests_box {
+    width: 100%;
+    height: 40vh;
+    background: #f2fd6b;
 }
-

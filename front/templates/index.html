@@ -3,14 +3,38 @@
 {% block style %}static/css/index.css{% endblock %}
 
 {% block content %}
-<div id = "top_image">
+    <div id="top_image">
 
-</div>
+    </div>
 
-<div id = "search_container">
-    <div id = irai_search></div>
-    <div id = seisaku_search></div>
-</div>
+    <div id="search_container">
+        <div id=irai_search class="search_img">
+            <div></div>
+            <div class="img"></div>
+        </div>
+        <div id=seisaku_search class="search_img">
+            <div></div>
+            <div class="img"></div>
+        </div>
+    </div>
+
+    <div id="wave">
+        <div class="waveWrapper waveAnimation">
+            <div class="bgTop">
+                <div class="wave waveTop"
+                     style="background-image: url({{ url_for('static', filename='img/wave-top.png') }})"></div>
+            </div>
+            <div class="bgMiddle">
+                <div class="wave waveMiddle"
+                     style="background-image: url({{ url_for('static', filename='img/wave-mid.png') }})"></div>
+            </div>
+            <div class="bgBottom">
+                <div class="wave waveBottom"
+                     style="background-image: url({{ url_for('static', filename='img/wave-bot.png') }})"></div>
+            </div>
+        </div>
+    </div>
+    <div id="requests_box"></div>
 {% endblock %}
 
 {% block script %}static/js/index.js{% endblock %}

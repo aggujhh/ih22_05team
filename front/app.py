@@ -1,7 +1,6 @@
 # flaskより必要なモジュールをインポートする
 from routes import app
 from config import HOST, PORT
-import os
 
 
 # アプリケーションの実行

@@ -65,3 +65,18 @@ for (let i = 0; i < cks.length; i++) {
         checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
     })
 }
+
+const request_boxes = document.querySelectorAll(".request_box")
+const get_request_id = document.querySelector(".get_request_id")
+
+request_boxes.forEach(request => {
+    console.log(request)
+    request.addEventListener("click", (e) => {
+        const targetElement = e.target.closest("[data-id]");
+        if (targetElement) {
+            get_request_id.action = `/request/${targetElement.dataset.id}`
+            get_request_id.submit();
+        }
+    })
+})
+

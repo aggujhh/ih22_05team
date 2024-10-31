@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block style %}{{ url_for('static', filename='css/request.css') }}{% endblock %}
+
+{% block content %}
+    <section id="request">
+        <h2>
+            <img src="{{ url_for('static', filename='img/title_icon.svg') }}">
+            {{ request_title }}
+        </h2>
+        <div class="header">
+            <div class="request_statu">制作者募集中</div>
+            <div class="request_category">
+                <div>#</div>
+                <div>衣装</div>
+                <div>造形</div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="request_images">
+                <div class="big_img"></div>
+                <div class="small_img">
+                    <div>1</div>
+                    <div>1</div>
+                    <div>1</div>
+                    <div>1</div>
+                </div>
+            </div>
+            <div class="request_content"></div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}{{ url_for('static', filename='js/request.js') }}{% endblock %}

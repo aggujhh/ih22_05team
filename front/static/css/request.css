@@ -1,0 +1,126 @@
+/*============================================================*/
+/*依頼詳細ページのCSS*/
+/*============================================================*/
+#request {
+    h2 {
+        position: relative;
+        padding-top: 80px;
+        text-indent: 4rem;
+        color: #ec7fb1;
+        border-bottom: 2px solid #ec7fb1;
+
+        img {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            left: 0;
+            bottom: 0;
+        }
+    }
+
+    .header {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 40px;
+        padding: 10px 0;
+        margin-bottom: 40px;
+
+        .request_statu {
+            padding: 5px 15px;
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .request_category {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 10px;
+
+            > div {
+                font-weight: bold;
+            }
+
+            > div:nth-of-type(1) {
+                font-size: 25px;
+                color: #ec7fb1;
+            }
+
+            > div:nth-of-type(2) {
+                background: #9fd4c5;
+                padding: 5px 15px;
+                color: #fff;
+            }
+
+            > div:nth-of-type(3) {
+                background: #d1b188;
+                padding: 5px 15px;
+                color: #fff;
+            }
+        }
+    }
+
+    .main {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        grid-column-gap: 60px;
+
+        /*> div {*/
+        /*    background: #000;*/
+        /*}*/
+
+        .request_images {
+            display: flex;
+            gap: 20px;
+
+            .big_img {
+                width: 350px;
+                height: 350px;
+                background-image: url('../img/uploads/request_img/request_id/写真1.png');
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                border: 1.5px solid #818181;
+                overflow: hidden;
+            }
+
+            .small_img {
+                width: 80px;
+                height: 350px;
+                display: grid;
+                grid-template-rows:1fr 1fr 1fr 1fr;
+                grid-row-gap: 10px;
+
+                > div {
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: cover;
+                    border: 1.5px solid #818181;
+                    cursor: pointer;
+                    overflow: hidden;
+                }
+
+                > div:hover {
+                    border: 2px solid #ec7fb1;
+                }
+
+                div:nth-of-type(1) {
+                    background-image: url('../img/uploads/request_img/request_id/写真1.png');
+                }
+
+                div:nth-of-type(2) {
+                    background-image: url('../img/uploads/request_img/request_id/写真2.png');
+                }
+
+                div:nth-of-type(3) {
+                    background-image: url('../img/uploads/request_img/request_id/写真3.png');
+                }
+
+                div:nth-of-type(4) {
+                    background-image: url('../img/uploads/request_img/request_id/写真4.png');
+                }
+            }
+        }
+    }
+}

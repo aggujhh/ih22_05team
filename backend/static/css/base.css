@@ -1,0 +1,114 @@
+
+/* 変数=================================================*/
+:root {
+    --color-y: #F2FD6B; /* 黄色 */
+    --color-p: #EC7FB1; /* ピンク色 */
+    --color-bp: #D66F9E; /* 濃いピンク色 */
+    --color-r: #FF6B6B; /* 赤色 */
+    --color-body: #F5F5F5; /* bodyの基本色 */
+
+    --font-size-large: 24px; /* 大きめ */
+    --font-size-semi-large: 20px; /* 少し大きめ */
+    --font-size-normal: 16px; /* 普通 */
+    --font-size-semi-small: 14px; /* 少し小さめ */
+    --font-size-small: 12px; /* 小さめ */
+}
+
+/*=======================================================*/
+
+
+
+/* 全体==================================================*/
+html {
+    background-color: #F5F5F5;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    /* アンチエイリアスを有効にする */
+    -webkit-font-smoothing: antialiased;
+    height: 100vh;
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+/*=======================================================*/
+
+
+/* リセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    background-color: #87cefa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+
+    .side-menu button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: #f0f8ff;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .close-button {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+}
+
+/* 画面内へスライド */
+.sidebar.show {
+    transform: translateX(0);
+}
+
+
+
+.main-content{
+    flex-grow: 1;
+    background-color: #d3d3d3;
+    padding: 10px;
+
+    .header {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+
+        .nav-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+    }
+
+    .content {
+        background-color: #eee;
+        padding: 10px;
+        border-radius: 8px;
+        height: 100%;
+    }
+
+}

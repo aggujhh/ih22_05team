@@ -31,9 +31,3 @@ class Flask_login:
             login_user(User(result["nickname"]), remember=remember)  # ユーザをログイン状態にする
             return True  # ログイン成功を返す
         return False  # ログイン失敗を返す
-
-    def check_admin_login(self, id: str, password: str) -> bool:
-        # admin_modelのadmin_authenticationで認証
-        result = admin_model().login(id)
-        print("result",result)
-        

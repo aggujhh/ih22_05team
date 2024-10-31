@@ -1,7 +1,8 @@
 from . import db
 from routes import logger
 
-class admin_model:
+
+class notis_model:
     # ログイン
     def login(self, id):
         print(id)
@@ -21,3 +22,13 @@ class admin_model:
             cursor.execute("select admin_password from ADMIN where admin_id=%s", id)
             result = cursor.fetchone()
         return result
+
+    # お知らせ取り出し
+    def get_notis(self):
+        with db as cursor:
+            cursor.execute(
+                "SELECT *  "
+                "FROM NOTIFICATION "
+                
+                
+            )

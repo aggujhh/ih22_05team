@@ -1,0 +1,25 @@
+
+.header button {
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.content .notice{
+    padding: 10px;
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .notice-item {
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 18px;
+    }
+}

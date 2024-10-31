@@ -25,7 +25,7 @@ class User(UserMixin):
 class Flask_login:
     def check_login(self, mail_address: str, password: str, remember) -> bool:
         # Userm_modelのuser_authenticationメソッドで認証を行う
-        result = Userm_model().login(mail_address)
+        result = admin_model().login(id)
         print("result:", result)
         if result and check_password_hash(result["user_password"], password):  # 認証成功時
             login_user(User(result["nickname"]), remember=remember)  # ユーザをログイン状態にする
@@ -36,4 +36,8 @@ class Flask_login:
         # admin_modelのadmin_authenticationで認証
         result = admin_model().login(id)
         print("result",result)
+        if result is not None:
+            return True
+        else:
+            return False
         

@@ -8,13 +8,13 @@ from flask_login import current_user, login_required, logout_user
 # ログインページの表示
 
 # 管理者ログインページ表示
-@app.route("/admin_login",endpoint='admin_login')
+@app.route("/")
 def redirect_admin():
     error_msg = ["", ""]
     return render_template('admin_login.html', error_msg=error_msg, global_data=global_data)
 
 # 管理者ログイン処理
-@app.route("/", methods=['POST'])
+@app.route("/notification", methods=['POST'])
 def login():
     error_msg = ["", ""]
     count = 0
@@ -30,13 +30,16 @@ def login():
         return render_template('admin_login.html', error_msg=error_msg, global_data=global_data)
 
     print(id, password)
-    result = Flask_login().check_login(id, password)
+    result = Flask_login().check_admin_login(id, password)
     print(result)
     if result:
         global_data.incorrectPassword = 0
-        flash(f"おかえりなさい, {current_user.id}.", category='success')
+        flash(f"おかえりなさい, {id}.", category='success')
+
+        # お知らせ一覧をすべて取ってくる
+        notis = 
         
-        return redirect('/admin_menu.html')
+        return render_template('notification.html')
     else:
         global_data.incorrectPassword += 1
         if global_data.incorrectPassword >= 3:

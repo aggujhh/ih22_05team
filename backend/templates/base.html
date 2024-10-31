@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock  %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block overlay_style %}{% endblock %}
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="side-menu">
+            <button>お知らせ</button>
+            <button>お問い合わせ</button>
+            <button>制作者審査</button>
+            <button>管理者ログ</button>
+            <button>アカウント凍結</button>
+            <button>管理者管理</button>
+            <button>ログアウト</button>
+        </div>
+        <button class="close-button">閉じる</button>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <button class="nav-button" style="display: block;">ナビ</button>
+            {% block header %}{% endblock  %}
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

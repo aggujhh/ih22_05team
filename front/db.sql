@@ -485,19 +485,38 @@ VALUES ('U_00000001', 'R_00000001', 'U_00000002', 10000),
 # テーブル26
 CREATE TABLE ADMIN
 (
-    admin_id                 VARCHAR(50),
+    admin_id                 CHAR(10),
     admin_password           VARCHAR(64),
     password_expiration_date DATETIME,
-    admin_permissions        TINYINT,
+    admin_permissions        char(7),
     PRIMARY KEY (admin_id)
 );
 
 INSERT INTO ADMIN (admin_id, admin_password, password_expiration_date, admin_permissions)
-VALUES ('admin1', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH), 1),
-       ('admin2', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH), 2),
-       ('admin3', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH), 3),
-       ('admin4', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH), 1),
-       ('admin5', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH), 2);
+VALUES ('A_00000001', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000001'),
+       ('A_00000002', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000010'),
+       ('A_00000003', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000100'),
+       ('A_00000004', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0001000'),
+       ('A_00000005', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0010000');
+
+
+# テーブル14
+CREATE TABLE admin_permissions
+(
+    permission_id   char(7)
+    permission_name varchar(100) not null,
+    PRIMARY KEY(permission)
+);
+
+INSERT INTO ADMIN_PERMISSIONS(permission_id, permission_name)
+VALUES
+('0000001', 'お知らせ'),
+('0000010', 'お問い合わせ'),
+('0000100', '制作者審査'),
+('0001000', 'アクションログ'),
+('0010000', 'アカウント関連'),
+('0100000', '情報閲覧'),
+('1000000', '管理者管理');
 
 
 # テーブル27
@@ -578,18 +597,22 @@ CREATE TABLE NOTIFICATION_MGR
 (
     notification_id         INT,
     user_id                 char(10),
+    admin_id                char(10),
     notification_management char(1) not null,
-    PRIMARY KEY (notification_id, user_id),
+    PRIMARY KEY (notification_id, user_id, admin_id),
     FOREIGN KEY (user_id) REFERENCES USERM (user_id),
     FOREIGN KEY (notification_id) REFERENCES NOTIFICATION (notification_id)
+    CHECK ((user_id IS NOT FULL AND admin_id IS NULL)
+        OR (user_id IS NULL AND admin_id IS NOT NULL))
 );
 
-INSERT INTO NOTIFICATION_MGR (notification_id, user_id, notification_management)
-VALUES (1, 'U_00000001', '1'),
-       (2, 'U_00000002', '0'),
-       (3, 'U_00000001', '1'),
-       (4, 'U_00000003', '0'),
-       (5, 'U_00000002', '1');
+INSERT INTO NOTIFICATION_MGR (notification_id, user_id, admin_id, notification_management)
+VALUES (1, 'U_00000001', NULL, '1'),
+       (2, 'U_00000002', NULL, '0'),
+       (3, 'U_00000001', NULL, '1'),
+       (4, 'U_00000003', NULL, '0'),
+       (5, 'U_00000002', NULL, '1'),
+       ();
 
 
 # テーブル32

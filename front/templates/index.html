@@ -3,9 +3,28 @@
 {% block style %}static/css/index.css{% endblock %}
 
 {% block content %}
-    <div id="top_image">
-
-    </div>
+    <section id="carousel_banner">
+        <div class="carousel">
+            <ul class="carousel_imgs">
+                <li class="carousel_img1"></li>
+                <li class="carousel_img2"></li>
+                <li class="carousel_img3"></li>
+                <li class="carousel_img4"></li>
+                <li class="carousel_img5"></li>
+            </ul>
+            <ul class="bold_dot">
+                <li class="dot"></li>
+                <li class="dot"></li>
+                <li class="dot"></li>
+                <li class="dot"></li>
+                <li class="dot"></li>
+            </ul>
+            <div class="carousel_button">
+                <div class="carousel_button_left">◀</div>
+                <div class="carousel_button_right">▶</div>
+            </div>
+        </div>
+    </section>
 
     <div id="search_container">
         <div id=irai_search class="search_img">
@@ -37,4 +56,4 @@
     <div id="requests_box"></div>
 {% endblock %}
 
-{% block script %}static/js/index.js{% endblock %}
+{% block script %}{{ url_for('static', filename='js/index.js') }}{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'new_request_base.html' %}
+
+{% block new_request %}
+    <section class="step_3">
+        <div class="option_areas">
+            <div class="option_1">
+                <p><small>*</small>依頼した経験</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_1">五回以上はある</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_1">1~5回はある</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_1">なし</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_2">
+                <p><small>*</small>欲しい生地や素材</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_2">ある程度決まっている</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_2">決まっていない</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_3">
+                <p><small>*</small>再現度</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_3">細部まで再現して欲しい</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_3">ある程度、制作者にお任せる</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_4">
+                <p><small>*</small>参考資料</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_4">豊富に準備できる</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_4">最低限の資料は準備できる</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_4">あまり準備できない</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_5">
+                <p><small>*</small>返信頻度</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_5">1~2時間以内の返信が可能</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_5">12時間以内には返信可能</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_5">1日以内には返信可能</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_5">なかなか返信できない</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_6">
+                <p><small>*</small>予算</p>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="option_5">相談して決めたい</label>
+                    </li>
+                    <li>
+                        <label><input type="radio" name="option_5">見積もりを出して欲しい</label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="option_5">
+                            <input type="text">
+                            円までしか出せない
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="option_7">
+                <p><small>*</small>絶対に欲しいポイント</p>
+                <textarea placeholder="例）ジャケットのボタンの色は黒、形は正方形の様な四角のものを希望したいです。
+あまりつやつやしていない素材の方がいいです。
+家の洗濯機で洗濯できる素材を使用してもらえたほうが嬉しいです。"></textarea>
+            </div>
+        </div>
+        <div>
+            <form action="/new_request_base/02">
+                <button>戻る</button>
+            </form>
+            <form action="/new_request_base/04">
+                <button>次へ</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

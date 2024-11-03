@@ -1,0 +1,43 @@
+{% extends 'new_request_base.html' %}
+
+{% block link_area %}
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+{% endblock %}
+
+
+{% block new_request %}
+    <section class="step_4">
+        <div class="header">
+            <div>
+                <p class="year"></p>
+                <p class="moon"></p>
+                <p>月</p>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <th>日</th>
+                <th>月</th>
+                <th>火</th>
+                <th>水</th>
+                <th>木</th>
+                <th>金</th>
+                <th>土</th>
+            </tr>
+        </table>
+        <div>
+            <small>＊ COSBARAでは依頼品(制作物)が手元に届く日の期限を「納期」と定めています</small><br>
+            <small>＊ 納期の選択は必ず指定してください。</small><br>
+            <small>＊ 本日から７日以内は選択できません</small>
+        </div>
+        <div>
+            <form action="/new_request_base/03">
+                <button>戻る</button>
+            </form>
+            <form action="/new_request_base/05">
+                <button>次へ</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

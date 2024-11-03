@@ -124,3 +124,8 @@ select {
     outline: none;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse !important;
+}
+

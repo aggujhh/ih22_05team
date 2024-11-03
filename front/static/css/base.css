@@ -52,13 +52,11 @@ h1 {
 }
 
 
-
 #search_box {
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content: end;
 }
-
 
 
 #viewSelect,
@@ -78,7 +76,7 @@ h1 {
 #loginbox {
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content: end;
     gap: 5%;
 
     > p {
@@ -105,7 +103,7 @@ h1 {
     }
 
     .my_page_btn,
-    .new_request > button {
+    .new_request  button {
         border-radius: 5px;
         font-size: 18px;
         border: 1.5px solid var(--color-p);
@@ -140,13 +138,13 @@ h1 {
     }
 
 
-    .new_request > button {
+    .new_request  button {
         padding: 5px 10px;
         background: var(--color-p);
         color: #fff;
     }
 
-    .new_request > button:hover {
+    .new_request  button:hover {
         background: #fff;
         color: var(--color-p);
     }

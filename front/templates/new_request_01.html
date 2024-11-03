@@ -1,0 +1,38 @@
+{% extends 'new_request_base.html' %}
+
+{% block new_request %}
+    <section class="step_1">
+        <ul>
+            <li>
+                <p><small>*</small>タイトル</p>
+                <input type="text" placeholder="タイトルを入力してください">
+            </li>
+            <li>
+                <p><small>*</small>ジャンル</p>
+                <ul>
+                    <li><label><input type="checkbox" id="checkAll">全部</label></li>
+                    <li><label><input type="checkbox" id="clothing" class="ck"> 衣装</label></li>
+                    <li><label><input type="checkbox" id="modeling" class="ck"> 造形</label></li>
+                    <li><label><input type="checkbox" id="props" class="ck"> 小道具</label></li>
+                    <li><label><input type="checkbox" id="wig" class="ck">ウィッグ</label></li>
+                    <li><label><input type="checkbox" id="accessory" class="ck"> アクセサリー</label></li>
+                    <li><label><input type="checkbox" id="others" class="ck">その他</label></li>
+                </ul>
+            </li>
+            <li>
+                <p><small>*</small>詳細</p>
+                <textarea placeholder="例）参考画像のキャラクターのジャケットとシャツの制作を希望します。
+それぞれ1着ずつを希望します。
+レディースサイズを希望しており、サイズは個別の相談でお伝えします。
+こまめにやり取りをしてくださる制作者を希望します。
+興味を持ってくださった方はご連絡いただけると嬉しいです。
+よろしくお願いします。"></textarea>
+            </li>
+            <li>
+                <form action="/new_request_base/02">
+                    <button>次へ</button>
+                </form>
+            </li>
+        </ul>
+    </section>
+{% endblock %}

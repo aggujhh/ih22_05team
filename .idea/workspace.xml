@@ -5,15 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d58c5201-fc16-4b75-99b4-7dd990c8bf8a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/front/static/img/desired_date_bg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/static/img/title_wing.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/static/img/uploads/user_icon/524eb29f80c08491874e06c4ac36706c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/css/new_request_base.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/kapibara6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/star_boll.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/img/step4_head_bd.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/static/js/new_request_base.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_01.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_02.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_03.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_04.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_05.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/templates/new_request_base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/routes/request_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/front/routes/request_routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/static/css/request.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/request.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/img/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/static/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/static/js/chat.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/templates/request.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/templates/request.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +33,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -53,42 +63,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.base.html.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.index.js.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.app (2).executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.user_routes.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Documents/GitHub/ih22_05team/front/lib&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.base.html.executor": "Run",
+    "Node.js.index.js.executor": "Run",
+    "Python.app (1).executor": "Run",
+    "Python.app (2).executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.user_routes.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "F:/Documents/GitHub/ih22_05team/front/templates",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Documents\GitHub\ih22_05team\front\templates" />
       <recent name="F:\Documents\GitHub\ih22_05team\front\lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\Documents\GitHub\ih22_05team\front\static\img" />
+      <recent name="F:\Documents\GitHub\ih22_05team\front\static" />
       <recent name="F:\Documents\GitHub\ih22_05team\front\static\img\uploads\user_icon" />
       <recent name="F:\Documents\GitHub\ih22_05team\front\static\img\uploads\request_img\request_id" />
       <recent name="F:\Documents\GitHub\ih22_05team\front\static\img\uploads\creator_images\user_id" />
-      <recent name="F:\Documents\GitHub\ih22_05team\front\static" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app (1)">
@@ -260,6 +271,8 @@
       <workItem from="1730382218685" duration="4000" />
       <workItem from="1730385662266" duration="1318000" />
       <workItem from="1730430310585" duration="16610000" />
+      <workItem from="1730470854675" duration="3191000" />
+      <workItem from="1730554254070" duration="30433000" />
     </task>
     <servers />
   </component>
@@ -282,6 +295,6 @@
     <SUITE FILE_PATH="coverage/ih22_05team$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1730214484744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
     <SUITE FILE_PATH="coverage/ih22_05team$user_routes.coverage" NAME="user_routes Coverage Results" MODIFIED="1729783087612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/routes" />
     <SUITE FILE_PATH="coverage/__init___cpython_312_pyc$app.coverage" NAME="app Coverage Results" MODIFIED="1730189079425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ih22_05team$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1730448648758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/front" />
+    <SUITE FILE_PATH="coverage/ih22_05team$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1730639824081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/front" />
   </component>
 </project>

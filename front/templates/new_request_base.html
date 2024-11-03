@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block style %}{{ url_for('static', filename='css/new_request_base.css') }}{% endblock %}
+{% block content %}
+    <section id="new_request">
+        <h2>新しい依頼を投稿する</h2>
+        <p>制作・見積もりを依頼する！</p>
+        <p>5つのステップで簡単で依頼を投稿できます！</p>
+        <div class="progress_box">
+            <div>
+                <div><p>基本情報</p></div>
+                <div><p>参考画像</p></div>
+                <div><p>その他情報</p></div>
+                <div><p>納期希望</p></div>
+                <div><p>最終確認</p></div>
+            </div>
+            <div>
+                <div></div>
+            </div>
+            <div class="progress_bar">
+                <div></div>
+            </div>
+        </div>
+        {% block new_request %}{% endblock %}
+    </section>
+{% endblock %}
+
+{% block script %}{{ url_for('static', filename='js/new_request_base.js') }}{% endblock %}

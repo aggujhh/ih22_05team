@@ -25,7 +25,7 @@ chat_title.addEventListener("click", () => {
         chat_interface.style.display = "none"
         chat_title.style.transform = "translateX(0) translateY(0) rotate(0)"
         chars.forEach(e => {
-            e.style.transform = "rotate(90deg)"
+            e.style.transform = "rotate(0deg)"
         })
         setTimeout(function () {
             chat_box.style.width = "40px"

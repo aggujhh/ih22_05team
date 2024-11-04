@@ -106,79 +106,205 @@ function validateImages(image) {
 //     })
 // }
 
-function getDaysOfMonthWithSurroundingWeeks(year, month) {
+
+// 指定された年、月のカレンダーに前後の週を含めた日付リストを生成する関数
+function getDaysOfMonthWithSurroundingWeeks(year, month, today, next_moon) {
     const daysOfMonth = [];
     const date = new Date(year, month, 1);
 
-    // 前一个月的最后一周
-    const previousMonth = new Date(year, month, 0); // 上个月的最后一天
+    // 前月の最後の週を取得
+    const previousMonth = new Date(year, month, 0);  // 前月の最終日
     const lastDayOfPrevMonth = previousMonth.getDate();
-    const lastWeekStart = lastDayOfPrevMonth - previousMonth.getDay(); // 上个月的最后一个星期天
+    const lastWeekStart = lastDayOfPrevMonth - previousMonth.getDay();  // 前月の最後の日曜日
 
+    // 前月が完全な週でない場合
     if (previousMonth.getDay() !== 6) {
         for (let day = lastWeekStart; day <= lastDayOfPrevMonth; day++) {
             const dayDate = new Date(year, month - 1, day);
             daysOfMonth.push({
                 date: dayDate.getDate(),
                 month: dayDate.getMonth() + 1,
-                weekDay: dayDate.getDay()
+                weekDay: dayDate.getDay(),
+                this_month: false// 現在の月でないことを示す
             });
         }
     }
 
-    // 当前月份的所有天
+    // 現在の月のすべての日を追加
     while (date.getMonth() === month) {
-        daysOfMonth.push({
-            date: date.getDate(),
-            month: date.getMonth() + 1,
-            weekDay: date.getDay()
-        });
-        date.setDate(date.getDate() + 1); // 移动到下一个日期
+        // 次の月の場合
+        if (next_moon) {
+            daysOfMonth.push({
+                date: date.getDate(),
+                month: date.getMonth() + 1,
+                weekDay: date.getDay(),
+                this_month: true,
+                apply: true　// 応募可能んの表示
+            });
+        } else {
+            // 本日から1週間後の日から応募可能
+            if (today && date.getDate() > today.getDate() + 7) {
+                daysOfMonth.push({
+                    date: date.getDate(),
+                    month: date.getMonth() + 1,
+                    weekDay: date.getDay(),
+                    this_month: true,
+                    apply: true
+                });
+            } else {
+                daysOfMonth.push({
+                    date: date.getDate(),
+                    month: date.getMonth() + 1,
+                    weekDay: date.getDay(),
+                    this_month: true
+                });
+            }
+        }
+        date.setDate(date.getDate() + 1);  // 次の日に移動
     }
 
-    // 下一个月的第一周
-    const nextMonth = new Date(year, month + 1, 1); // 下个月的第一天
+    // 翌月の最初の週を取得
+    const nextMonth = new Date(year, month + 1, 1); // 翌月の1日
+    // 完全な週でない場合
     if (nextMonth.getDay() !== 0) {
-        const daysToAdd = 6 - nextMonth.getDay(); // 从第一个星期天开始到第一个周六
+        const daysToAdd = 6 - nextMonth.getDay(); // 最初の日曜日から土曜日までの日数
         for (let day = 1; day <= daysToAdd + 1; day++) {
             const dayDate = new Date(year, month + 1, day);
             daysOfMonth.push({
                 date: dayDate.getDate(),
                 month: dayDate.getMonth() + 1,
-                weekDay: dayDate.getDay()
+                weekDay: dayDate.getDay(),
+                this_month: false // 現在の月でないことを示す
             });
         }
     }
     return daysOfMonth;
 }
 
-// 使用当前年份和月份
+// 現在の年と月を使用
 const today = new Date();
-const year = today.getFullYear();
-const month = today.getMonth(); // 当前月份，从0开始
+let year = today.getFullYear();
+let month = today.getMonth(); // 当前月份，从0开始
 const year_box = document.querySelector(".step_4 .year")
 const moon_box = document.querySelector(".step_4 .moon")
 year_box.innerText = year
 moon_box.innerText = month + 1
 
-
-const daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month);
+// 前後の週を含むカレンダー日付を取得
+const daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false);
 const calendar = document.querySelector("table>tbody")
-let test = ""
+let text = ""
+const temp_calendar = calendar.innerHTML
+let temp_selected = ""
+let temp_moon = ""
+let temp_year = ""
 
-daysWithSurroundingWeeks.forEach((day, i) => {
-    console.log(`日期: ${day.month}月${day.date}日, 星期: ${['日', '一', '二', '三', '四', '五', '六'][day.weekDay]}`);
-    if (i % 7 === 0) {
-        test = test + "<tr>"
-    }
-    if (day.date === today.getDate()) {
-        test = test + `<td><p class="today">${day.date}</p><p>今日</p></td>`
+// カレンダーを更新する関数
+function update_calendar(daysWithSurroundingWeeks, is_today) {
+    text = ""
+    if (temp_selected !== "" && is_today) {
+        calendar.innerHTML = temp_selected
     } else {
-        test = test + `<td><p>${day.date}</p></td>`
+        calendar.innerHTML = temp_calendar
+        daysWithSurroundingWeeks.forEach((day, i) => {
+            if (i % 7 === 0) {
+                text = text + "<tr>"
+            }
+            if (day.this_month === false) {
+                text = text + `<td class="not_this_moon" data-date="${day.date}"><p>${day.date}</p></td>`
+            } else if (day.date === today.getDate() && day.month === today.getMonth() + 1) {
+                text = text + `<td data-date="${day.date}"><p class="today">${day.date}</p><p>今日</p></td>`
+            } else if (day.apply) {
+                text = text + `<td class="apply" data-date="${day.date}"><p>${day.date}</p><p></p></td>`
+            } else {
+                text = text + `<td data-date="${day.date}"><p>${day.date}</p></td>`
+            }
+
+            if (i % 7 === 6) {
+                text = text + "</tr>"
+            }
+        });
     }
-    if (i % 7 === 6) {
-        test = test + "</tr>"
+
+
+    calendar.innerHTML += text;
+    const apply_list = document.querySelectorAll("table .apply")
+    const desired_date = document.querySelector(".desired_date")
+
+    if (apply_list) {
+        apply_list.forEach(apply => {
+            const date = apply.dataset.date
+            apply.addEventListener("click", () => {
+                apply_list.forEach(apply => {
+                    apply.classList.remove("selected")
+                    apply.lastElementChild.innerHTML = ""
+                })
+                apply.classList.add("selected")
+                apply.lastElementChild.innerHTML = "納期"
+                temp_selected = calendar.innerHTML
+                temp_moon = document.querySelector(".moon").innerHTML
+                temp_year = Number(document.querySelector(".year").innerHTML)
+                desired_date.innerHTML = `${temp_year}年${temp_moon}月${apply.firstElementChild.innerHTML}日まで`
+            })
+        })
     }
-});
-console.log(test)
-calendar.insertAdjacentHTML("beforeend", test);
+}
+
+update_calendar(daysWithSurroundingWeeks, true)
+
+const prev = document.querySelector(".header .prev")
+const next = document.querySelector(".header .next")
+
+// 前の月ボタンのイベント
+prev.addEventListener("click", () => {
+    if (month > 0) {
+        month--
+    } else {
+        month = 11
+        year--
+    }
+    moon_box.innerText = month + 1
+    year_box.innerText = year
+    let daysWithSurroundingWeeks
+    if (month === today.getMonth() && year === today.getFullYear()) {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
+    } else if (month >= today.getMonth() || year > today.getFullYear()) {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
+    } else {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
+    }
+    console.log("month", month, temp_moon - 1)
+    console.log("year", year, temp_year)
+    if (month === temp_moon - 1 && year === temp_year) {
+        console.log(123)
+        update_calendar(daysWithSurroundingWeeks, true)
+    } else {
+        update_calendar(daysWithSurroundingWeeks, false)
+    }
+})
+
+// 次の月ボタンのイベント
+next.addEventListener("click", () => {
+    if (month < 11) {
+        month++
+    } else {
+        month = 0
+        year++
+    }
+    moon_box.innerText = month + 1
+    year_box.innerText = year
+    let daysWithSurroundingWeeks
+    if (month === today.getMonth() && year === today.getFullYear()) {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
+    } else if (month >= today.getMonth() || year > today.getFullYear()) {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
+    } else {
+        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
+    }
+    if (month === temp_moon - 1 && year === temp_year) {
+        console.log(123)
+        update_calendar(daysWithSurroundingWeeks, true)
+    } else {
+        update_calendar(daysWithSurroundingWeeks, false)
+    }
+})

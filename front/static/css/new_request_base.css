@@ -355,8 +355,9 @@
             background-repeat: no-repeat;
             background-position: bottom center;
             background-size: contain;
+            position: relative;
 
-            > div {
+            > div:nth-of-type(1) {
                 display: flex;
                 justify-content: center;
                 transform: translateX(5px);
@@ -376,6 +377,38 @@
 
                 > p:nth-of-type(3) {
                     font-family: "Yusei Magic", sans-serif;
+                }
+            }
+
+            > div:nth-of-type(2) {
+                position: absolute;
+                width: 100%;
+                height: 36%;
+                bottom: 8%;
+                left: 0;
+
+                > button {
+                    position: absolute;
+                    top: 0;
+                    width: 40px;
+                    font-size: 24px;
+                    height: 100%;
+                    transform: scaleY(1.4);
+                    color: #f3f3f3;
+                    background: #ec7fb1;
+                }
+
+                > button:hover {
+                    background: #FFB8DA;
+                }
+
+
+                > button:nth-of-type(1) {
+                    left: 0;
+                }
+
+                > button:nth-of-type(2) {
+                    right: 0;
                 }
             }
         }
@@ -414,6 +447,30 @@
                         color: #FF3578 !important;
                     }
                 }
+
+                > .not_this_moon {
+                    background: #cdcdcd !important;
+
+                    > p {
+                        color: #818181 !important;
+                    }
+                }
+
+                > .apply {
+                    background: #d3f9ff;
+                    cursor: pointer;
+                }
+
+                > .apply:hover {
+                    background: #ffbcdb;
+                }
+
+                > .apply.selected {
+                    background-image: url('../img/table_td_bg.svg');
+                    background-repeat: no-repeat;
+                    background-position: bottom center;
+                    background-size: contain;
+                }
             }
 
 
@@ -439,6 +496,20 @@
         }
 
         > div:nth-of-type(3) {
+            margin-bottom: 40px;
+            display: flex;
+
+            > h3 {
+                margin-right: 20px;
+            }
+
+            > p {
+                font-size: 18px;
+                line-height: 25px;
+            }
+        }
+
+        > div:nth-of-type(4) {
             position: relative;
             height: 40px;
 

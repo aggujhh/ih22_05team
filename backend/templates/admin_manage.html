@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">{% endblock %}
+
+{% block title %} お知らせ画面 {% endblock %}
+
+{% block header %}
+
+    <h2>管理者管理</h2>
+    <button onclick="location.href='/add_admin'">管理者追加</button>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="managers">
+        <table id="manager_table" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>管理者名</th>
+                    <th>有効期限</th>
+                    <th>付与権限</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for admin in admins %}
+                    <tr>
+                        <td>{{ admin.admin_id }}</td>
+                        <td>{{ admin.admin_name }}</td>
+                        <td>{{ admin.password_expiration_date }}</td>
+                        <td>
+                            {% for role in admin.admin_permissions %}
+                                {{ role['permission_name'] }}
+                                {{ admin.admin_permissions }}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <form action="/admin_edit" method="post">
+                                    <!-- 管理者の情報をhiddenフィールドで渡す -->
+                                    <input type="hidden" name="admin_id" value="{{ admin.admin_id }}">
+                                <button>編集</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <ul>
+            {% for item in items %}
+                <li class="notice-item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/admin_manage.js') }}"></script>
+    <script>
+    </script>
+{% endblock %}

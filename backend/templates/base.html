@@ -11,16 +11,20 @@
 
 <body>
     <div class="sidebar">
+        <button class="close-button">閉じる</button>
         <div class="side-menu">
-            <button>お知らせ</button>
+            <form action="/notification" method="post">
+                <button type="submit">お知らせ</button>
+            </form>
             <button>お問い合わせ</button>
             <button>制作者審査</button>
             <button>管理者ログ</button>
             <button>アカウント凍結</button>
-            <button>管理者管理</button>
+            <form action="/admin_manage" method="get">
+                <button type="submit">管理者管理</button>
+            </form>
             <button>ログアウト</button>
         </div>
-        <button class="close-button">閉じる</button>
     </div>
     <div class="main-content">
         <div class="header">

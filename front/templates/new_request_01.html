@@ -5,19 +5,20 @@
         <ul>
             <li>
                 <p><small>*</small>タイトル</p>
-                <input type="text" placeholder="タイトルを入力してください">
+                <input type="text" placeholder="タイトルを入力してください" name="title">
             </li>
             <li>
                 <p><small>*</small>ジャンル</p>
                 <ul>
                     <li><label><input type="checkbox" id="checkAll">全部</label></li>
-                    <li><label><input type="checkbox" id="clothing" class="ck"> 衣装</label></li>
-                    <li><label><input type="checkbox" id="modeling" class="ck"> 造形</label></li>
-                    <li><label><input type="checkbox" id="props" class="ck"> 小道具</label></li>
-                    <li><label><input type="checkbox" id="wig" class="ck">ウィッグ</label></li>
-                    <li><label><input type="checkbox" id="accessory" class="ck"> アクセサリー</label></li>
-                    <li><label><input type="checkbox" id="others" class="ck">その他</label></li>
+                    <li><label><input type="checkbox" id="clothing" class="ck" value="衣装"> 衣装</label></li>
+                    <li><label><input type="checkbox" id="modeling" class="ck" value="造形"> 造形</label></li>
+                    <li><label><input type="checkbox" id="props" class="ck" value="小道具"> 小道具</label></li>
+                    <li><label><input type="checkbox" id="wig" class="ck" value="ウィッグ">ウィッグ</label></li>
+                    <li><label><input type="checkbox" id="accessory" class="ck" value="アクセサリー"> アクセサリー</label></li>
+                    <li><label><input type="checkbox" id="others" class="ck" value="その他">その他</label></li>
                 </ul>
+                <input type="hidden" name="genre">
             </li>
             <li>
                 <p><small>*</small>詳細</p>
@@ -29,8 +30,8 @@
 よろしくお願いします。"></textarea>
             </li>
             <li>
-                <form action="/new_request_base/02">
-                    <button>次へ</button>
+                <form action="/new_request_base/02" class="next_step_form">
+                    <button type="button" class="next_step_btn">次へ</button>
                 </form>
             </li>
         </ul>

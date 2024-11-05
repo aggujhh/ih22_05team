@@ -97,3 +97,19 @@ if (textarea) {
     })
 }
 
+const new_request_btn = document.querySelector(".new_request_btn")
+console.log(new_request_btn)
+new_request_btn.addEventListener("click", () => {
+    console.log("new_request_btn click")
+    let progress_value_list = {
+        bar_width: 10,
+        kapibara_move: 0,
+        star_boxes_index: 0
+    };
+
+    let new_request_list = {}
+    localStorage.setItem("progress_value_list", JSON.stringify(progress_value_list))
+    localStorage.setItem("new_request_list", JSON.stringify(new_request_list))
+    new_request_btn.parentNode.submit();
+})
+

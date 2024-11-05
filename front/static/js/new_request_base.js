@@ -187,14 +187,22 @@ let year = today.getFullYear();
 let month = today.getMonth(); // 当前月份，从0开始
 const year_box = document.querySelector(".step_4 .year")
 const moon_box = document.querySelector(".step_4 .moon")
-year_box.innerText = year
-moon_box.innerText = month + 1
+if (year_box) {
+    year_box.innerText = year
+}
+if (moon_box) {
+    moon_box.innerText = month + 1
+}
+
 
 // 前後の週を含むカレンダー日付を取得
 const daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false);
 const calendar = document.querySelector("table>tbody")
 let text = ""
-const temp_calendar = calendar.innerHTML
+let temp_calendar = ""
+if (calendar) {
+    temp_calendar = calendar.innerHTML
+}
 let temp_selected = ""
 let temp_moon = ""
 let temp_year = ""
@@ -250,61 +258,128 @@ function update_calendar(daysWithSurroundingWeeks, is_today) {
     }
 }
 
-update_calendar(daysWithSurroundingWeeks, true)
+if (calendar) {
+    update_calendar(daysWithSurroundingWeeks, true)
+}
+
 
 const prev = document.querySelector(".header .prev")
 const next = document.querySelector(".header .next")
 
-// 前の月ボタンのイベント
-prev.addEventListener("click", () => {
-    if (month > 0) {
-        month--
-    } else {
-        month = 11
-        year--
-    }
-    moon_box.innerText = month + 1
-    year_box.innerText = year
-    let daysWithSurroundingWeeks
-    if (month === today.getMonth() && year === today.getFullYear()) {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
-    } else if (month >= today.getMonth() || year > today.getFullYear()) {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
-    } else {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
-    }
-    console.log("month", month, temp_moon - 1)
-    console.log("year", year, temp_year)
-    if (month === temp_moon - 1 && year === temp_year) {
-        console.log(123)
-        update_calendar(daysWithSurroundingWeeks, true)
-    } else {
-        update_calendar(daysWithSurroundingWeeks, false)
-    }
-})
+if (prev && next) {
+    // 前の月ボタンのイベント
+    prev.addEventListener("click", () => {
+        if (month > 0) {
+            month--
+        } else {
+            month = 11
+            year--
+        }
+        moon_box.innerText = month + 1
+        year_box.innerText = year
+        let daysWithSurroundingWeeks
+        if (month === today.getMonth() && year === today.getFullYear()) {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
+        } else if (month >= today.getMonth() || year > today.getFullYear()) {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
+        } else {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
+        }
+        console.log("month", month, temp_moon - 1)
+        console.log("year", year, temp_year)
+        if (month === temp_moon - 1 && year === temp_year) {
+            console.log(123)
+            update_calendar(daysWithSurroundingWeeks, true)
+        } else {
+            update_calendar(daysWithSurroundingWeeks, false)
+        }
+    })
 
 // 次の月ボタンのイベント
-next.addEventListener("click", () => {
-    if (month < 11) {
-        month++
-    } else {
-        month = 0
-        year++
+    next.addEventListener("click", () => {
+        if (month < 11) {
+            month++
+        } else {
+            month = 0
+            year++
+        }
+        moon_box.innerText = month + 1
+        year_box.innerText = year
+        let daysWithSurroundingWeeks
+        if (month === today.getMonth() && year === today.getFullYear()) {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
+        } else if (month >= today.getMonth() || year > today.getFullYear()) {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
+        } else {
+            daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
+        }
+        if (month === temp_moon - 1 && year === temp_year) {
+            console.log(123)
+            update_calendar(daysWithSurroundingWeeks, true)
+        } else {
+            update_calendar(daysWithSurroundingWeeks, false)
+        }
+    })
+}
+
+
+const prev_step_btn = document.querySelector(".prev_step_btn")
+const next_step_btn = document.querySelector(".next_step_btn")
+const progress_bar = document.querySelector(".progress_bar > div")
+const kapibara = document.querySelector(".kapibara > div")
+const star_boxes = document.querySelectorAll(".star_box")
+const prev_step_form = document.querySelector(".prev_step_form")
+const next_step_form = document.querySelector(".next_step_form")
+let progress_value_list = JSON.parse(localStorage.getItem("progress_value_list"));
+let new_request_list = JSON.parse(localStorage.getItem("new_request_list"));
+
+console.log(progress_value_list.star_boxes_index)
+
+function reset_progress() {
+    for (let i = 0; i < progress_value_list.star_boxes_index + 1; i++) {
+        if (star_boxes[i]) {
+            star_boxes[i].style.filter = "grayscale(0%)"
+        }
     }
-    moon_box.innerText = month + 1
-    year_box.innerText = year
-    let daysWithSurroundingWeeks
-    if (month === today.getMonth() && year === today.getFullYear()) {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, today, false)
-    } else if (month >= today.getMonth() || year > today.getFullYear()) {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, true)
-    } else {
-        daysWithSurroundingWeeks = getDaysOfMonthWithSurroundingWeeks(year, month, null, false)
-    }
-    if (month === temp_moon - 1 && year === temp_year) {
-        console.log(123)
-        update_calendar(daysWithSurroundingWeeks, true)
-    } else {
-        update_calendar(daysWithSurroundingWeeks, false)
+    progress_bar.style.width = `${progress_value_list.bar_width}%`
+    kapibara.style.transform = `translateX(${progress_value_list.kapibara_move}%)`
+}
+
+reset_progress()
+
+if (next_step_btn) {
+    next_step_btn.addEventListener("click", () => {
+        console.log("next_step_btn click")
+        progress_value_list.bar_width = progress_value_list.bar_width + 20
+        progress_value_list.kapibara_move = progress_value_list.kapibara_move + 100
+        progress_value_list.star_boxes_index++
+        localStorage.setItem("progress_value_list", JSON.stringify(progress_value_list))
+        next_step_form.submit();
+    })
+}
+
+
+if (prev_step_btn) {
+    prev_step_btn.addEventListener("click", () => {
+        console.log("prev_step_btn click")
+        progress_value_list.bar_width = progress_value_list.bar_width - 20
+        progress_value_list.kapibara_move = progress_value_list.kapibara_move - 100
+        progress_value_list.star_boxes_index--
+        localStorage.setItem("progress_value_list", JSON.stringify(progress_value_list))
+        prev_step_form.submit();
+    })
+}
+
+
+const checkAll = document.querySelector('#checkAll')
+const cks = document.querySelectorAll('.ck')
+checkAll.addEventListener('click', function () {
+    for (let i = 0; i < cks.length; i++) {
+        cks[i].checked = this.checked
     }
 })
+for (let i = 0; i < cks.length; i++) {
+    cks[i].addEventListener('click', function () {
+        checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
+    })
+}

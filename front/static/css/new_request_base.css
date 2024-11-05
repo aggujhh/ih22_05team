@@ -25,13 +25,15 @@
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             margin-bottom: 60px;
 
-            > div {
+            .star_box {
                 background-image: url('../img/star_boll.svg');
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;
                 font-size: 18px;
                 position: relative;
+                /*filter: grayscale(100%);*/
+                transition: 0.4s;
 
                 > p {
                     position: absolute;
@@ -42,16 +44,18 @@
             }
         }
 
-        > div:nth-of-type(2) {
+        > .kapibara {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             height: 6vh;
+            overflow: hidden;
 
             > div {
                 background-image: url('../img/kapibara6.png');
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;
+                transition: 0.4s;
             }
         }
 
@@ -59,11 +63,13 @@
             height: 1.5vh;
             background: #D9D9D9;
             margin-bottom: 40px;
+            overflow: hidden;
 
             > div {
-                width: 10%;
+                /*width: 10%;*/
                 height: 100%;
                 background: #ec7fb1;
+                transition: 0.4s;
             }
         }
     }
@@ -532,4 +538,54 @@
             }
         }
     }
+
+    > .step_5 {
+        > ul {
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 40px;
+
+            > li {
+                > h3 {
+                    height: 50px;
+                    line-height: 50px;
+                    background: #ec7fb1;
+                    margin-bottom: 20px;
+                    border-radius: 50px;
+                    color: #f3f3f3;
+                    padding-left: 40px;
+                }
+
+                > p {
+                    padding-left: 40px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+        > div:first-of-type{
+            position: relative;
+            height: 40px;
+
+            button {
+                position: absolute;
+                bottom: 0;
+                padding: 8px 80px;
+                background: #ec7fb1;
+                color: #f3f3f3;
+                border-radius: 5px;
+            }
+
+            form:nth-of-type(1) button {
+                left: 0;
+                filter: grayscale(100%);
+            }
+
+            form:nth-of-type(2) button {
+                right: 0;
+            }
+        }
+    }
+
 }

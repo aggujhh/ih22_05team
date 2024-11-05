@@ -37,7 +37,7 @@ def login():
         flash(f"おかえりなさい, {id}.", category='success')
 
         # お知らせ一覧をすべて取ってくる
-        notis = 
+        # notis =
         
         return render_template('notification.html')
     else:

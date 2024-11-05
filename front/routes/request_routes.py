@@ -13,3 +13,9 @@ def request_details(request_id):
 @app.route('/new_request_base/<step>', methods=['GET'])
 def new_request_base(step):
     return render_template(f"new_request_{step}.html")
+
+
+# 新しい依頼追加する機能
+@app.route('/add_new_request', methods=['POST'])
+def add_new_request():
+    return "add_new_request"

@@ -4,6 +4,7 @@ from servers.flask_login import Flask_login
 from db.admin_manage import admin_manage
 from flask_login import current_user, login_required, logout_user
 import json
+import random
 
 
 
@@ -39,11 +40,8 @@ def login():
         flash(f"おかえりなさい, {id}.", category='success')
 
         # お知らせ一覧をすべて取ってくる
-<<<<<<< Updated upstream
         # notis =
-=======
         notis = False
->>>>>>> Stashed changes
         
         return render_template('notification.html')
     else:
@@ -120,6 +118,37 @@ def add_admin():
         print('roles',roles)
         admin = admin_manage().get_adminT_columns()
 
+        return render_template('add_admin.html', admin=admin, roles=roles)
+    
+    if request.method == 'POST':
+        print('/add_admin POST')
+        # 管理者追加
+        ## 入力された情報をDBに登録
+        admin = {}
+        admin['admin_name'] = request.form['admin_name']
+        admin['admin_permissions'] = request.form.getlist('permissions')
+        print('admin',admin)
+
+        ### admin_idとadmin_passwordを生成
+        #### admin_idの発行
+        makeAdmin = False
+        while not makeAdmin:
+            # admin_id生成
+            number_part = f"{random.randint(0,99999999):08}"
+            admin_id = f"U_{number_part}"
+            print('admin_id',admin_id)
+            # admin_idの重複確認
+            makeAdmin = admin_manage().get_admin(admin_id)
+
+
+
+
+
+
+
+
+
+        return redirect('/admin_manage')
 
 
 

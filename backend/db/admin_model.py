@@ -21,3 +21,4 @@ class admin_model:
             cursor.execute("select admin_password from ADMIN where admin_id=%s", id)
             result = cursor.fetchone()
         return result
+

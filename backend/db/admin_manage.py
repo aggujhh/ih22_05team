@@ -38,6 +38,9 @@ class admin_manage:
             # 権限名取得
             result['admin_permissions'] = self.get_role_name(result['admin_permissions'])
             print('result',result)
+
+            if result is None:
+                result = False
         return result
     
     # admin_permissionsから権限名を取得
@@ -79,11 +82,19 @@ class admin_manage:
         return result
 
 
+    # ADMIN テーブルからカラム名を取り出す
     def get_adminT_columns(self):
         print('get_adminT_columns')
         with db as cursor:
             cursor.execute("SHOW COLUMNS FROM ADMIN ")
             result = cursor.fetchall()
         print('result',result)
-        
-        return result
+
+        # resultからADMINテーブルからカラム名を取り出す
+        fields = {}
+        for array in result:
+            fields[array['Field']] = ''
+        print('fields',fields)
+            
+        return fields
+    

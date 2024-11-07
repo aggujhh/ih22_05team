@@ -1,5 +1,4 @@
-/front/.idea/
-/__pycache__/
-/py24venv/
-/.vscode/
-
+__pycache__/
+py24venv/
+.vscode/
+.idea/

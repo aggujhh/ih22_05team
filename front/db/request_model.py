@@ -1,6 +1,7 @@
 from . import db
 from routes import logger
 
+
 class Request_model:
     def add_request(self, user_id, request_id, data_list):
         logger.info(f"add_request 実行開始、引数: {user_id, request_id, data_list}")
@@ -14,8 +15,9 @@ class Request_model:
                 cursor.execute("insert into request(user_id, request_id) "
                                "values (%s ,%s)", (user_id, request_id))
                 for i in data_list["genre"]:
-                    cursor.execute("INSERT INTO request_category(request_id, category_name) "
-                                   "VALUES (%s ,%s)", (request_id, i))
+                    if not i == "":
+                        cursor.execute("INSERT INTO request_category(request_id, category_name) "
+                                       "VALUES (%s ,%s)", (request_id, i))
                 cursor.execute(
                     "INSERT INTO request_other(request_id, experience, fabric_material, reproducibility, reference_material, reply_frequency, request_budget, required_points, required_amount) "
                     "VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s)",
@@ -49,4 +51,34 @@ class Request_model:
             return result
         except Exception as e:
             logger.error(f"have_request_id 実行中にエラーが発生しました: {e}")
+            return None
+
+    def fetch_all_requests(self):
+        logger.info(f"fetch_all_requests 実行開始")
+        try:
+            with db as cursor:
+                cursor.execute("SELECT "
+                               "request_details.request_id, "
+                               "request_details.request_title, "
+                               "request_details.request_status, "
+                               "request_details.request_deadline, "
+                               "(SELECT photo_name "
+                               "FROM request_img "
+                               "WHERE request_img.request_id = request_details.request_id "
+                               "LIMIT 1 ) AS photo_name,"
+                               "(SELECT category_name "
+                               "FROM request_category "
+                               "WHERE request_category.request_id = request_details.request_id "
+                               "LIMIT 1 ) AS category_name,"
+                               "(SELECT user_id "
+                               "FROM request "
+                               "WHERE request.request_id = request_details.request_id "
+                               "LIMIT 1 ) AS user_id "
+                               "FROM request_details "
+                               "LIMIT 0, 8")
+            results = cursor.fetchall()
+            logger.info(f"fetch_all_requests 実行成功しました。data>>> ${results}")
+            return results
+        except Exception as e:
+            logger.error(f"fetch_all_requests 実行中にエラーが発生しました: {e}")
             return None

@@ -1,13 +1,18 @@
 #データベース作成
-CREATE DATABASE ih22_db
+CREATE
+    DATABASE ih22_db
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
 
-# CREATE USER 'ih05team'@'localhost' IDENTIFIED BY 'ih05_123456';
-GRANT ALL PRIVILEGES ON ih22_db.* TO 'ih05team'@'localhost';
-FLUSH PRIVILEGES;
+# CREATE
+USER 'ih05team'@'localhost' IDENTIFIED BY 'ih05_123456';
+GRANT ALL PRIVILEGES ON ih22_db.* TO
+    'ih05team'@'localhost';
+FLUSH
+    PRIVILEGES;
 
-USE ih22_db;
+USE
+    ih22_db;
 
 
 #テーブル1
@@ -231,10 +236,10 @@ VALUES ('U_00000001', 'C001'),
        ('U_00000004', 'C004'),
        ('U_00000005', 'C005');
 
-#テーブル14
+-- テーブル14
 CREATE TABLE REQUEST_DETAILS
 (
-    request_id       char(10) primary key,
+    request_id       varchar(64) primary key,
     request_title    varchar(20)   not null,
     request_content  varchar(1000) not null,
     request_status   char(1)       not null,
@@ -252,7 +257,7 @@ VALUES ('R_00000001', '衣装制作', 'アニメキャラクターの衣装を�
 CREATE TABLE REQUEST
 (
     user_id    char(10),
-    request_id char(10),
+    request_id varchar(64),
     primary key (user_id, request_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
 );
@@ -267,7 +272,7 @@ VALUES ('U_00000001', 'R_00000001'),
 #テーブル15
 CREATE TABLE REQUEST_CATEGORY
 (
-    request_id  char(10),
+    request_id  varchar(64),
     category_id char(5),
     primary key (request_id, category_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
@@ -287,8 +292,8 @@ VALUES ('R_00000001', 'C001'),
 #テーブル16
 CREATE TABLE REQUEST_IMG
 (
-    request_id char(10),
-    photo_id   char(16),
+    request_id varchar(64),
+    photo_id   varchar(64),
     photo_url  varchar(200) not null unique,
     primary key (request_id, photo_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
@@ -305,7 +310,7 @@ VALUES ('R_00000001', 'P000000000000001', 'http://example.com/images/costume1.jp
 #テーブル17
 CREATE TABLE REQUEST_OTHER
 (
-    request_id         char(10) primary key,
+    request_id         varchar(64) primary key,
     experience         char(1) not null,
     fabric_material    char(1) not null,
     reproducibility    char(1) not null,
@@ -380,7 +385,7 @@ VALUES ('U_00000001', '1'), -- CosTaro: 衣装制作
 -- PhotoAce: 撮影依頼
 
 
-# テーブル21
+#テーブル21
 CREATE TABLE RATING
 (
     rated_user_id     char(10),
@@ -396,6 +401,7 @@ CREATE TABLE RATING
     FOREIGN KEY (rated_user_id) REFERENCES USERM (user_id),
     FOREIGN KEY (evaluator_user_id) REFERENCES USERM (user_id)
 );
+
 INSERT INTO RATING (rated_user_id, evaluator_user_id, delivery_deadline, quality, price, responsiveness, overall_rating,
                     review, helpfulness)
 VALUES ('U_00000001', 'U_00000002', 5, 4, 5, 4, 4, 'Great service, would recommend!', TRUE),
@@ -405,7 +411,7 @@ VALUES ('U_00000001', 'U_00000002', 5, 4, 5, 4, 4, 'Great service, would recomme
        ('U_00000004', 'U_00000003', 6, 4, 4, 4, 4, 'Good overall experience, will use again.', TRUE);
 
 
-# テーブル22
+#テーブル22
 CREATE TABLE DESIGN_PREVIEW
 (
     user_id   char(10),
@@ -423,16 +429,17 @@ VALUES ('U_00000001', 1, 'http://example.com/images/design1.jpg'),
        ('U_00000005', 5, 'http://example.com/images/design5.jpg');
 
 
-# テーブル23
+-- テーブル23
 CREATE TABLE REQUEST_APPLY
 (
     creator_id char(10),
-    request_id char(10),
+    request_id varchar(64),
     PRIMARY KEY (creator_id, request_id),
     FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
 );
-## REQUEST(request_id)はPRIMARY KEY or UNIQUE制約が設定されているか？
+-- REQUEST(request_id)はPRIMARY KEY or UNIQUE制約が設定されているか
+
 
 INSERT INTO REQUEST_APPLY (creator_id, request_id)
 VALUES ('U_00000001', 'R_00000001'),
@@ -442,11 +449,11 @@ VALUES ('U_00000001', 'R_00000001'),
        ('U_00000005', 'R_00000005');
 
 
-# テーブル24
+-- テーブル24
 CREATE TABLE ORDER_MGR
 (
-    requester_id char(10),
-    request_id   char(10),
+    requester_id varchar(64),
+    request_id   varchar(64),
     PRIMARY KEY (requester_id, request_id),
     FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
@@ -460,11 +467,11 @@ VALUES ('U_00000001', 'R_00000001'),
        ('U_00000005', 'R_00000005');
 
 
-# テーブル25
+#テーブル25
 CREATE TABLE REQUEST_HISTORY
 (
-    requester_id       char(10),
-    request_id         char(10),
+    requester_id       varchar(64),
+    request_id         varchar(64),
     creator_id         char(10),
     contract_amount    INT,
     contract_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -482,7 +489,7 @@ VALUES ('U_00000001', 'R_00000001', 'U_00000002', 10000),
        ('U_00000005', 'R_00000005', 'U_00000002', 25000);
 
 
-# テーブル26
+#テーブル26
 CREATE TABLE ADMIN
 (
     admin_id                 CHAR(10),
@@ -493,33 +500,32 @@ CREATE TABLE ADMIN
 );
 
 INSERT INTO ADMIN (admin_id, admin_password, password_expiration_date, admin_permissions)
-VALUES ('A_00000001', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000001'),
-       ('A_00000002', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000010'),
-       ('A_00000003', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000100'),
-       ('A_00000004', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0001000'),
-       ('A_00000005', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0010000');
+VALUES ('A_00000001', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000001'),
+       ('A_00000002', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000010'),
+       ('A_00000003', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000100'),
+       ('A_00000004', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0001000'),
+       ('A_00000005', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0010000');
 
 
-# テーブル14
+#テーブル14
 CREATE TABLE admin_permissions
 (
-    permission_id   char(7)
+    permission_id char(7) ,
     permission_name varchar(100) not null,
-    PRIMARY KEY(permission)
+    PRIMARY KEY (permission_id)
 );
 
 INSERT INTO ADMIN_PERMISSIONS(permission_id, permission_name)
-VALUES
-('0000001', 'お知らせ'),
-('0000010', 'お問い合わせ'),
-('0000100', '制作者審査'),
-('0001000', 'アクションログ'),
-('0010000', 'アカウント関連'),
-('0100000', '情報閲覧'),
-('1000000', '管理者管理');
+VALUES ('0000001', 'お知らせ'),
+       ('0000010', 'お問い合わせ'),
+       ('0000100', '制作者審査'),
+       ('0001000', 'アクションログ'),
+       ('0010000', 'アカウント関連'),
+       ('0100000', '情報閲覧'),
+       ('1000000', '管理者管理');
 
 
-# テーブル27
+#テーブル27
 CREATE TABLE INQUIRY
 (
     inquiry_id       INT AUTO_INCREMENT,
@@ -548,20 +554,20 @@ VALUES ('U_00000001', 'John Doe', 'john.doe@example.com', '123-456-7890', 'Servi
         'Do you have any promotional offers?', 1);
 
 
-# テーブル28
+#テーブル28
 CREATE TABLE PRODUCER_APP
 (
-    creator_application_id     char(12) primary key ,
-    creator_nickname_id        VARCHAR(12) not null,
-    creator_mail               VARCHAR(64) not null unique,
+    creator_application_id     char(12) primary key,
+    creator_nickname_id        VARCHAR(12)  not null,
+    creator_mail               VARCHAR(64)  not null unique,
     creator_password           VARCHAR(255) not null,
-    creator_tel                VARCHAR(15) not null,
-    creator_history            TEXT        not null,
-    creator_application_status char(1)     not null
+    creator_tel                VARCHAR(15)  not null,
+    creator_history            TEXT         not null,
+    creator_application_status char(1)      not null
 );
 
 
-# テーブル29
+#テーブル29
 CREATE TABLE IMG_APP
 (
     product_image_id       INT AUTO_INCREMENT,
@@ -572,8 +578,7 @@ CREATE TABLE IMG_APP
 );
 
 
-
-# テーブル31
+#テーブル31
 CREATE TABLE NOTIFICATION
 (
     notification_id          INT AUTO_INCREMENT,
@@ -592,7 +597,7 @@ VALUES ('System Maintenance', '1', 'The system will undergo maintenance on Octob
        ('Holiday Notice', '1', 'The office will be closed during the national holiday.');
 
 
-# テーブル30
+#テーブル30
 CREATE TABLE NOTIFICATION_MGR
 (
     notification_id         INT,
@@ -602,7 +607,7 @@ CREATE TABLE NOTIFICATION_MGR
     PRIMARY KEY (notification_id, user_id, admin_id),
     FOREIGN KEY (user_id) REFERENCES USERM (user_id),
     FOREIGN KEY (notification_id) REFERENCES NOTIFICATION (notification_id)
-    CHECK ((user_id IS NOT FULL AND admin_id IS NULL)
+        CHECK ((user_id IS NOT FULL AND admin_id IS NULL)
         OR (user_id IS NULL AND admin_id IS NOT NULL))
 );
 
@@ -615,7 +620,7 @@ VALUES (1, 'U_00000001', NULL, '1'),
        ();
 
 
-# テーブル32
+#テーブル32
 CREATE TABLE REPORT_FRAU
 (
     fraud_report_id    INT AUTO_INCREMENT,
@@ -638,7 +643,7 @@ VALUES ('U_00000001', '1', 'Inappropriate content', '1', 'U_00000002'),
        ('U_00000004', '2', 'Threatening behavior', '0', 'U_00000005');
 
 
-# テーブル38
+#テーブル38
 CREATE TABLE CHAT
 (
     chat_id int AUTO_INCREMENT,
@@ -654,7 +659,7 @@ VALUES ('U_00000001'),
        ('U_00000005');
 
 
-# テーブル33
+#テーブル33
 CREATE TABLE CHANNELS
 (
     channel_id     INT AUTO_INCREMENT,
@@ -672,7 +677,7 @@ VALUES (1, '1'), -- チャットID 1に対するチャネル
 -- チャットID 4に対するチャネル
 
 
-# テーブル34
+#テーブル34
 CREATE TABLE MESSAGE
 (
     message_id        BIGINT UNSIGNED AUTO_INCREMENT,
@@ -691,7 +696,7 @@ VALUES (1, 1, 'Hello, how are you?'),
        (3, 4, 'Please confirm your attendance.');
 
 
-# テーブル35
+#テーブル35
 CREATE TABLE THAW_REQ
 (
     unfreeze_request_id     INT AUTO_INCREMENT,
@@ -711,7 +716,7 @@ VALUES ('U_00000001', 'user1@example.com', 'I would like to reactivate my accoun
        ('U_00000005', 'user5@example.com', 'I have resolved the issues that led to freezing.', 1);
 
 
-# テーブル36
+#テーブル36
 CREATE TABLE FROZEN_USER
 (
     user_id       char(10),
@@ -729,7 +734,7 @@ VALUES ('U_00000001', 'Account frozen due to multiple failed login attempts.'),
        ('U_00000005', 'User reported lost access and requested freeze.');
 
 
-# テーブル37
+#テーブル37
 CREATE TABLE DEL_USER
 (
     user_id         char(10),
@@ -747,15 +752,15 @@ VALUES ('U_00000001', 'User requested account deletion.'),
        ('U_00000005', 'User reported issues and chose to delete account.');
 
 
-# テーブル39
+-- テーブル39
 CREATE TABLE DEALCONFIRMATION
 (
     contract_id      INT AUTO_INCREMENT,
-    request_id       char(10) not null,
-    creator_id       char(10) not null,
+    request_id       varchar(64) not null,
+    creator_id       char(10)    not null,
     payment_amount   INT,
     contract_details TEXT,
-    contract_stage   char(1)  not null,
+    contract_stage   char(1)     not null,
     PRIMARY KEY (contract_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id),
     FOREIGN KEY (creator_id) REFERENCES USERM (user_id)
@@ -769,7 +774,7 @@ VALUES (1, 'R_00000001', 'U_00000001', 5000, 'Contract for web development servi
        (5, 'R_00000005', 'U_00000005', 2000, 'SEO services contract.', '2');
 
 
-# テーブル40
+#テーブル40
 CREATE TABLE TRANSACTION_MGR
 (
     contract_id     INT,
@@ -786,4 +791,123 @@ VALUES (1, '2024-10-01', '2024-10-02', '1'),
        (3, '2024-10-05', NULL, '0'),
        (4, '2024-10-06', NULL, '0'),
        (5, '2024-10-07', '2024-10-08', '1');
+
+
+-- ==================================================================
+-- database触った、2024.11.07
+-- ==================================================================
+-- drop table ORDER_MGR;
+-- drop table REQUEST_APPLY;
+-- drop table REQUEST_OTHER;
+-- drop table REQUEST_IMG;
+-- drop table REQUEST_CATEGORY;
+-- drop table REQUEST_HISTORY;
+-- drop table TRANSACTION_MGR;
+-- drop table DEALCONFIRMATION;
+-- drop table REQUEST;
+-- drop table REQUEST_DETAILS;
+--
+--
+--
+CREATE TABLE REQUEST_DETAILS
+(
+    request_id       varchar(64) primary key,
+    request_title    varchar(40),
+    request_content  varchar(1000),
+    request_status   char(1),
+    request_deadline date
+);
+--
+-- CREATE TABLE REQUEST
+-- (
+--     user_id    char(10),
+--     request_id varchar(64),
+--     primary key (user_id, request_id),
+--     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
+-- );
+--
+CREATE TABLE REQUEST_CATEGORY
+(
+    request_id  varchar(64),
+    category_name varchar(20),
+    primary key (request_id, category_name),
+    FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
+);
+--
+CREATE TABLE REQUEST_IMG
+(
+    request_id varchar(64),
+    photo_name varchar(255),
+    primary key (request_id, photo_name),
+    FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
+);
+--
+CREATE TABLE REQUEST_OTHER
+(
+    request_id         varchar(64) primary key,
+    experience         char(1) not null,
+    fabric_material    char(1) not null,
+    reproducibility    char(1) not null,
+    reference_material char(1) not null,
+    reply_frequency    char(1) not null,
+    request_budget     char(1) not null,
+    required_points    TEXT,
+    required_amount    INT,
+    FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
+);
+--
+-- CREATE TABLE REQUEST_APPLY
+-- (
+--     creator_id char(10),
+--     request_id varchar(64),
+--     PRIMARY KEY (creator_id, request_id),
+--     FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
+--     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+-- );
+--
+-- CREATE TABLE ORDER_MGR
+-- (
+--     requester_id varchar(64),
+--     request_id   varchar(64),
+--     PRIMARY KEY (requester_id, request_id),
+--     FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
+--     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+-- );
+--
+-- CREATE TABLE REQUEST_HISTORY
+-- (
+--     requester_id       varchar(64),
+--     request_id         varchar(64),
+--     creator_id         char(10),
+--     contract_amount    INT,
+--     contract_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     PRIMARY KEY (requester_id, request_id, creator_id),
+--     FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
+--     FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
+--     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+-- );
+--
+-- CREATE TABLE DEALCONFIRMATION(
+--     contract_id      INT AUTO_INCREMENT,
+--     request_id       varchar(64) not null,
+--     creator_id       char(10) not null,
+--     payment_amount   INT,
+--     contract_details TEXT,
+--     contract_stage   char(1)  not null,
+--     PRIMARY KEY (contract_id),
+--     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id),
+--     FOREIGN KEY (creator_id) REFERENCES USERM (user_id)
+-- );
+--
+-- CREATE TABLE TRANSACTION_MGR
+-- (
+--     contract_id     INT,
+--     payment_date    DATE,
+--     transfer_date   DATE,
+--     transfer_status char(1) not null,
+--     PRIMARY KEY (contract_id),
+--     FOREIGN KEY (contract_id) REFERENCES DEALCONFIRMATION (contract_id)
+-- );
+
+
 

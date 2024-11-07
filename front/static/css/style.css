@@ -109,6 +109,10 @@ textarea {
     background-color: #999 !important;
 }
 
+.dis_input_text {
+    background-color: #cfcfcf !important;
+}
+
 main {
     width: 70%;
     min-height: 60vh;

@@ -3,28 +3,26 @@
 {% block new_request %}
     <section class="step_2">
         <p>制作物画像（複数可）</p>
-        <div><input type="file" id="upload_img" style="display: none"></div>
-        {#        <input type="hidden" name="creator_image" data-name="制作物画像">#}
-        <div class="preview_area">
-            <label class="add_box" for="upload_img">
-                <div class="add">
-                    <div class="a">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+        <form action="/new_request_base/01" class="prev_step_form" method="post">
+            <div><input type="file" id="upload_img" style="display: none"></div>
+            {#        <input type="hidden" name="creator_image" data-name="制作物画像">#}
+            <div class="preview_area">
+                <label class="add_box" for="upload_img">
+                    <div class="add">
+                        <div class="a">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
-                </div>
-            </label>
-            <small class="error_msg"></small>
-        </div>
-        <div>
-            <form action="/new_request_base/01" class="prev_step_form">
-                <button  type="button" class="prev_step_btn">戻る</button>
-            </form>
-            <form action="/new_request_base/03" class="next_step_form">
-                <button  type="button" class="next_step_btn">次へ</button>
-            </form>
-        </div>
+                </label>
+                <small class="error_msg"></small>
+            </div>
+            <div>
+                <button type="button" class="prev_step_btn">戻る</button>
+                <button type="button" class="next_step_btn">次へ</button>
+            </div>
+        </form>
     </section>
 {% endblock %}

@@ -71,3 +71,21 @@ class Userm_model:
                            "SET user_password= %s "
                            "WHERE user_id= %s ", (ps, result["user_id"]))
         logger.info("パスワードの再設定が成功しました")
+
+    def fetch_id_by_nickname(self, nickname):
+        logger.info(f"fetch_id_by_nickname 実行開始、引数: {nickname}")
+        try:
+            with db as cursor:
+                cursor.execute("SELECT user_id "
+                               "FROM profile "
+                               "WHERE nickname = %s", nickname)
+                result = cursor.fetchone()
+                if result:
+                    logger.info(f"ID {result['user_id']} を取得しました")
+                    return result['user_id']
+                else:
+                    logger.warning("指定されたニックネームに一致するIDが見つかりません")
+                    return None
+        except Exception as e:
+            logger.error(f"ID の取得中にエラーが発生しました: {e}")
+            return None

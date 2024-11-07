@@ -2,106 +2,104 @@
 
 {% block new_request %}
     <section class="step_3">
-        <div class="option_areas">
-            <div class="option_1">
-                <p><small>*</small>依頼した経験</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_1">五回以上はある</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_1">1~5回はある</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_1">なし</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_2">
-                <p><small>*</small>欲しい生地や素材</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_2">ある程度決まっている</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_2">決まっていない</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_3">
-                <p><small>*</small>再現度</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_3">細部まで再現して欲しい</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_3">ある程度、制作者にお任せる</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_4">
-                <p><small>*</small>参考資料</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_4">豊富に準備できる</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_4">最低限の資料は準備できる</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_4">あまり準備できない</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_5">
-                <p><small>*</small>返信頻度</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_5">1~2時間以内の返信が可能</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_5">12時間以内には返信可能</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_5">1日以内には返信可能</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_5">なかなか返信できない</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_6">
-                <p><small>*</small>予算</p>
-                <ul>
-                    <li>
-                        <label><input type="radio" name="option_5">相談して決めたい</label>
-                    </li>
-                    <li>
-                        <label><input type="radio" name="option_5">見積もりを出して欲しい</label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="radio" name="option_5">
-                            <input type="text">
-                            円までしか出せない
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option_7">
-                <p><small>*</small>絶対に欲しいポイント</p>
-                <textarea placeholder="例）ジャケットのボタンの色は黒、形は正方形の様な四角のものを希望したいです。
+        <form class="prev_step_form" method="post">
+            <div class="option_areas">
+                <div class="option_1">
+                    <p><small>*</small>依頼した経験</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_1" value="0" {% if result['option_1']=="0"%}checked{% endif %}>五回以上はある</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_1" value="1" {% if result['option_1']=="1"%}checked{% endif %}>1~5回はある</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_1" value="2" {% if result['option_1']=="2"%}checked{% endif %}>なし</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_2">
+                    <p><small>*</small>欲しい生地や素材</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_2" value="0" {% if result['option_2']=="0"%}checked{% endif %}>ある程度決まっている</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_2" value="1" {% if result['option_2']=="1"%}checked{% endif %}>決まっていない</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_3">
+                    <p><small>*</small>再現度</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_3" value="0" {% if result['option_3']=="0"%}checked{% endif %}>細部まで再現して欲しい</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_3" value="1" {% if result['option_3']=="1"%}checked{% endif %}>ある程度、制作者にお任せる</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_4">
+                    <p><small>*</small>参考資料</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_4" value="0" {% if result['option_4']=="0"%}checked{% endif %}>豊富に準備できる</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_4" value="1" {% if result['option_4']=="1"%}checked{% endif %}>最低限の資料は準備できる</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_4" value="2" {% if result['option_4']=="2"%}checked{% endif %}>あまり準備できない</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_5">
+                    <p><small>*</small>返信頻度</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_5" value="0" {% if result['option_5']=="0"%}checked{% endif %}>1~2時間以内の返信が可能</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_5" value="1" {% if result['option_5']=="1"%}checked{% endif %}>12時間以内には返信可能</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_5" value="2" {% if result['option_5']=="2"%}checked{% endif %}>1日以内には返信可能</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_5" value="3" {% if result['option_5']=="3"%}checked{% endif %}>なかなか返信できない</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_6">
+                    <p><small>*</small>予算</p>
+                    <ul>
+                        <li>
+                            <label><input type="radio" name="option_6" value="0" {% if result['option_6']=="0"%}checked{% endif %}>相談して決めたい</label>
+                        </li>
+                        <li>
+                            <label><input type="radio" name="option_6" value="1" {% if result['option_6']=="1"%}checked{% endif %}>見積もりを出して欲しい</label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" name="option_6" value="2" {% if result['option_6']=="2"%}checked{% endif %}>
+                                <input type="text" name="amount"  {% if result['option_6']!="2"%}class="dis_input_text" disabled{% endif %} value="{{ result['amount'] }}">
+                                円までしか出せない
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="option_7">
+                    <p><small>*</small>絶対に欲しいポイント</p>
+                    <textarea placeholder="例）ジャケットのボタンの色は黒、形は正方形の様な四角のものを希望したいです。
 あまりつやつやしていない素材の方がいいです。
-家の洗濯機で洗濯できる素材を使用してもらえたほうが嬉しいです。"></textarea>
+家の洗濯機で洗濯できる素材を使用してもらえたほうが嬉しいです。" name="want_point">{{ result['want_point'] }}</textarea>
+                </div>
             </div>
-        </div>
-        <div>
-            <form action="/new_request_base/02" class="prev_step_form">
+            <div>
                 <button type="button" class="prev_step_btn">戻る</button>
-            </form>
-            <form action="/new_request_base/04" class="next_step_form" >
                 <button type="button" class="next_step_btn">次へ</button>
-            </form>
-        </div>
+            </div>
+        </form>
     </section>
 {% endblock %}

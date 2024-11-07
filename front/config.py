@@ -8,6 +8,11 @@ PORT = '5000'
 # secret_key を安全に生成
 SECRET_KEY = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
 
+# FlaskでRedisをセッションストレージとして使用する設定,この設定を行うことで、
+# Flaskはデフォルトのクッキーによるセッション管理ではなく、Redisを使ってサーバー側でセッションデータを保持します。
+# SESSION_TYPE = 'redis'
+# PERMANENT_SESSION_LIFETIME = timedelta(hours=1)
+
 # ファイルサイズ制限、最大2MB
 MAX_CONTENT_LENGTH = 2 * 1024 * 1024
 

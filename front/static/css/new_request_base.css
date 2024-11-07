@@ -80,8 +80,7 @@
     }
 
     > .step_1 {
-        > ul {
-
+        > form > ul {
             > li {
                 display: grid;
                 grid-template-columns: 1fr 3fr;
@@ -144,7 +143,7 @@
         }
 
 
-        > .preview_area {
+        .preview_area {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-column-gap: 20px;
@@ -253,7 +252,7 @@
 
         }
 
-        > div:nth-of-type(3) {
+        > form > div:nth-of-type(3) {
             position: relative;
             height: 20px;
 
@@ -266,12 +265,12 @@
                 border-radius: 5px;
             }
 
-            form:nth-of-type(1) button {
+            button:nth-of-type(1) {
                 left: 0;
                 filter: grayscale(100%);
             }
 
-            form:nth-of-type(2) button {
+            button:nth-of-type(2) {
                 right: 0;
             }
         }
@@ -313,6 +312,7 @@
                     height: 30px;
                     width: 80px;
                     margin-right: 5px;
+                    text-indent: 10px;
                 }
             }
 
@@ -328,7 +328,7 @@
 
         }
 
-        > div:nth-of-type(2) {
+        > form > div:nth-of-type(2) {
             position: relative;
             height: 20px;
 
@@ -341,12 +341,12 @@
                 border-radius: 5px;
             }
 
-            form:nth-of-type(1) button {
+            button:nth-of-type(1) {
                 left: 0;
                 filter: grayscale(100%);
             }
 
-            form:nth-of-type(2) button {
+            button:nth-of-type(2) {
                 right: 0;
             }
         }
@@ -515,7 +515,7 @@
             }
         }
 
-        > div:nth-of-type(4) {
+        > form > div {
             position: relative;
             height: 40px;
 
@@ -528,19 +528,19 @@
                 border-radius: 5px;
             }
 
-            form:nth-of-type(1) button {
+            button:nth-of-type(1) {
                 left: 0;
                 filter: grayscale(100%);
             }
 
-            form:nth-of-type(2) button {
+            button:nth-of-type(2) {
                 right: 0;
             }
         }
     }
 
     > .step_5 {
-        > ul {
+        > form > ul {
             width: 100%;
             background: #fff;
             padding: 20px;
@@ -562,9 +562,31 @@
                     margin-bottom: 20px;
                 }
             }
+
+            > li:nth-of-type(4) {
+                > div {
+                    display: grid;
+                    width: 100%;
+                    padding: 0 40px;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                    grid-column-gap: 10px;
+                    grid-row-gap: 10px;
+                    margin-bottom: 20px;
+
+
+                    .img {
+                        height: 100px;
+                        /*background-image: url("../img/uploads/request_img/Rectangle 18.png");*/
+                        background-size: cover;
+                        background-position: top center;
+                        background-repeat: no-repeat;
+                        margin-right: 20px;
+                    }
+                }
+            }
         }
 
-        > div:first-of-type{
+        > form > div:first-of-type {
             position: relative;
             height: 40px;
 
@@ -577,12 +599,12 @@
                 border-radius: 5px;
             }
 
-            form:nth-of-type(1) button {
+            button:nth-of-type(1) {
                 left: 0;
                 filter: grayscale(100%);
             }
 
-            form:nth-of-type(2) button {
+            button:nth-of-type(2) {
                 right: 0;
             }
         }

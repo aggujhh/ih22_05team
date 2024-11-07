@@ -2,38 +2,52 @@
 
 {% block new_request %}
     <section class="step_1">
-        <ul>
-            <li>
-                <p><small>*</small>タイトル</p>
-                <input type="text" placeholder="タイトルを入力してください" name="title">
-            </li>
-            <li>
-                <p><small>*</small>ジャンル</p>
-                <ul>
-                    <li><label><input type="checkbox" id="checkAll">全部</label></li>
-                    <li><label><input type="checkbox" id="clothing" class="ck" value="衣装"> 衣装</label></li>
-                    <li><label><input type="checkbox" id="modeling" class="ck" value="造形"> 造形</label></li>
-                    <li><label><input type="checkbox" id="props" class="ck" value="小道具"> 小道具</label></li>
-                    <li><label><input type="checkbox" id="wig" class="ck" value="ウィッグ">ウィッグ</label></li>
-                    <li><label><input type="checkbox" id="accessory" class="ck" value="アクセサリー"> アクセサリー</label></li>
-                    <li><label><input type="checkbox" id="others" class="ck" value="その他">その他</label></li>
-                </ul>
-                <input type="hidden" name="genre">
-            </li>
-            <li>
-                <p><small>*</small>詳細</p>
-                <textarea placeholder="例）参考画像のキャラクターのジャケットとシャツの制作を希望します。
+        <form action="/new_request_base/02" method="post" class="next_step_form">
+            <ul>
+                <li>
+                    <p><small>*</small>タイトル</p>
+                    <input type="text" placeholder="タイトルを入力してください" name="title"
+                           value="{{ result["title"] }}">
+                </li>
+                <li>
+                    <p><small>*</small>ジャンル</p>
+                    <ul>
+                        <li><label><input type="checkbox" id="checkAll">全部</label></li>
+                        <li>
+                            <label><input type="checkbox" id="clothing" class="ck"
+                                          value="衣装" {% if result["genre"][0] != "" %}checked{% endif %}>衣装</label>
+                        </li>
+                        <li><label><input type="checkbox" id="modeling" class="ck"
+                                          value="造形" {% if result["genre"][1] != "" %}checked{% endif %}> 造形</label>
+                        </li>
+                        <li><label><input type="checkbox" id="props" class="ck"
+                                          value="小道具" {% if result["genre"][2] != "" %}checked{% endif %}> 小道具</label>
+                        </li>
+                        <li><label><input type="checkbox" id="wig" class="ck" value="ウィッグ" {% if result["genre"][3] != "" %}checked{% endif %}>ウィッグ</label>
+                        </li>
+                        <li><label><input type="checkbox" id="accessory" class="ck"
+                                          value="アクセサリー" {% if result["genre"][4] != "" %}checked{% endif %}>
+                            アクセサリー</label></li>
+                        <li><label><input type="checkbox" id="others" class="ck"
+                                          value="その他"{% if result["genre"][5] != "" %}checked{% endif %}>その他</label>
+                        </li>
+
+                    </ul>
+                    <input type="hidden" name="genre">
+                </li>
+                <li>
+                    <p><small>*</small>詳細</p>
+                    <textarea placeholder="例）参考画像のキャラクターのジャケットとシャツの制作を希望します。
 それぞれ1着ずつを希望します。
 レディースサイズを希望しており、サイズは個別の相談でお伝えします。
 こまめにやり取りをしてくださる制作者を希望します。
 興味を持ってくださった方はご連絡いただけると嬉しいです。
-よろしくお願いします。"></textarea>
-            </li>
-            <li>
-                <form action="/new_request_base/02" class="next_step_form">
+よろしくお願いします。" name="details">{{ result["details"] }}</textarea>
+                </li>
+                <li>
                     <button type="button" class="next_step_btn">次へ</button>
-                </form>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </form>
     </section>
 {% endblock %}

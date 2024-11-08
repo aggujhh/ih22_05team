@@ -19,6 +19,7 @@ data_list = {
 def request_details(request_id):
     result = Request_model().fetch_request_by_request_id(request_id)
     for index, photo in enumerate(result['photos']):
+        print("index, photo", index, photo)
         result['photos'][index] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{photo}"
     result['request_content'] = result['request_content'].replace("\r\n", "<br>")
     result['required_points'] = result['required_points'].replace("\r\n", "<br>")
@@ -108,6 +109,11 @@ def load_new_requests():
     try:
         results = Request_model().load_requests(limit_start)
         if results:
+
+            for result in results:
+                result['request_deadline'] = result['request_deadline'].strftime("%Y-%m-%d")
+                result[
+                    'image_path'] = f"../static/img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
             return jsonify({'message': '読み込み完了。', 'data': results})
         else:
             return jsonify({'message': '依頼はこの以上です。'})

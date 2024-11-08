@@ -15,12 +15,15 @@ def redirect_nav(nav_name):
     if nav_name == "index":
         return redirect('/')
     elif nav_name == "requests":
-        results = Request_model().fetch_all_requests()
+        results, count = Request_model().fetch_all_requests()
         for result in results:
-            result['image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
-        return render_template(f"{nav_name}.html", left_margin=left_margin, results=results)
+            result[
+                'image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
+        return render_template(f"{nav_name}.html", left_margin=left_margin, results=results, count=count['COUNT(*)'])
     else:
         return render_template(f"{nav_name}.html", left_margin=left_margin)
 
 
-
+@app.errorhandler(405)
+def page_not_found(e):
+    return render_template('404.html'), 405

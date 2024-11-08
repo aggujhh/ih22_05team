@@ -97,6 +97,11 @@
     grid-row-gap: 40px;
     padding-bottom: 80px;
     border-bottom: 1.5px dashed #818181;
+
+    > p {
+        grid-column: 1 / -1;
+        color: #FF3578;
+    }
 }
 
 #requests_view .request-list li {

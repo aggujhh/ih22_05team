@@ -15,7 +15,7 @@ def redirect_nav(nav_name):
     if nav_name == "index":
         return redirect('/')
     elif nav_name == "requests":
-        results = fetch_all_requests()
+        results = Request_model().fetch_all_requests()
         for result in results:
             result['image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
         return render_template(f"{nav_name}.html", left_margin=left_margin, results=results)
@@ -23,7 +23,4 @@ def redirect_nav(nav_name):
         return render_template(f"{nav_name}.html", left_margin=left_margin)
 
 
-#
-def fetch_all_requests():
-    results = Request_model().fetch_all_requests()
-    return results
+

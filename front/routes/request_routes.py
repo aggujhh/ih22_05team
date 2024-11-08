@@ -17,8 +17,17 @@ data_list = {
 # 依頼詳細情報ページへのリダイレクト
 @app.route('/request/<request_id>', methods=['POST'])
 def request_details(request_id):
-    request_title = "SPY×FAMILY アーニャ･フォージャー フルセット"
-    return render_template("request.html", request_title=request_title)
+    result = Request_model().fetch_request_by_request_id(request_id)
+    for index, photo in enumerate(result['photos']):
+        result['photos'][index] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{photo}"
+    result['request_content'] = result['request_content'].replace("\r\n", "<br>")
+    result['required_points'] = result['required_points'].replace("\r\n", "<br>")
+    result['year'] = result['request_deadline'].year
+    result['month'] = result['request_deadline'].month if result['request_deadline'].month > 10 else "0" + str(
+        result['request_deadline'].month)
+    result['day'] = result['request_deadline'].day if result['request_deadline'].day > 10 else "0" + str(
+        result['request_deadline'].day)
+    return render_template("request.html", result=result)
 
 
 # 新しい依頼追加するページへのリダイレクト
@@ -89,3 +98,18 @@ def upload_img_of_new_request(request_id):
             saved_files.append(file_path)
         except Exception as e:
             return jsonify({'error': f'Failed to process image {idx}: {str(e)}'}), 500
+
+
+# もっと依頼を読み込む
+@app.route('/load_new_requests', methods=['POST'])
+def load_new_requests():
+    load_count = int(request.form.get("load_count"))
+    limit_start = load_count * 8
+    try:
+        results = Request_model().load_requests(limit_start)
+        if results:
+            return jsonify({'message': '読み込み完了。', 'data': results})
+        else:
+            return jsonify({'message': '依頼はこの以上です。'})
+    except Exception as e:
+        return jsonify({'error': f'エラー発生 >>> {e}'})

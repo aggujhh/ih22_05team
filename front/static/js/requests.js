@@ -19,6 +19,7 @@ function throttle(func, wait) {
 
 
 const windows_scroll = throttle(() => {
+    let load_count = 0
     // 現在のウィンドウの下端位置とリストの下端位置をログに出力
     console.log(window.scrollY + window.innerHeight, request_list.offsetTop + request_list.offsetHeight);
     // ウィンドウの下端の位置を計算
@@ -27,14 +28,32 @@ const windows_scroll = throttle(() => {
     let request_list_bottom = request_list.offsetTop + request_list.offsetHeight + 160;
     // ウィンドウの下端がリストの下端を超えた場合、"ページ触底了"を表示
     if (window_bottom >= request_list_bottom) {
+        load_count++
         loader.style.display = "block";
         console.log("ページの下端に到達しました");
-        setTimeout(function () {
-            request_list.innerHTML += `<li class="request_box"></li>
-                                <li class="request_box"></li>
-                                <li class="request_box"></li>
-                                <li class="request_box"></li>`
-        }, 1000);
+        $.ajax({
+            url: 'http://127.0.0.1:5000/load_new_requests',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                load_count
+            },
+            success: function (response) {
+                // 请求成功时执行的函数
+                console.log('Reset successful');
+            },
+            error: function (xhr, status, error) {
+                // 请求失败时执行的函数
+                console.error('Error response:', error.response);
+                console.error('Error message:', error.message);
+            }
+        });
+        // setTimeout(function () {
+        //     request_list.innerHTML += `<li class="request_box"></li>
+        //                         <li class="request_box"></li>
+        //                         <li class="request_box"></li>
+        //                         <li class="request_box"></li>`
+        // }, 1000);
     } else {
         loader.style.display = "none";
     }

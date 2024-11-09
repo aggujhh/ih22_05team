@@ -27,6 +27,11 @@ body {
 /* header ===============================================*/
 header {
     width: 100%;
+    position: fixed;
+    z-index: 100;
+    background: #f3f3f3;
+    top: 0;
+    left: 0;
 }
 
 h1 {
@@ -288,6 +293,7 @@ footer .social-media {
 footer > .footer-bottom > small {
     color: #fff;
 }
+
 
 
 /*=======================================================*/

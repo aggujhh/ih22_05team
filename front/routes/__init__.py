@@ -63,3 +63,4 @@ def favicon():
 from . import user_routes
 from . import nav_routes
 from . import request_routes
+from . import my_page_routes

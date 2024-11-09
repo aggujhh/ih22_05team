@@ -1,6 +1,61 @@
 {% extends 'base.html' %}
 
+{% block style %}{{ url_for('static', filename='css/contact.css') }}{% endblock %}
 
 {% block content %}
-お問い合わせ
+    <h2>お問い合わせ</h2>
+    <section id="contact">
+        <div class="input_area">
+            <form action="/check_registration/requester_user" method="post" id="requester_form">
+                <ul>
+                    <li>
+                        <p><small>*</small>お名前</p>
+                        <input type="text" placeholder="お名前を入力してください" name="name"
+                               data-name="お名前">
+                        <small class="error_msg"></small>
+                    </li>
+                    <li>
+                        <p><small>*</small>メールアドレス</p>
+                        <input type="text" placeholder="メールアドレスを入力してください" name="email"
+                               data-name="メールアドレス">
+                        <small class="error_msg">{{ error_msg[0] }}</small>
+                    </li>
+                    <li>
+                        <p><small>*</small>カテゴリー</p>
+                        <input type="text" placeholder="カテゴリーを入力してください" name="category"
+                               data-name="カテゴリー">
+                        <small class="error_msg">{{ error_msg[1] }}</small>
+                    </li>
+                    <li>
+                        <p><small>*</small>お問い合わせ内容</p>
+                        <textarea placeholder="お問い合わせ内容を入力してください" name="contact_contents"
+                                  data-name="お問い合わせ内容"></textarea>
+                        <p class="count_text">0/1200文字</p>
+                        <small class="error_msg"></small>
+                    </li>
+                </ul>
+                <button class="contact_btn" type="button">提出する</button>
+            </form>
+        </div>
+        <div class="explanation_area">
+            <div class="explanation">
+                依頼や制作に関してのご質問、不明な点がある場合は、こちらに記載している方法でご連絡をください。誠意を持ってお客様のご質問に答えます。
+                <br>
+                <br>
+                ＊依頼、制作に関してのご質問は確認の上またお返事することが必要ですので、お問合せたい商依頼注文番号をメールでお問合せすることがおすすめです。
+                <br>
+                <br>
+                ＊ご質問内容、および休業日・営業時間によって、お返事に時間が掛る場合もあります。ご了承ください。
+                <br>
+                <br>
+                ＊営業時間：
+                <br>
+                10:00～13:00；15:00～19:00
+                <br>
+                （土曜日・日曜日を除く）
+            </div>
+            <a>よくある質問をすべてご覧いただけます →</a>
+            <div class="man_img"></div>
+        </div>
+    </section>
 {% endblock %}

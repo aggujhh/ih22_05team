@@ -1,0 +1,56 @@
+main > h2 {
+    line-height: 100px;
+}
+
+
+#my_page_base {
+    display: grid;
+    grid-template-columns: 1fr 3.5fr;
+    grid-column-gap: 80px;
+    width: 100%;
+    margin: auto;
+
+    > nav {
+        display: flex;
+        flex-direction: column;
+        background: none;
+
+
+        > ul {
+            background: #ec7fb1;
+            height: 480px;
+
+            > li {
+                width: 100%;
+                height: 60px;
+                background: #ec7fb1;
+                border-bottom: 1.5px dashed #fff;
+                margin: 0 20px;
+                text-align: left !important;
+
+                > a {
+                    width: 100%;
+                    padding-left: 20px;
+                    color: #f3f3f3;
+                    font-size: 16px;
+                }
+            }
+
+            > li:hover a {
+                color: #FFEC1A;
+            }
+
+            > li.active a {
+                color: #FFEC1A !important;
+            }
+
+            > li:last-of-type {
+                 border-bottom: none;
+            }
+        }
+    }
+
+    article {
+
+    }
+}

@@ -75,7 +75,7 @@ textarea {
     transform: translateX(-50%);
     width: 450px;
     height: 140px;
-    z-index: 99;
+    z-index: 999;
     border-radius: 10px;
     display: flex;
     justify-content: center;

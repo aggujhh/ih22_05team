@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block style %}{{ url_for('static', filename='css/my_page_base.css') }}{% endblock %}
+
+{% block content %}
+    <h2>マイページ</h2>
+    <section id="my_page_base">
+        <nav>
+            <ul>
+                {% for i in page_name_list %}
+                    {% if loop.index0 + 1 == page_num %}
+                        <li class="active"><a href="#" onclick="event.preventDefault();">➤ {{ i }}</a></li>
+                    {% else %}
+                        <li><a href="/my_page/{{ loop.index0 + 1 }}">➤ {{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+        {% block my_page_content %}{% endblock %}
+    </section>
+{% endblock %}

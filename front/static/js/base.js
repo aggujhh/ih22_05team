@@ -29,7 +29,7 @@ if (my_page_select) {
     });
 }
 
-const lis = document.querySelectorAll('nav li')
+const lis = document.querySelectorAll('header nav li')
 const short_line = document.querySelector('.short_line')
 let nav_name;
 let left;

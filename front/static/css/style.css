@@ -116,7 +116,8 @@ textarea {
 main {
     width: 70%;
     min-height: 60vh;
-    margin: auto;
+    margin: 18vh auto 0 !important;
+
 }
 
 /* スクロールバーの幅を0に設定し、非表示にする。Webkit系ブラウザに適用される */

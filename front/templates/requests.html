@@ -4,64 +4,68 @@
 
 
 {% block content %}
-<section id="requests_view">
-    <div class="title">
-        <h2>依頼一覧</h2>
-        <p class="request_count">999</p>
-    </div>
-    <div class="filter-options">
-        <ul>
-            <li><label><input type="checkbox" id="checkAll" checked> 全部</label></li>
-            <li><label><input type="checkbox" id="clothing" class="ck" checked> 衣装</label></li>
-            <li><label><input type="checkbox" id="modeling" class="ck" checked> 造形</label></li>
-            <li><label><input type="checkbox" id="props" class="ck" checked> 小道具</label></li>
-            <li><label><input type="checkbox" id="wig" class="ck" checked>ウィッグ</label></li>
-            <li><label><input type="checkbox" id="accessory" class="ck" checked> アクセサリー</label></li>
-            <li><label><input type="checkbox" id="others" class="ck" checked>その他</label></li>
-        </ul>
-        <select class="requests_status_option">
-            <option selected>すべて</option>
-            <option>募集中</option>
-            <option>制作中</option>
-            <option>成約完了</option>
-        </select>
-        <select class="requests_dates">
-            <option selected>作成日</option>
-            <option>更新日</option>
-            <option>納期希望</option>
-        </select>
-        <div class="order">
-            <img src="{{ url_for('static', filename='img/sort_order_icon.svg') }}">
+    <section id="requests_view">
+        <div class="title">
+            <h2>依頼一覧</h2>
+            <p class="request_count">{{ count }}</p>
         </div>
-    </div>
-    <div class="request-list">
-        <form action="/request/" method="post" class="get_request_id"></form>
-        <ul>
-            <div class="loader" id="loading"></div>
-            {% for result in results %}
-            <li class="request_box" data-id="{{ result['user_id'] }}">
-                <div class="request_img" style="background-image: url('{{ url_for('static', filename=result['image_path']) }}')">
-
-                    <div class="request_text">
-                        <p class="request_title">
-                            {{ result['request_title'] }}</p>
-                        <p class="request_time">納期希望　{{ result['request_deadline'] }}まで</p>
-                    </div>
-                </div>
-                {% if result['request_status']=="0" %}
-                <div class="request_statu">制作者募集中</div>
-                {% elif result['request_status']=="1" %}
-                <div class="request_statu">制作中</div>
-                {% else %}
-                <div class="request_statu">成約完了</div>
-                {% endif %}
-                <div class="request_category">{{ result['category_name'] }}</div>
-                <button class="apply_btn">応募する</button>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
+        <div class="filter-options">
+            <ul>
+                <li><label><input type="checkbox" id="checkAll" checked> 全部</label></li>
+                <li><label><input type="checkbox" id="clothing" class="ck" checked> 衣装</label></li>
+                <li><label><input type="checkbox" id="modeling" class="ck" checked> 造形</label></li>
+                <li><label><input type="checkbox" id="props" class="ck" checked> 小道具</label></li>
+                <li><label><input type="checkbox" id="wig" class="ck" checked>ウィッグ</label></li>
+                <li><label><input type="checkbox" id="accessory" class="ck" checked> アクセサリー</label></li>
+                <li><label><input type="checkbox" id="others" class="ck" checked>その他</label></li>
+            </ul>
+            <select class="requests_status_option">
+                <option selected>すべて</option>
+                <option>募集中</option>
+                <option>制作中</option>
+                <option>成約完了</option>
+            </select>
+            <select class="requests_dates">
+                <option selected>作成日</option>
+                <option>更新日</option>
+                <option>納期希望</option>
+            </select>
+            <div class="order">
+                <img src="{{ url_for('static', filename='img/sort_order_icon.svg') }}">
+            </div>
+        </div>
+        <div class="request-list">
+            <form action="/request/" method="post" class="get_request_id"></form>
+            <ul>
+                <div class="loader" id="loading"></div>
+                {% for result in results %}
+                    <li class="request_box" data-id="{{ result['request_id'] }}">
+                        <div class="request_img"
+                             style="background-image: url('{{ url_for('static', filename=result['image_path']) }}')">
+                            <div class="request_text">
+                                <p class="request_title">
+                                    {{ result['request_title'] }}</p>
+                                <p class="request_time">納期希望　{{ result['request_deadline'] }}まで</p>
+                            </div>
+                        </div>
+                        {% if result['request_status']=="0" %}
+                            <div class="request_statu">制作者募集中</div>
+                        {% elif result['request_status']=="1" %}
+                            <div class="request_statu">制作中</div>
+                        {% else %}
+                            <div class="request_statu">成約完了</div>
+                        {% endif %}
+                        <div class="request_category">
+                            {% for i in result['categories'] %}
+                                <p>{{ i }}</p>
+                            {% endfor %}
+                        </div>
+                        <button class="apply_btn">応募する</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 {% endblock %}
 
 {% block script %}{{ url_for('static', filename='js/requests.js') }}{% endblock %}

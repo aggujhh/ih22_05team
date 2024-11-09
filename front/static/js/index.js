@@ -9,6 +9,11 @@ const carousel_box = document.querySelector(".carousel");
 let index = 0;
 let time = 0;
 
+window.addEventListener("load", () => {
+    pause_and_play_the_carousel()
+    add_redirect()
+})
+
 
 //结合index定义图片位置
 function position() {
@@ -19,8 +24,6 @@ function position() {
 
 position()
 refreshDot();
-
-
 
 
 function add() {
@@ -117,3 +120,31 @@ carousel_box.addEventListener("mouseleave", () => {
 });
 
 timer();
+
+
+function pause_and_play_the_carousel() {
+    const requests_box = document.querySelector("#requests_box ul")
+    requests_box.addEventListener("mouseover", () => {
+        requests_box.style.animationPlayState = "paused";
+    });
+// 添加鼠标移出事件监听器到轮播图区域
+    requests_box.addEventListener("mouseleave", () => {
+        requests_box.style.animationPlayState = "running";
+    });
+}
+
+function add_redirect() {
+    console.log("add_redirect")
+    const get_request_id = document.querySelector(".get_request_id");
+
+    // 使用事件委托，避免重复绑定事件
+    document.querySelector("#requests_box ul").addEventListener("click", (e) => {
+        const targetElement = e.target.closest("li[data-id]");
+        console.log("targetElement",targetElement)
+        if (targetElement && get_request_id) {
+            console.log("click ")
+            get_request_id.action = `/request/${targetElement.dataset.id}`;
+            get_request_id.submit();
+        }
+    });
+}

@@ -1,35 +1,33 @@
 from dbutils.pooled_db import PooledDB
 import pymysql
 import threading
-
+from routes import logger
 
 class SqlPool(object):
     def __init__(self):
         self.pool = PooledDB(
-            creator=pymysql,  # 使用するデータベースモジュール
-            maxconnections=6,  # 接続プールで許可される最大接続数
-            mincached=2,  # 初期化時、接続プールで作成される最小空き接続数
-            blocking=True,  # 接続プールに利用可能な接続がない場合、待機するかどうか
+            creator=pymysql,
+            maxconnections=6,
+            mincached=2,
+            blocking=True,
             host='localhost',
             port=3306,
             user='ih05team',
             password='ih05_123456',
             database='ih22_db',
             charset='utf8',
-            autocommit=True  # データを自動コミットする
+            autocommit=False  # データの自動コミットをオフにする
         )
         self.local = threading.local()
 
     def open(self):
-        # 接続プールから接続と対応するカーソルを取得
         conn = self.pool.connection()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)  # 結果を辞書で返す、デフォルトはタプル
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
         return conn, cursor
 
     def close(self, conn, cursor):
-        # 接続とカーソルを閉じる
-        conn.close()
         cursor.close()
+        conn.close()
 
     # クエリを実行し、最初のレコードを返す
     def fetchone(self, sql, *args):
@@ -47,37 +45,42 @@ class SqlPool(object):
         self.close(conn, cursor)
         return result
 
-    # 挿入操作を実行し、影響を受けた行数を返す
-    def insert(self, sql, *args):
+    # トランザクションの開始
+    def begin_transaction(self):
         conn, cursor = self.open()
-        cursor.execute(sql, args)
-        result = cursor.rowcount  # 実際に更新された行数を取得
-        self.close(conn, cursor)
-        return result
+        conn.begin()
+        self.local.conn = conn
+        self.local.cursor = cursor
+
+    # トランザクションのコミット
+    def commit(self):
+        if hasattr(self.local, "conn"):
+            self.local.conn.commit()
+            logger.info("commit成功しました。")
+            self.close(self.local.conn, self.local.cursor)  # トランザクション終了後に接続を閉じる
+            del self.local.conn
+            del self.local.cursor
+
+    # トランザクションのロールバック
+    def rollback(self):
+        if hasattr(self.local, "conn"):
+            self.local.conn.rollback()
+            logger.error("commit失敗し、rollbackする。")  # 添加错误日志
+            self.close(self.local.conn, self.local.cursor)
+            del self.local.conn
+            del self.local.cursor
 
     # コンテキストマネージャのサポート
     def __enter__(self):
-        conn, cursor = self.open()
-        # ======================================================================
-        # Pythonのgetattr関数を使用して、self.localオブジェクトから"stack"という属性を取得しようとしています。
-        # これはthreading.local()のインスタンスです。
-        # 属性が存在しない場合はgetattrの第3引数、ここではNoneを返します。
-        # ======================================================================
-        rv = getattr(self.local, "stack", None)
-        if not rv:
-            self.local.stack = [(conn, cursor), ]  # スタックを初期化
-        else:
-            self.local.stack.append((conn, cursor))  # スタックに追加
-        return cursor
+        self.begin_transaction()
+        return self.local.cursor  # コンテキスト内で cursor を直接使用
 
     # コンテキストマネージャの終了操作をサポート
     def __exit__(self, exc_type, exc_val, exc_tb):
-        rv = getattr(self.local, "stack", None)
-        if not rv:
-            del self.local.stack  # スタックを削除
-            return
-        conn, cursor = rv.pop()  # 最後の要素をポップ
-        self.close(conn, cursor)  # 接続とカーソルを閉じる
+        if exc_type is not None:  # エラーが発生した場合
+            self.rollback()
+        else:
+            self.commit()  # 正常終了の場合はコミット
 
 
 # シングルトンパターン

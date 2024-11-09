@@ -7,7 +7,7 @@
 {% block header %}
 
     <h2>管理者管理</h2>
-    <button onclick="location.href='/add_admin'">管理者追加</button>
+    <button onclick="location.href='/register_admin'">管理者追加</button>
 
 {% endblock %}
 
@@ -33,7 +33,6 @@
                         <td>
                             {% for role in admin.admin_permissions %}
                                 {{ role['permission_name'] }}
-                                {{ admin.admin_permissions }}
                             {% endfor %}
                         </td>
                         <td>
@@ -41,6 +40,12 @@
                                     <!-- 管理者の情報をhiddenフィールドで渡す -->
                                     <input type="hidden" name="admin_id" value="{{ admin.admin_id }}">
                                 <button>編集</button>
+                            </form>
+                            <button onclick="confirmDelete('{{ admin.admin_id }}')">削除</button>
+                            <form action="/admin_delete" method="post">
+                                    <!-- 管理者の情報をhiddenフィールドで渡す -->
+                                    <input type="hidden" name="admin_id" value="{{ admin.admin_id }}">
+                                <button>削除</button>
                             </form>
                         </td>
                     </tr>
@@ -54,10 +59,46 @@
         </ul>
     </div>
 
+    <!--削除確認モーダル-->
+    <div id="deleteModal" style="display:none;">
+        <p>本当に削除しますか？</p>
+        <button onclick="deleteAdmin()">はい</button>
+        <button onclick="closeModal()">いいえ</button>
+    </div>
+
 {% endblock %}
 
 {% block script %}
     <script src="{{ url_for('static', filename='js/admin_manage.js') }}"></script>
     <script>
+        let adminIdToDelete = null;
+
+        // 削除ボタンが押されたら
+        function confirmDelete(admin_id){
+            adminIdToDelete = admin_id;
+            document.getElementById("deleteModal").style.display = "block";
+        }
+
+        // モーダルを閉じる
+        function closeModal() {
+            document.getElementById("deleteModal").style.display = "none";
+        }
+
+        // 管理者を削除する関数
+        function deleteAdmin() {
+            if (adminIdToDelete) {
+                // バックエンドに削除リクエスト
+                fetch(`/admin/delete/${adminIdToDelete}`, {method: 'DELETE'})
+                    .then(response => {
+                        if (response.ok) {
+                            alert("削除が完了しました");
+                            location.reload(); // ページをリロードして更新
+                        } else {
+                            alert("削除に失敗しました");
+                        }
+                    });
+                closeModal();
+            }
+        }
     </script>
 {% endblock %}

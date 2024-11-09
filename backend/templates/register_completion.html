@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者登録完了</title>
+    <link rel="stylesheet" href="register_completion.css">
+</head>
+<body>
+    <div class="container">
+        <div class="message-box">
+            <h1>管理者登録完了</h1>
+            <p>新しい管理者が正常に登録されました。</p>
+            
+            <div>
+                <p>管理者名:{{ admin.admin_name }}</p>
+                <p>管理者ID:{{ admin.admin_id }}</p>
+                <p>パスワード:{{ admin.admin_password }}</p>
+                <p>権限:{{ admin.admin_permissions }}</p>
+            </div>
+            <p>登録した情報を確認してください。</p>
+            <a href="/admin_manage" class="button">管理者ダッシュボードに戻る</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -92,7 +92,7 @@ main {
             z-index: 99;
         }
 
-        .carousel_button_right{
+        .carousel_button_right {
             padding: 10px 20px;
         }
     }
@@ -111,6 +111,8 @@ main {
 }
 
 #irai_search {
+    height: 100%;
+    width: 100%;
     position: relative;
     background: #f2fd6b;
     border-radius: 20px;
@@ -141,6 +143,8 @@ main {
 
 
 #seisaku_search {
+    height: 100%;
+    width: 100%;
     position: relative;
     background: #ec7fb1;
     border-radius: 20px;
@@ -252,8 +256,147 @@ main {
 
 #requests_box {
     width: 100%;
-    height: 40vh;
+    height: 68vh;
     background: #f2fd6b;
+    position: relative;
+
+    > h3 {
+        font-family: "Yusei Magic", sans-serif;
+        font-size: 35px;
+        font-weight: normal;
+        margin-left: 12.5%;
+        margin-bottom: 40px;
+    }
+
+    > form > button {
+        position: absolute;
+        bottom: 40px;
+        right: 12.5%;
+        font-size: 16px;
+        color: #FF3578;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        background: none;
+        transition: 0.6s;
+    }
+
+    > form > button:hover{
+        letter-spacing: 3px;
+    }
+
+    > div {
+        margin: 0 auto 40px;
+        width: 75%;
+        height: 360px;
+        overflow: hidden;
+
+        > ul {
+            height: 100%;
+            display: flex;
+            animation: swiperAnim 15s linear infinite;
+
+            > li {
+                flex: 250px 0 0;
+                margin-right: 70px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                cursor: pointer;
+                transition: 0.6s;
+
+                .request_img {
+                    position: relative;
+                    flex: 80% 0 1;
+                    width: 100%;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: cover;
+                    margin-bottom: 20px;
+                }
+
+                .request_text {
+                    position: absolute;
+                    height: 40%;
+                    width: 100%;
+                    left: 0;
+                    bottom: 0;
+                    background: rgba(217, 217, 217, 0.7);
+                    padding: 20px;
+                }
+
+                .request_title {
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    text-overflow: ellipsis;
+                }
+
+                .request_time {
+                    position: absolute;
+                    right: 10px;
+                    bottom: 10px;
+                }
+
+                .request_statu {
+                    position: absolute;
+                    top: 20px;
+                    left: -10px;
+                    padding: 10px 20px;
+                    background: #ff6b6b;
+                    color: #F5F5F5;
+                }
+
+                .request_statu::before {
+                    content: '';
+                    position: absolute;
+                    bottom: -9px;
+                    left: 0;
+                    width: 0;
+                    height: 0;
+                    border: 5px solid #ff6b6b;
+                    border-bottom-color: #faf7ea;
+                    border-left-color: #faf7ea;
+                }
+
+
+                .request_category {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    top: 5px;
+                    right: 0;
+                    transform: translateX(100%);
+
+
+                    p {
+                        padding: 12px 3px;
+                        background: rgba(0, 0, 0, 0.6);
+                        color: #F5F5F5;
+                        writing-mode: vertical-lr;
+                        margin-bottom: 3px;
+                    }
+                }
+
+                .apply_btn {
+                    flex: 13% 0 1;
+                    width: 100%;
+                    border-radius: 10px;
+                    border: none;
+                    background: #ff6b6b;
+                    color: #F5F5F5;
+                    font-weight: bold;
+                }
+            }
+
+            > li:hover {
+                transform: scale(1.025);
+                box-shadow: 0 10px 15px 2px rgba(0, 0, 0, .5);
+            }
+        }
+    }
 }
 
 /*===============================================================*/
@@ -269,5 +412,15 @@ main {
     }
     100% {
         transform: translateX(-50%) translateZ(0) scaleY(1)
+    }
+}
+
+@keyframes swiperAnim {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-2560px)
     }
 }

@@ -5,7 +5,10 @@ from db.request_model import Request_model
 
 @app.route("/")
 def hello():
-    return render_template('index.html', left_margin="224px")
+    results, count = Request_model().fetch_all_requests()
+    for result in results:
+        result['image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
+    return render_template('index.html', left_margin="224px", results=results)
 
 
 # すべてのナビのページへのリダイレクト

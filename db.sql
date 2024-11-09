@@ -493,7 +493,7 @@ VALUES ('U_00000001', 'R_00000001', 'U_00000002', 10000),
 CREATE TABLE ADMIN
 (
     admin_id                 CHAR(10),
-    admin_password           VARCHAR(64),
+    admin_password           VARCHAR(255),
     password_expiration_date DATETIME,
     admin_permissions        char(7),
     PRIMARY KEY (admin_id)

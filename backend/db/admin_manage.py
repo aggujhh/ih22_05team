@@ -35,12 +35,7 @@ class admin_manage:
                 , (admin_id,)
             )
             result = cursor.fetchone()
-            # 権限名取得
-            result['admin_permissions'] = self.get_role_name(result['admin_permissions'])
-            print('result',result)
-
-            if result is None:
-                result = False
+        print('result',result)
         return result
     
     # admin_permissionsから権限名を取得
@@ -98,3 +93,42 @@ class admin_manage:
             
         return fields
     
+    # 権限名から２進数表現に変換
+    def get_role(self,name):
+        print('get_role',name)
+        with db as cursor:
+            cursor.execute(
+                "SELECT permission_id "
+                "FROM admin_permissions "
+                "WHERE permission_name = %s "
+                , (name,)
+            )
+            result = cursor.fetchone()
+        print('result',result)
+        return result['permission_id']
+
+    # 管理者を登録
+    def register_admin(self,admin):
+        print('register_admin',admin)
+        with db as cursor:
+            cursor.execute(
+                "INSERT INTO ADMIN(admin_id, admin_password, password_expiration_date, admin_permissions) "
+                "VALUES (%s, %s, DATE_ADD(NOW(), INTERVAL 1 MONTH), %s);"
+                ,(admin['admin_id'], admin['admin_password'], admin['admin_permissions'],)
+            )
+        return 0
+    
+    # 管理者を削除
+    def delete_admin(self,admin_id):
+        print('delete_admin',admin_id)
+        try:
+            with db as cursor:
+                cursor.execute(
+                    "DELETE FROM ADMIN WHERE admin_id = %s "
+                    , (admin_id,)
+                )
+            return 0
+        except Exception as e:
+            print("削除失敗:", e)
+            return -1
+            

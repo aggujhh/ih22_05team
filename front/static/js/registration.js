@@ -78,13 +78,16 @@ function not_full() {
             if (e.dataset.name === "制作物画像") {
                 e.parentNode.querySelector(".error_msg").innerText = `少なくとも1枚の制作物画像をアップロードしてください。`
             } else {
-                e.parentNode.querySelector(".error_msg").innerText = `${e.dataset.name}は空にできません。再入力してください。`
+                if(e.dataset.name){
+                    e.parentNode.querySelector(".error_msg").innerText = `${e.dataset.name}は空にできません。再入力してください。`
+                }
             }
         } else {
             count++
         }
     })
-    return count < inputs.length
+    console.log(count,inputs.length)
+    return count < inputs.length-1
 }
 
 if (requester_btn) {

@@ -6,33 +6,57 @@
     <section id="request">
         <h2>
             <img src="{{ url_for('static', filename='img/title_icon.svg') }}">
-            {{ request_title }}
+            {{ result["request_title"] }}
         </h2>
         <div class="header">
-            <div class="request_statu">制作者募集中</div>
+            {% if result['request_status']=="0" %}
+                <div class="request_statu">制作者募集中</div>
+            {% elif result['request_status']=="1" %}
+                <div class="request_statu">制作中</div>
+            {% else %}
+                <div class="request_statu">成約完了</div>
+            {% endif %}
             <div class="request_category">
                 <div>#</div>
-                <div>衣装</div>
-                <div>造形</div>
+                {% for i in result['categories'] %}
+                    {% if i=="衣装" %}
+                        <div style="background: #F28C8E">{{ i }}</div>
+                    {% elif i=="造形" %}
+                        <div style="background: #FCB869">{{ i }}</div>
+                    {% elif i=="小道具" %}
+                        <div style="background: #CACA61">{{ i }}</div>
+                    {% elif i=="ウィッグ" %}
+                        <div style="background: #3FABA4">{{ i }}</div>
+                    {% elif i=="アクセサリー" %}
+                        <div style="background: #6591C0">{{ i }}</div>
+                    {% elif i=="その他" %}
+                        <div style="background: #AC7EAE">{{ i }}</div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <div class="main">
             <div class="request_images">
-                <div class="big_img"></div>
+                <div class="big_img"
+                     style="background-image: url('{{ url_for('static', filename=result['photos'][0]) }}')"></div>
                 <div class="small_img">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    {% for i in result['photos'] %}
+                        <div style="background-image: url('{{ url_for('static', filename=i ) }}')"></div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="request_content">
                 <div class="user_box">
-                    <div class="user_icon">
+                    {% if result['icon_url'] %}
+                        <div class="user_icon">
+                    {% else %}
+                        <div class="user_icon"
+                             style="background-image: url('{{ url_for('static', filename='img/default_avatar.png') }}')">
+                    {% endif %}
                     </div>
                     <div>
                         <p>依頼者</p>
-                        <p>アーニャ同好会</p>
+                        <p>{{ result['nickname'] }}</p>
                     </div>
                     <div>
                         <button>
@@ -44,58 +68,92 @@
                             依頼者と打合せする
                         </button>
                     </div>
-                </div>
-                <div class="profile">
-                    フルセットでの希望ですが、最悪ワンピースと髪飾りがあればと思います。<br>
-                    基本的には全てお任せでお願いするとは思いますがこまめに進捗が知りたいです。 <br>
-                    大体150cmくらいのサイズになると思います。よろしくお願いします。
-                </div>
-            </div>
-        </div>
-        <div class="other">
-            <h3 class="title">その他情報</h3>
-            <div>
-                <div>
-                    <p>依頼した経験</p>
-                    <p>なし</p>
-                </div>
-                <div>
-                    <p>欲しい生地と素材</p>
-                    <p>決まっていない</p>
-                </div>
-                <div>
-                    <p>再現度</p>
-                    <p>ある程度、制作者に任せる</p>
-                </div>
-                <div>
-                    <p>参考資料</p>
-                    <p>最低限の資料が準備できる</p>
-                </div>
-                <div>
-                    <p>返信頻度</p>
-                    <p>一日中返信可能</p>
-                </div>
-                <div>
-                    <p>予算</p>
-                    <p>見積もりを出して欲しい</p>
-                </div>
-                <div>
-                    <p>納期希望</p>
-                    <div>
-                        <p>10</p>
-                        <p>01</p>
+                    </div>
+                    <div class="profile">
+                        {{ result['request_content']|safe }}
                     </div>
                 </div>
-                <div>
-                    <p>絶対欲しいポイント</p>
-                    <p>可能であれば動きやすい素材でお願いいたします</p>
-                </div>
             </div>
+            <div class="other">
+                <h3 class="title">その他情報</h3>
+                <div>
+                    <div>
+                        <p>依頼した経験</p>
+                        {% if result['experience']=="0" %}
+                            <p>五回以上はある</p>
+                        {% elif result['experience']=="1" %}
+                            <p>1~５回はある</p>
+                        {% elif result['experience']=="2" %}
+                            <p>なし</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>欲しい生地と素材</p>
+                        {% if result['fabric_material']=="0" %}
+                            <p>ある程度決まっている</p>
+                        {% elif result['fabric_material']=="1" %}
+                            <p>決まっていない</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>再現度</p>
+                        {% if result['reproducibility']=="0" %}
+                            <p>細部まで再現して欲しい</p>
+                        {% elif result['reproducibility']=="1" %}
+                            <p>ある程度、制作者にお任せる</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>参考資料</p>
+                        {% if result['reference_material']=="0" %}
+                            <p>豊富に準備できる</p>
+                        {% elif result['reference_material']=="1" %}
+                            <p>最低限の資料は準備できる</p>
+                        {% elif result['reference_material']=="2" %}
+                            <p>あまり準備できない</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>返信頻度</p>
+                        {% if result['reply_frequency']=="0" %}
+                            <p>1~2時間以内の返信が可能</p>
+                        {% elif result['reply_frequency']=="1" %}
+                            <p>12時間以内には返信可能</p>
+                        {% elif result['reply_frequency']=="2" %}
+                            <p>1日以内には返信可能</p>
+                        {% elif result['reply_frequency']=="3" %}
+                            <p>なかなか返信できない</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>予算</p>
+                        {% if result['request_budget']=="0" %}
+                            <p>相談して決めたい</p>
+                        {% elif result['request_budget']=="1" %}
+                            <p>見積もりを出して欲しい</p>
+                        {% elif result['request_budget']=="2" %}
+                            <p>{{ result['required_amount'] }}円までしか出せない</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>納期希望</p>
+                        <div>
+                            <p>{{ result['year'] }}年</p>
+                            <p>{{ result['month'] }}</p>
+                            <p>{{ result['day'] }}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>絶対欲しいポイント</p>
+                        <p>{{ result['required_points']|safe }}
+                        </p>
+                    </div>
+                </div>
 
-        </div>
-        <div class="foot">
-            <button></button>
-        </div>
+            </div>
+            <div class="foot">
+                <button></button>
+            </div>
     </section>
 {% endblock %}
 

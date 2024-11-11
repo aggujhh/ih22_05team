@@ -28,7 +28,5 @@ class notis_model:
         with db as cursor:
             cursor.execute(
                 "SELECT *  "
-                "FROM NOTIFICATION "
-                
-                
+                "FROM NOTIFICATION " 
             )

@@ -7,7 +7,7 @@
     <section id="requests_view">
         <div class="title">
             <h2>依頼一覧</h2>
-            <p class="request_count">999</p>
+            <p class="request_count">{{ count }}</p>
         </div>
         <div class="filter-options">
             <ul>
@@ -38,25 +38,31 @@
             <form action="/request/" method="post" class="get_request_id"></form>
             <ul>
                 <div class="loader" id="loading"></div>
-                <li class="request_box" data-id="R00001">
-                    <div class="request_img">
-                        <div class="request_text">
-                            <p class="request_title">
-                                原神げんしげんしげんしげんしげんしげんしげんしげんしげんしげんしげんしげんし</p>
-                            <p class="request_time">納期希望　9月18日</p>
+                {% for result in results %}
+                    <li class="request_box" data-id="{{ result['request_id'] }}">
+                        <div class="request_img"
+                             style="background-image: url('{{ url_for('static', filename=result['image_path']) }}')">
+                            <div class="request_text">
+                                <p class="request_title">
+                                    {{ result['request_title'] }}</p>
+                                <p class="request_time">納期希望　{{ result['request_deadline'] }}まで</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="request_statu">制作者募集中</div>
-                    <div class="request_category">衣装</div>
-                    <button class="apply_btn">応募する</button>
-                </li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
-                <li class="request_box"></li>
+                        {% if result['request_status']=="0" %}
+                            <div class="request_statu">制作者募集中</div>
+                        {% elif result['request_status']=="1" %}
+                            <div class="request_statu">制作中</div>
+                        {% else %}
+                            <div class="request_statu">成約完了</div>
+                        {% endif %}
+                        <div class="request_category">
+                            {% for i in result['categories'] %}
+                                <p>{{ i }}</p>
+                            {% endfor %}
+                        </div>
+                        <button class="apply_btn">応募する</button>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </section>

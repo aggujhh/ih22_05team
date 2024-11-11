@@ -17,7 +17,6 @@ if not os.path.exists(app.config['CREATOR_IMG']):
 print(f"ファイルの保存先: {app.config['CREATOR_IMG']}")
 
 # ログの設定
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -64,3 +63,4 @@ def favicon():
 from . import user_routes
 from . import nav_routes
 from . import request_routes
+from . import my_page_routes

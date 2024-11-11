@@ -40,23 +40,13 @@
 
             > div {
                 font-weight: bold;
+                padding: 5px 15px;
+                color: #fff;
             }
 
             > div:nth-of-type(1) {
                 font-size: 25px;
                 color: #ec7fb1;
-            }
-
-            > div:nth-of-type(2) {
-                background: #9fd4c5;
-                padding: 5px 15px;
-                color: #fff;
-            }
-
-            > div:nth-of-type(3) {
-                background: #d1b188;
-                padding: 5px 15px;
-                color: #fff;
             }
         }
     }
@@ -74,7 +64,6 @@
             .big_img {
                 width: 350px;
                 height: 350px;
-                background-image: url('../img/uploads/request_img/request_id/写真1.png');
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: cover;
@@ -85,37 +74,22 @@
             .small_img {
                 width: 80px;
                 height: 350px;
-                display: grid;
-                grid-template-rows:1fr 1fr 1fr 1fr;
-                grid-row-gap: 10px;
+                overflow: auto;
 
                 > div {
+                    width: 100%;
+                    height: 80px;
                     background-repeat: no-repeat;
                     background-position: center center;
                     background-size: cover;
                     border: 1.5px solid #818181;
                     cursor: pointer;
                     overflow: hidden;
+                    margin-bottom: 10px;
                 }
 
                 > div:hover {
                     border: 2px solid #ec7fb1;
-                }
-
-                div:nth-of-type(1) {
-                    background-image: url('../img/uploads/request_img/request_id/写真1.png');
-                }
-
-                div:nth-of-type(2) {
-                    background-image: url('../img/uploads/request_img/request_id/写真2.png');
-                }
-
-                div:nth-of-type(3) {
-                    background-image: url('../img/uploads/request_img/request_id/写真3.png');
-                }
-
-                div:nth-of-type(4) {
-                    background-image: url('../img/uploads/request_img/request_id/写真4.png');
                 }
             }
         }
@@ -133,7 +107,6 @@
                 .user_icon {
                     width: 100px;
                     height: 100px;
-                    background-image: url("../img/uploads/user_icon/524eb29f80c08491874e06c4ac36706c.jpg");
                 }
 
                 > div:nth-of-type(2) {
@@ -176,6 +149,8 @@
 
             .profile {
                 padding: 20px 0;
+                overflow: auto;
+                height: 232px;
             }
         }
     }
@@ -198,7 +173,7 @@
             margin-bottom: 20px;
         }
 
-        > diV:first-of-type {
+        > div:first-of-type {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -233,6 +208,12 @@
                 grid-template-rows: 1fr 5fr;
             }
 
+            > div:nth-of-type(8) {
+                > p:nth-of-type(2) {
+                    overflow: auto;
+                }
+            }
+
             > div:nth-of-type(7) {
                 background: #fff;
 
@@ -247,15 +228,23 @@
                         position: absolute;
                         font-size: 40px;
                         color: #FF3578;
-                        top: 37%;
                         font-weight: bold;
                     }
 
                     > p:nth-of-type(1) {
-                        left: 22%;
+                        font-size: 22px;
+                        color: #333;
+                        top: 5%;
+                        left: 5%;
                     }
 
                     > p:nth-of-type(2) {
+                        top: 37%;
+                        left: 22%;
+                    }
+
+                    > p:nth-of-type(3) {
+                        top: 37%;
                         left: 60%;
                     }
                 }

@@ -75,7 +75,7 @@ textarea {
     transform: translateX(-50%);
     width: 450px;
     height: 140px;
-    z-index: 99;
+    z-index: 999;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -109,10 +109,15 @@ textarea {
     background-color: #999 !important;
 }
 
+.dis_input_text {
+    background-color: #cfcfcf !important;
+}
+
 main {
     width: 70%;
     min-height: 60vh;
-    margin: auto;
+    margin: 18vh auto 0 !important;
+
 }
 
 /* スクロールバーの幅を0に設定し、非表示にする。Webkit系ブラウザに適用される */

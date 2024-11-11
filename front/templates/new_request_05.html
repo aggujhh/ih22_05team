@@ -2,6 +2,102 @@
 
 {% block new_request %}
     <section class="step_5">
-        new_request_05
+        <form action="/new_request_base/04" class="prev_step_form" method="post">
+            <uL>
+                <li>
+                    <h3>タイトル</h3>
+                    <p>{{ result["title"] }}</p>
+                </li>
+                <li>
+                    <h3>ジャンル</h3>
+                    <p>{% if result["genre"] %}
+                        {% set str = ", ".join(result["genre"]) %}
+                        {{ str }}
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>詳細</h3>
+                    <p>{{ result["details"] }}</p>
+                </li>
+                <li>
+                    <h3>参考画像</h3>
+                    <div class="final_confirmation_image"></div>
+                </li>
+                <li>
+                    <h3>依頼した経験</h3>
+                    <p>{% if result["option_1"]=='0' %}
+                        五回以上はある
+                    {% elif result["option_1"]=='1' %}
+                        1~5回はある
+                    {% elif result["option_1"]=='2' %}
+                        なし
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>欲しい生地や素材</h3>
+                    <p>{% if result["option_2"]=='0' %}
+                        ある程度決まっている
+                    {% elif result["option_2"]=='1' %}
+                        決まっていない
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>再現度</h3>
+                    <p>{% if result["option_3"]=='0' %}
+                        細部まで再現して欲しい
+                    {% elif result["option_3"]=='1' %}
+                        ある程度、制作者にお任せる
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>参考資料</h3>
+                    <p>{% if result["option_4"]=='0' %}
+                        豊富に準備できる
+                    {% elif result["option_4"]=='1' %}
+                        最低限の資料は準備できる
+                    {% elif result["option_4"]=='2' %}
+                        あまり準備できない
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>返信頻度</h3>
+                    <p>{% if result["option_5"]=='0' %}
+                        1~2時間以内の返信が可能
+                    {% elif result["option_5"]=='1' %}
+                        12時間以内には返信可能
+                    {% elif result["option_5"]=='2' %}
+                        1日以内には返信可能
+                    {% elif result["option_5"]=='3' %}
+                        なかなか返信できない
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>予算</h3>
+                    <p>{% if result["option_6"]=='0' %}
+                        相談して決めたい
+                    {% elif result["option_6"]=='1' %}
+                        見積もりを出して欲しい
+                    {% elif result["option_6"]=='2' %}
+                        {{ result["amount"] }}円までしか出せない
+                    {% endif %}</p>
+                </li>
+                <li>
+                    <h3>絶対欲しいポイント</h3>
+                    <p>{{ result["want_point"] }}</p>
+                </li>
+                <li>
+                    <h3>納期希望</h3>
+                    <p>{% if result['year'] %}
+                        {{ result['year']+"年"+result['moon']+"月"+result['day']+"日まで" }}{% endif %}</p>
+                </li>
+            </ul>
+            <div>
+                <button type="button" class="prev_step_btn">戻る</button>
+                <button class="submit_btn" type="button">投稿する</button>
+            </div>
+        </form>
+        <form action="/requests" method="post" class="add_suc">
+            <input type="hidden" name="left_margin" value="404px">
+        </form>
     </section>
 {% endblock %}

@@ -1,10 +1,10 @@
 from . import app, global_data
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash, redirect,jsonify
 from servers.flask_login import Flask_login
 from db.admin_manage import admin_manage
 from flask_login import current_user, login_required, logout_user
 from werkzeug.security import generate_password_hash
-import json,jsonify
+import json
 import random,string
 
 def generate_random_password(length=12):
@@ -80,6 +80,9 @@ def logout():
 
 
 
+
+
+
 # 管理者管理
 @app.route('/admin_manage')
 def admin_mange():
@@ -142,6 +145,7 @@ def add_admin():
         ## 入力された情報をDBに登録
         admin = {}
         admin_name = request.form['admin_name']
+        print('admin_name',admin_name)
         #admin_password = request.form['admin_password']
         admin_permissions = request.form.getlist('permissions')
         print('admin',admin)

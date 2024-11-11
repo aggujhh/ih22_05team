@@ -42,11 +42,6 @@
                                 <button>編集</button>
                             </form>
                             <button onclick="confirmDelete('{{ admin.admin_id }}')">削除</button>
-                            <form action="/admin_delete" method="post">
-                                    <!-- 管理者の情報をhiddenフィールドで渡す -->
-                                    <input type="hidden" name="admin_id" value="{{ admin.admin_id }}">
-                                <button>削除</button>
-                            </form>
                         </td>
                     </tr>
                 {% endfor %}

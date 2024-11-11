@@ -112,9 +112,9 @@ class admin_manage:
         print('register_admin',admin)
         with db as cursor:
             cursor.execute(
-                "INSERT INTO ADMIN(admin_id, admin_password, password_expiration_date, admin_permissions) "
-                "VALUES (%s, %s, DATE_ADD(NOW(), INTERVAL 1 MONTH), %s);"
-                ,(admin['admin_id'], admin['admin_password'], admin['admin_permissions'],)
+                "INSERT INTO ADMIN(admin_id, admin_name, admin_password, password_expiration_date, admin_permissions) "
+                "VALUES (%s, %s, %s, DATE_ADD(NOW(), INTERVAL 1 MONTH), %s);"
+                ,(admin['admin_id'], admin['admin_name'], admin['admin_password'], admin['admin_permissions'],)
             )
         return 0
     
@@ -132,3 +132,18 @@ class admin_manage:
             print("削除失敗:", e)
             return -1
             
+    # admin_idから管理者情報を更新
+    def modify_admin(self,admin_id):
+        print('modify_admin',admin_id)
+        try:
+            with db as cursor:
+                cursor.execute(
+                    "UPDATE ADMIN "
+                    "SET admin_name=%s, "
+                    "    admin_permissions=%s "
+                    "WHERE admin_id=%s "
+                )
+            return 0
+        except Exception as e:
+            print("更新失敗:",e)
+            return -1

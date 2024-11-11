@@ -1,8 +1,9 @@
-from . import app, global_data, Session
+from . import app, Session
 from flask import render_template, request, flash, redirect, jsonify
 from severs.flask_login import Flask_login
 from flask_login import current_user, login_required, logout_user
 from severs.flask_mail import mail
+from severs.global_data import global_data
 from flask_mail import Message
 from db.userm_model import Userm_model
 from werkzeug.security import generate_password_hash
@@ -20,7 +21,7 @@ import json
 @app.route("/redirect_to_login")
 def redirect_to_login():
     error_msg = ["", ""]
-    return render_template('login.html', error_msg=error_msg, global_data=global_data)
+    return render_template('login.html', error_msg=error_msg, count=0)
 
 
 # ログイン処理
@@ -37,30 +38,33 @@ def login():
         error_msg[1] = "パスワードを空欄にしてはいけません。再入力してください。"
         count += 1
     if count != 0:
-        return render_template('login.html', error_msg=error_msg, global_data=global_data)
+        return render_template('login.html', error_msg=error_msg, count=0)
 
     print(mail_address, password)
     remember_me = 'remember' in request.form
     result = Flask_login().check_login(mail_address, password, remember_me)
     print(result)
     if result:
-        global_data.incorrectPassword = 0
-        flash(f"おかえりなさい, {current_user.id}.", category='success')
+        global_data.del_incorrect_password(mail_address)
+        nickname = global_data.get_nickname(current_user.id)
+        flash(f"おかえりなさい, {nickname}.", category='success')
         return redirect('/')
     else:
-        global_data.incorrectPassword += 1
-        if global_data.incorrectPassword >= 3:
+        count = global_data.increment_incorrect_password(mail_address)
+        if count > 3:
             flash(f"パスワードを3回間違えたため、10秒後にもう一度お試しください。", category='danger')
         else:
             flash(f"ユーザー名またはパスワードが正しくありません。", category='danger')
-        return redirect('/redirect_to_login')
+        return render_template('login.html', error_msg=error_msg, mail_address=mail_address, count=count)
 
 
 # パスワード入力可能状態に戻る
-@app.route('/reset', methods=['GET'])
+@app.route('/reset', methods=['POST'])
 def reset():
-    global_data.incorrectPassword = 0
-    return redirect('/redirect_to_login')
+    email_address = request.form.get("mail")
+    print("email_address", email_address)
+    global_data.reset_incorrect_password(email_address)
+    return jsonify({"status": "success"})
 
 
 # アカウント作成ページへ
@@ -75,6 +79,7 @@ def registration():
 @app.route('/logout')
 @login_required
 def logout():
+    global_data.del_user(current_user.id)
     logout_user()
     return redirect('/')
 
@@ -197,11 +202,14 @@ def check_registration(user_type):
                 Userm_model().add_creator_application(user)
             print("登録完成")
             Flask_login().check_login(user["user_email_address"], password)
-            return render_template('register_completion.html', user_type=user_type)
+            return render_template('register_completion.html', user_type=user_type, remember=False)
         except Exception as e:
             # エラーが発生した場合、エラーログを記録
             logging.error(f"Error occurred: {e}")
-            return "登録失败"  # 登録が失敗した場合のメッセージ
+            alert_message = "登録失敗"
+            # 登録が失敗した場合のメッセージ
+            return render_template('registration.html', user_type=user_type, error_msg=error_msg,
+                                   alert_message=alert_message)
     else:
         return render_template('registration.html', user_type=user_type, error_msg=error_msg)
 
@@ -269,6 +277,7 @@ def reset_password():
     # パスワードをハッシュ化する
     hashed_password = generate_password_hash(password)
     Userm_model().reset_ps(mail_address, hashed_password)
-    Flask_login().check_login(mail_address, password)
-    flash(f"おかえりなさい, {current_user.id}.", category='success')
+    Flask_login().check_login(mail_address, password, remember=False)
+    nickname = global_data.get_nickname(current_user.id)
+    flash(f"おかえりなさい, {nickname}.", category='success')
     return redirect('/')

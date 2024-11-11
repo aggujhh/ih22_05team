@@ -1,5 +1,7 @@
 from flask import Flask, session, send_from_directory
 from datetime import timedelta, datetime
+from flask_login import current_user
+from severs.global_data import global_data
 import logging
 import os
 
@@ -41,26 +43,24 @@ class Session:
         return None
 
 
-# Global_dataクラスは、パスワードの間違い回数を記録するためのクラスです。
-# このクラスには、パスワードを間違えた回数（incorrectPassword）を保持し、
-# その値を初期化および文字列として表示する機能があります。
-class Global_data():
-    def __init__(self, incorrectPassword=0):
-        self.incorrectPassword = incorrectPassword
-
-    def __str__(self):
-        return f"incorrectPassword={self.incorrectPassword}"
-
-
-global_data = Global_data()
-
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+@app.context_processor
+def inject_user_data():
+    if current_user.is_authenticated:
+        # 获取当前用户的昵称
+        nickname = global_data.get_nickname(current_user.id)
+    else:
+        nickname = None
+    # 将 nickname 注入到模板上下文中
+    return {'nickname': nickname}
 
 
 from . import user_routes
 from . import nav_routes
 from . import request_routes
 from . import my_page_routes
+from . import inquiry_routes

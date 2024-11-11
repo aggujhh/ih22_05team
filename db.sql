@@ -910,3 +910,44 @@ CREATE TABLE TRANSACTION_MGR
 
 
 
+-- ===================================================
+-- database 変更 2024/11/11
+-- ===================================================
+drop table admin;
+drop table admin_permissions;
+
+CREATE TABLE ADMIN
+(
+    admin_id                 CHAR(10),
+    admin_name               VARCHAR(64),
+    admin_password           VARCHAR(64),
+    password_expiration_date DATETIME,
+    admin_permissions        char(7),
+    PRIMARY KEY (admin_id)
+);
+
+INSERT INTO ADMIN (admin_id, admin_name, admin_password, password_expiration_date, admin_permissions)
+VALUES ('A_00000001', 'ロイド・フォージャー',   'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000001'),
+       ('A_00000002', 'ヨル・フォージャー',     'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000010'),
+       ('A_00000003', 'アーニャ・フォージャー', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000100'),
+       ('A_00000004', 'ボンド・フォージャー',   'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0001000'),
+       ('A_00000005', 'ユーリ・ブライアー',     'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0010000');
+
+
+CREATE TABLE admin_permissions
+(
+    permission_id   char(7)
+    permission_name varchar(100) not null,
+    PRIMARY KEY(permission)
+);
+
+INSERT INTO ADMIN_PERMISSIONS(permission_id, permission_name)
+VALUES
+('0000001', 'お知らせ'),
+('0000010', 'お問い合わせ'),
+('0000100', '制作者審査'),
+('0001000', 'アクションログ'),
+('0010000', 'アカウント関連'),
+('0100000', '情報閲覧'),
+('1000000', '管理者管理');
+

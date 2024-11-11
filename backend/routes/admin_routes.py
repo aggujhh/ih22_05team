@@ -64,7 +64,7 @@ def login():
             flash(f"パスワードを3回間違えたため、10秒後にもう一度お試しください。", category='danger')
         else:
             flash(f"ユーザー名またはパスワードが正しくありません。", category='danger')
-        return redirect('/redirect_admin_login')
+        return redirect('/')
 
 
 
@@ -83,7 +83,9 @@ def logout():
 
 
 
+#######################################################################
 # 管理者管理
+#######################################################################
 @app.route('/admin_manage')
 def admin_mange():
     
@@ -93,7 +95,9 @@ def admin_mange():
 
     return render_template('admin_manage.html',admins=admins)
 
+#######################################################################
 # 管理者編集
+#######################################################################
 @app.route('/admin_edit', methods=['POST'])
 def admin_edit():
     
@@ -124,8 +128,9 @@ def admin_edit():
 
     return render_template('admin_edit.html',admin=admin,roles=roles)
 
-
+#######################################################################
 # 管理者追加
+#######################################################################
 @app.route('/register_admin', methods=['GET', 'POST'])
 def add_admin():
     if request.method == 'GET':
@@ -148,7 +153,6 @@ def add_admin():
         print('admin_name',admin_name)
         #admin_password = request.form['admin_password']
         admin_permissions = request.form.getlist('permissions')
-        print('admin',admin)
 
         ### admin_idの発行
         admin_id = f'A_{f"{random.randint(0,99999999):08}"}'
@@ -178,6 +182,7 @@ def add_admin():
             'admin_password': hashed_password,
             'admin_permissions': roles 
         }
+        print('before SQL',admin)
         ### SQL呼び出し
         admin_manage().register_admin(admin)
 
@@ -210,8 +215,9 @@ def delete_admin(admin_id):
 
 
 
-
-# 管理者,編集後にDBに保存
+##################################################################
+# 管理者修正
+##################################################################
 @app.route('/modify_admin', methods=['POST'])
 def modify_admin():
     admin = {
@@ -219,3 +225,8 @@ def modify_admin():
         'admin_name': request.form.get('admin_name'),
         'admin_permissions': request.form.get('admin_permissions')
     }
+
+    # 受け取った情報をDBに登録
+    
+
+    return redirect('/admin_manage')

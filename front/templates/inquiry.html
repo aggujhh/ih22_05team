@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block style %}{{ url_for('static', filename='css/contact.css') }}{% endblock %}
+{% block style %}{{ url_for('static', filename='css/inquiry.css') }}{% endblock %}
 
 {% block content %}
     <h2>お問い合わせ</h2>
-    <section id="contact">
+    <section id="inquiry">
         <div class="input_area">
-            <form action="/check_registration/requester_user" method="post" id="requester_form">
+            <form action="/send_inquiry" method="post" id="inquiry_form">
                 <ul>
                     <li>
                         <p><small>*</small>お名前</p>
@@ -18,23 +18,27 @@
                         <p><small>*</small>メールアドレス</p>
                         <input type="text" placeholder="メールアドレスを入力してください" name="email"
                                data-name="メールアドレス">
-                        <small class="error_msg">{{ error_msg[0] }}</small>
+                        <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>カテゴリー</p>
-                        <input type="text" placeholder="カテゴリーを入力してください" name="category"
-                               data-name="カテゴリー">
-                        <small class="error_msg">{{ error_msg[1] }}</small>
+                        <select name="category" data-name="カテゴリー">
+                            <option value="">カテゴリーを選択してください</option>
+                            <option value="0">アカウントについて</option>
+                            <option value="1">取引について</option>
+                            <option value="2">通報</option>
+                        </select>
+                        <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>お問い合わせ内容</p>
-                        <textarea placeholder="お問い合わせ内容を入力してください" name="contact_contents"
+                        <textarea placeholder="お問い合わせ内容を入力してください" name="inquiry_contents"
                                   data-name="お問い合わせ内容"></textarea>
                         <p class="count_text">0/1200文字</p>
                         <small class="error_msg"></small>
                     </li>
                 </ul>
-                <button class="contact_btn" type="button">提出する</button>
+                <button class="inquiry_btn" type="button">提出する</button>
             </form>
         </div>
         <div class="explanation_area">
@@ -59,3 +63,12 @@
         </div>
     </section>
 {% endblock %}
+
+{% block script_area %}
+    {% if alert_message %}
+        <script>
+            alert("{{ alert_message }}");
+        </script>
+    {% endif %}
+{% endblock %}
+{% block script %}{{ url_for('static', filename='js/inquiry.js') }}{% endblock %}

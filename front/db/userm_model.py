@@ -7,12 +7,10 @@ class Userm_model:
     def login(self, mail_address):
         print(mail_address)
         with db as cursor:
-            cursor.execute("SELECT profile.nickname,user_password "
+            cursor.execute("SELECT userm.user_id,user_password "
                            "FROM userm "
                            "INNER JOIN user_infom "
                            "ON userm.user_id = user_infom.user_id "
-                           "INNER JOIN profile "
-                           "ON userm.user_id = profile.user_id "
                            "WHERE user_email_address = %s"
                            , mail_address)
             result = cursor.fetchone()
@@ -72,20 +70,20 @@ class Userm_model:
                            "WHERE user_id= %s ", (ps, result["user_id"]))
         logger.info("パスワードの再設定が成功しました")
 
-    def fetch_id_by_nickname(self, nickname):
-        logger.info(f"fetch_id_by_nickname 実行開始、引数: {nickname}")
+    def fetch_nickname_by_userid(self, user_id):
+        logger.info(f"fetch_nickname_by_userid関数 実行開始、引数:{user_id}")
         try:
             with db as cursor:
-                cursor.execute("SELECT user_id "
+                cursor.execute("SELECT nickname "
                                "FROM profile "
-                               "WHERE nickname = %s", nickname)
+                               "WHERE user_id = %s", user_id)
                 result = cursor.fetchone()
                 if result:
-                    logger.info(f"ID {result['user_id']} を取得しました")
-                    return result['user_id']
+                    logger.info(f"ネックネーム: {result['nickname']} を取得しました")
+                    return result['nickname']
                 else:
-                    logger.warning("指定されたニックネームに一致するIDが見つかりません")
+                    logger.warning("ニックネームが見つかりません")
                     return None
         except Exception as e:
-            logger.error(f"ID の取得中にエラーが発生しました: {e}")
+            logger.error(f"fetch_nickname_by_userid関数 実行中にエラーが発生しました: {e}")
             return None

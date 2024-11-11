@@ -24,9 +24,10 @@
                     <a href="/forgot_password">パスワードを忘れた方はこちら</a>
                 </li>
                 <li>
-                    {% if global_data.incorrectPassword <= 2 %}
+                    {% if count <= 3 %}
                         <button type="submit">ログイン</button>
                     {% else %}
+                        <input type="hidden" value="{{ mail_address }}">
                         <button type="submit" class="dis_btn" disabled>ログイン</button>
                     {% endif %}
                 </li>

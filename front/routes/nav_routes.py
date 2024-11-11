@@ -24,7 +24,7 @@ def redirect_nav(nav_name):
             result[
                 'image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
         return render_template(f"{nav_name}.html", left_margin=left_margin, results=results, count=count['COUNT(*)'])
-    elif nav_name == "contact":
+    elif nav_name == "inquiry":
         error_msg = []
         return render_template(f"{nav_name}.html", left_margin=left_margin, error_msg=error_msg)
     else:

@@ -28,28 +28,33 @@
                 <ul>
                     <li>
                         <p><small>*</small>ニックネーム</p>
-                        <input type="text" placeholder="ニックネームを入力してください" name="nickname" data-name="ニックネーム">
+                        <input type="text" placeholder="ニックネームを入力してください" name="nickname"
+                               data-name="ニックネーム">
                         <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>メールアドレス</p>
-                        <input type="text" placeholder="メールアドレスを入力してください" name="email" data-name="メールアドレス">
+                        <input type="text" placeholder="メールアドレスを入力してください" name="email"
+                               data-name="メールアドレス">
                         <a class="get_authentication_code">認証コードを取得する（45）</a>
                         <small class="error_msg">{{ error_msg[0] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>メール認証コード</p>
-                        <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code" data-name="メール認証コード">
+                        <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code"
+                               data-name="メール認証コード">
                         <small class="error_msg">{{ error_msg[1] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード</p>
-                        <input type="password" placeholder="パスワードを入力してください" name="password" data-name="パスワード">
+                        <input type="password" placeholder="パスワードを入力してください" name="password"
+                               data-name="パスワード">
                         <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード確認</p>
-                        <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password" data-name="パスワード確認">
+                        <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password"
+                               data-name="パスワード確認">
                         <small class="error_msg">{{ error_msg[2] }}</small>
                     </li>
                     <li>
@@ -64,28 +69,33 @@
                 <ul>
                     <li>
                         <p><small>*</small>ニックネーム</p>
-                        <input type="text" placeholder="ニックネームを入力してください" name="nickname"  data-name="ニックネーム">
+                        <input type="text" placeholder="ニックネームを入力してください" name="nickname"
+                               data-name="ニックネーム">
                         <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>メールアドレス</p>
-                        <input type="text" placeholder="メールアドレスを入力してください" name="email" data-name="メールアドレス">
+                        <input type="text" placeholder="メールアドレスを入力してください" name="email"
+                               data-name="メールアドレス">
                         <a class="get_authentication_code">認証コードを取得する（45）</a>
                         <small class="error_msg">{{ error_msg[0] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>メール認証コード</p>
-                        <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code" data-name="メール認証コード">
+                        <input type="text" placeholder="メール認証コードを入力してください" name="authentication_code"
+                               data-name="メール認証コード">
                         <small class="error_msg">{{ error_msg[1] }}</small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード</p>
-                        <input type="password" placeholder="パスワードを入力してください" name="password" data-name="パスワード">
+                        <input type="password" placeholder="パスワードを入力してください" name="password"
+                               data-name="パスワード">
                         <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>パスワード確認</p>
-                        <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password" data-name="パスワード確認">
+                        <input type="password" placeholder="パスワード確認を入力してください" name="confirm_password"
+                               data-name="パスワード確認">
                         <small class="error_msg">{{ error_msg[2] }}</small>
                     </li>
                     <li>
@@ -95,14 +105,15 @@
                     </li>
                     <li>
                         <p><small>*</small>制作に関する略歴</p>
-                        <textarea placeholder="制作に関する略歴を入力してください" name="creator_history" data-name="制作に関する略歴"></textarea>
+                        <textarea placeholder="制作に関する略歴を入力してください" name="creator_history"
+                                  data-name="制作に関する略歴"></textarea>
                         <p class="count_text">0/1200文字</p>
                         <small class="error_msg"></small>
                     </li>
                     <li>
                         <p><small>*</small>制作物画像(複数可)</p>
                         <div><input type="file" id="upload_img" style="display: none"></div>
-                        <input type="hidden"  name="creator_image" data-name="制作物画像">
+                        <input type="hidden" name="creator_image" data-name="制作物画像">
                         <div class="preview_area">
                             <label class="add_box" for="upload_img">
                                 <div class="add">
@@ -138,4 +149,9 @@
     </div>
 {% endblock %}
 
+{% block script_area %}
+    {% if alert_message %}
+        alert("{{ alert_message }}");
+    {% endif %}
+{% endblock %}
 {% block script %}{{ url_for('static', filename='js/registration.js') }}{% endblock %}

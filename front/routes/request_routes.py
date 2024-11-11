@@ -1,17 +1,13 @@
 from . import app
 from flask import render_template, request, jsonify
-from db.userm_model import Userm_model
 from db.request_model import Request_model
 from flask_login import current_user, login_required
+from severs.global_data import global_data
 import secrets
 import base64
 import os
 import uuid
 import json
-
-data_list = {
-    "genre": ["", "", "", "", "", ""],
-}
 
 
 # 依頼詳細情報ページへのリダイレクト
@@ -38,12 +34,13 @@ def new_request_base(step):
     global data_list
     if request.method == 'GET':
         data_list = {
-            "genre": ["", "", "", "", "", ""],
+            "genre": global_data.get_genre(current_user.id)
         }
     else:
         for key, value in request.form.items():
             if key == "genre":
                 data_list[key] = json.loads(value)
+                global_data.set_genre(current_user.id, json.loads(value))
             else:
                 data_list[key] = value
     print(data_list)
@@ -58,7 +55,7 @@ def add_new_request():
     request_id = "r_" + secrets.token_hex(10)
     while request_model.have_request_id(request_id):
         request_id = secrets.token_hex(10)
-    user_id = Userm_model().fetch_id_by_nickname(current_user.id)
+    user_id = current_user.id
     try:
         request_model.add_request(user_id, request_id, data_list)
         upload_img_of_new_request(request_id)
@@ -71,7 +68,7 @@ def add_new_request():
 def upload_img_of_new_request(request_id):
     request_model = Request_model()
 
-    user_id_folder = Userm_model().fetch_id_by_nickname(current_user.id)
+    user_id_folder = current_user.id
     # フロントエンドからのJSONデータを取得
     data = request.get_json()
     # 画像データの配列を取得

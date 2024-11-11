@@ -94,6 +94,7 @@
                     </li>
                 {% endfor %}
                 {% for i in range(4) %}
+                {% if results[i]%}
                     <li data-id="{{ results[i]['request_id'] }}">
                         <div class="request_img"
                              style="background-image: url('{{ url_for('static', filename=results[i]['image_path']) }}')">
@@ -117,6 +118,9 @@
                         </div>
                         <button class="apply_btn">応募する</button>
                     </li>
+                {% else %}
+                    <li></li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

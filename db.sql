@@ -5,14 +5,13 @@ CREATE
     COLLATE utf8mb4_general_ci;
 
 # CREATE
-USER 'ih05team'@'localhost' IDENTIFIED BY 'ih05_123456';
+-- USER 'ih05team'@'localhost' IDENTIFIED BY 'ih05_123456';
 GRANT ALL PRIVILEGES ON ih22_db.* TO
     'ih05team'@'localhost';
 FLUSH
     PRIVILEGES;
 
-USE
-    ih22_db;
+USE ih22_db;
 
 
 #テーブル1
@@ -796,19 +795,19 @@ VALUES (1, '2024-10-01', '2024-10-02', '1'),
 -- ==================================================================
 -- database触った、2024.11.07
 -- ==================================================================
--- drop table ORDER_MGR;
--- drop table REQUEST_APPLY;
--- drop table REQUEST_OTHER;
--- drop table REQUEST_IMG;
--- drop table REQUEST_CATEGORY;
--- drop table REQUEST_HISTORY;
--- drop table TRANSACTION_MGR;
--- drop table DEALCONFIRMATION;
--- drop table REQUEST;
--- drop table REQUEST_DETAILS;
---
---
---
+drop table ORDER_MGR;
+drop table REQUEST_APPLY;
+drop table REQUEST_OTHER;
+drop table REQUEST_IMG;
+drop table REQUEST_CATEGORY;
+drop table REQUEST_HISTORY;
+drop table TRANSACTION_MGR;
+drop table DEALCONFIRMATION;
+drop table REQUEST;
+drop table REQUEST_DETAILS;
+
+
+
 CREATE TABLE REQUEST_DETAILS
 (
     request_id       varchar(64) primary key,
@@ -817,15 +816,15 @@ CREATE TABLE REQUEST_DETAILS
     request_status   char(1),
     request_deadline date
 );
---
--- CREATE TABLE REQUEST
--- (
---     user_id    char(10),
---     request_id varchar(64),
---     primary key (user_id, request_id),
---     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
--- );
---
+
+CREATE TABLE REQUEST
+(
+    user_id    char(10),
+    request_id varchar(64),
+    primary key (user_id, request_id),
+    FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
+);
+
 CREATE TABLE REQUEST_CATEGORY
 (
     request_id  varchar(64),
@@ -855,59 +854,59 @@ CREATE TABLE REQUEST_OTHER
     required_amount    INT,
     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
 );
---
--- CREATE TABLE REQUEST_APPLY
--- (
---     creator_id char(10),
---     request_id varchar(64),
---     PRIMARY KEY (creator_id, request_id),
---     FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
---     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
--- );
---
--- CREATE TABLE ORDER_MGR
--- (
---     requester_id varchar(64),
---     request_id   varchar(64),
---     PRIMARY KEY (requester_id, request_id),
---     FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
---     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
--- );
---
--- CREATE TABLE REQUEST_HISTORY
--- (
---     requester_id       varchar(64),
---     request_id         varchar(64),
---     creator_id         char(10),
---     contract_amount    INT,
---     contract_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
---     PRIMARY KEY (requester_id, request_id, creator_id),
---     FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
---     FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
---     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
--- );
---
--- CREATE TABLE DEALCONFIRMATION(
---     contract_id      INT AUTO_INCREMENT,
---     request_id       varchar(64) not null,
---     creator_id       char(10) not null,
---     payment_amount   INT,
---     contract_details TEXT,
---     contract_stage   char(1)  not null,
---     PRIMARY KEY (contract_id),
---     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id),
---     FOREIGN KEY (creator_id) REFERENCES USERM (user_id)
--- );
---
--- CREATE TABLE TRANSACTION_MGR
--- (
---     contract_id     INT,
---     payment_date    DATE,
---     transfer_date   DATE,
---     transfer_status char(1) not null,
---     PRIMARY KEY (contract_id),
---     FOREIGN KEY (contract_id) REFERENCES DEALCONFIRMATION (contract_id)
--- );
+
+CREATE TABLE REQUEST_APPLY
+(
+    creator_id char(10),
+    request_id varchar(64),
+    PRIMARY KEY (creator_id, request_id),
+    FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
+    FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+);
+
+CREATE TABLE ORDER_MGR
+(
+    requester_id varchar(64),
+    request_id   varchar(64),
+    PRIMARY KEY (requester_id, request_id),
+    FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
+    FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+);
+
+CREATE TABLE REQUEST_HISTORY
+(
+    requester_id       varchar(64),
+    request_id         varchar(64),
+    creator_id         char(10),
+    contract_amount    INT,
+    contract_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (requester_id, request_id, creator_id),
+    FOREIGN KEY (requester_id) REFERENCES USERM (user_id),
+    FOREIGN KEY (creator_id) REFERENCES USERM (user_id),
+    FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
+);
+
+CREATE TABLE DEALCONFIRMATION(
+    contract_id      INT AUTO_INCREMENT,
+    request_id       varchar(64) not null,
+    creator_id       char(10) not null,
+    payment_amount   INT,
+    contract_details TEXT,
+    contract_stage   char(1)  not null,
+    PRIMARY KEY (contract_id),
+    FOREIGN KEY (request_id) REFERENCES REQUEST (request_id),
+    FOREIGN KEY (creator_id) REFERENCES USERM (user_id)
+);
+
+CREATE TABLE TRANSACTION_MGR
+(
+    contract_id     INT,
+    payment_date    DATE,
+    transfer_date   DATE,
+    transfer_status char(1) not null,
+    PRIMARY KEY (contract_id),
+    FOREIGN KEY (contract_id) REFERENCES DEALCONFIRMATION (contract_id)
+);
 
 
 

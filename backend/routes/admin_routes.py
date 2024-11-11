@@ -2,10 +2,15 @@ from . import app, global_data
 from flask import render_template, request, flash, redirect,jsonify
 from servers.flask_login import Flask_login
 from db.admin_manage import admin_manage
+from db.notification_model import notification_model
 from flask_login import current_user, login_required, logout_user
 from werkzeug.security import generate_password_hash
+from datetime import datetime
 import json
 import random,string
+
+
+
 
 def generate_random_password(length=12):
     # パスワードに使う文字を定義(英字,数字,記号)
@@ -21,6 +26,28 @@ def generate_random_password(length=12):
     return ''.join(password)
 
 
+# 権限名たちを２進数に変換
+## {'admin_permissions':'}
+def roleName_to_bin(roles):
+    print('roleName_to_bin')
+    result = '0000000'
+    for role in roles:
+        # 権限名を2進数に変換
+        role = admin_manage().get_role(role)
+        # 文字列2進数の足し算,先頭0bを除き,7桁になるように0埋め
+        result = bin(int(result,2) + int(role,2))[2:].zfill(7)
+    return result
+
+
+
+
+
+
+
+
+
+
+
 
 # ログインページの表示
 
@@ -31,7 +58,7 @@ def redirect_admin():
     return render_template('admin_login.html', error_msg=error_msg, global_data=global_data)
 
 # 管理者ログイン処理
-@app.route("/notification", methods=['POST'])
+@app.route("/menu", methods=['POST'])
 def login():
     error_msg = ["", ""]
     count = 0
@@ -53,11 +80,7 @@ def login():
         global_data.incorrectPassword = 0
         flash(f"おかえりなさい, {id}.", category='success')
 
-        # お知らせ一覧をすべて取ってくる
-        # notis =
-        notis = False
-        
-        return render_template('notification.html')
+        return render_template('menu.html')
     else:
         global_data.incorrectPassword += 1
         if global_data.incorrectPassword >= 3:
@@ -166,13 +189,7 @@ def add_admin():
         print('admin_password',admin_password)
 
         ## 権限名を2進数に変換
-        roles = '0000000'
-        for role in admin_permissions:
-            # 権限名を2進数に変換
-            role = admin_manage().get_role(role)
-            print('role',type(role))
-            # 文字列2進数の足し算,先頭0bを除き,7桁になるように0埋め
-            roles = bin(int(roles,2) + int(role,2))[2:].zfill(7)
+        roles = roleName_to_bin(admin_permissions)
         print(roles)
 
         ## 管理者情報をDBに登録
@@ -191,6 +208,8 @@ def add_admin():
         return render_template('register_completion.html',admin=admin)
 
 
+
+
 #####################################################################
 # 管理者削除
 #####################################################################
@@ -200,7 +219,7 @@ def delete_admin(admin_id):
     try:
         print('delete_admin',admin_id)
         # 削除SQLの呼び出し
-        if not admin_manage().delete_admin(admin_id):
+        if admin_manage().delete_admin(admin_id):
             return jsonify({"message": "削除が完了しました"}), 200
         return jsonify({"message": "削除に失敗しました"}), 500
     except Exception as e:
@@ -220,13 +239,91 @@ def delete_admin(admin_id):
 ##################################################################
 @app.route('/modify_admin', methods=['POST'])
 def modify_admin():
-    admin = {
-        'admin_id': request.form.get('admin_id'),
-        'admin_name': request.form.get('admin_name'),
-        'admin_permissions': request.form.get('admin_permissions')
-    }
+    try:
+        print('modify_admin')
+        admin = {
+            'admin_id': request.form.get('admin_id'),
+            'admin_name': request.form.get('admin_name'),
+            'admin_permissions': roleName_to_bin(request.form.getlist('permissions'))
+        }
+        print('admin',admin)
 
-    # 受け取った情報をDBに登録
-    
+        # 受け取った情報をDBに登録
+        if admin_manage().update_admin(admin):
+            return redirect('/admin_manage')
+    except Exception as e:        
+        return render_template('error.html',e=e)
 
-    return redirect('/admin_manage')
+
+
+
+##############################################################
+# お知らせ画面表示
+##############################################################
+@app.route('/notification', methods=['GET'])
+def notification():
+    print('notification')
+    ##notification_id = '1'
+    ##notification_title = 'test'
+    ##notification_content = 'content1'
+    ##notification = {
+    ##    'notification_id': notification_id,
+    ##    'notification_title':notification_title,
+    ##    'notification_content':notification_content
+    ##}
+    ##notifications = [notification]
+
+    # DBからお知らせたちを取得
+    notifications = notification_model().get_notifications()
+    return render_template('notification.html',notifications=notifications)
+
+
+
+##############################################################
+# お知らせ詳細表示
+##############################################################
+@app.route('/notification/<int:notification_id>')
+def notification_detail(notification_id):
+    print('notification_detail')
+    return render_template('notification_detail.html')
+
+
+
+##############################################################
+# お知らせ追加
+##############################################################
+@app.route('/add_notification', methods=['GET', 'POST'])
+def add_notification():
+    if request.method == 'GET':
+        print('add_notification GET')
+        return render_template('notification_detail.html')
+    if request.method == 'POST':
+        action = request.form.get('action')
+        print('add_notification POST', action)
+
+        # 入力内容の取得
+        title = request.form.get('title')
+        content = request.form.get('content')
+        show_calendar = 'showCalendar' in request.form
+        reservationDatetime = request.form.get('reservationDatetime') if show_calendar else None
+        visibility = request.form.get('visibility')
+        
+        ## ISO 8601形式をMySQL DATETIME形式に変換
+        formatted_datetiem = reservationDatetime.replace('T', ' ') + ':00'
+        ### 文字列->datetime object
+        datetime_obj = datetime.strptime(formatted_datetiem, '%Y-%m-%d %H:%M:%S')
+
+        notification = {
+            'notification_title':title,
+            'notification_post_status':'1',
+            'notification_post_time':datetime_obj,
+            'notification_content':content
+        }
+        print('notification',notification)
+
+        # DBへ情報登録
+        if notification_model().update_notification(notification):
+            return redirect('/notification')
+        
+
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投稿フォーム</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    .form-container {
+        width: 400px;
+        padding: 20px;
+        background-color: #cfcfcf;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-group textarea {
+        height: 100px;
+        resize: none;
+    }
+    .form-group input[type="radio"] {
+        margin-right: 5px;
+    }
+    .form-group label.radio-label {
+        font-weight: normal;
+        margin-right: 10px;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+    .buttons button {
+        width: 30%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .buttons button#post {
+        background-color: #4caf50;
+        color: white;
+    }
+    .buttons button#save {
+        background-color: #2196f3;
+        color: white;
+    }
+    .buttons button#cancel {
+        background-color: #f44336;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-group">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" placeholder="タイトル">
+    </div>
+
+    <div class="form-group">
+        <label for="content">投稿内容</label>
+        <textarea id="content" placeholder="投稿内容"></textarea>
+    </div>
+
+    <div class="form-group">
+        <input type="radio" id="scheduled" name="postType">
+        <label for="scheduled" class="radio-label">予約投稿</label>
+        <input type="text" id="scheduled-date" placeholder="予約投稿の日時">
+    </div>
+
+    <div class="form-group">
+        <label>公開範囲</label>
+        <input type="radio" id="public" name="visibility">
+        <label for="public" class="radio-label">全体公開</label>
+        
+        <input type="radio" id="creator-only" name="visibility">
+        <label for="creator-only" class="radio-label">製作者のみ公開</label>
+        
+        <input type="radio" id="requester-only" name="visibility">
+        <label for="requester-only" class="radio-label">依頼者のみ公開</label>
+    </div>
+
+    <div class="buttons">
+        <button id="post">投稿</button>
+        <button id="save">保存</button>
+        <button id="cancel">キャンセル</button>
+    </div>
+</div>
+
+</body>
+</html>

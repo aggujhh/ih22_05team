@@ -2,31 +2,18 @@ from . import db
 from routes import logger
 
 
-class notis_model:
-    # ログイン
-    def login(self, id):
-        print(id)
-        with db as cursor:
-            cursor.execute("SELECT admin_id, admin_password, password_expiration_date, admin_permissions "
-                           "FROM ADMIN "
-                           "WHERE admin_id = %s",
-                           (id,)
-            )
-            result = cursor.fetchone()
-        return result
-
-    # idの確認
-    def admin_authentication(self, id):
-        print(id)
-        with db as cursor:
-            cursor.execute("select admin_password from ADMIN where admin_id=%s", id)
-            result = cursor.fetchone()
-        return result
-
+class notification_model:
     # お知らせ取り出し
-    def get_notis(self):
+    def get_notifications(self):
         with db as cursor:
             cursor.execute(
-                "SELECT *  "
+                "SELECT notification_id, notification_title, notification_post_time, notification_content "
                 "FROM NOTIFICATION " 
+                "WHERE notification_post_status = '1' "
             )
+            results = cursor.fetchall()
+        return results
+    
+    # お知らせ更新
+    def update_notification(self,notification):
+        return 1

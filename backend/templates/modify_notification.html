@@ -73,18 +73,18 @@
     </style>
 {% endblock %}
 
-{% block title %} お知らせ追加画面 {% endblock %}
+{% block title %} お知らせ修正画面 {% endblock %}
 
 {% block header %}
 
-    <h2>お知らせ追加</h2>
+    <h2>お知らせ修正</h2>
     <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
 
 {% endblock %}
 
 {% block content %}
 
-    <form action="/add_notification" method="post">
+    <form action="{{ url_for('modify_notification', notification_id=notification.notification_id) }}" method="post">
         <div class="form-container">
             <div class="form-group">
                 <label for="title">タイトル</label>

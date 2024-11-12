@@ -11,6 +11,10 @@ import random,string
 
 
 
+######################################################################
+# 関数
+######################################################################
+
 
 def generate_random_password(length=12):
     # パスワードに使う文字を定義(英字,数字,記号)
@@ -39,10 +43,15 @@ def roleName_to_bin(roles):
     return result
 
 
+## 
 
 
 
 
+
+######################################################################
+# 処理
+######################################################################
 
 
 
@@ -285,7 +294,11 @@ def notification():
 @app.route('/notification/<int:notification_id>')
 def notification_detail(notification_id):
     print('notification_detail')
-    return render_template('notification_detail.html')
+
+    # お知らせ取り出し
+    notification = notification_model().get_notification(notification_id)
+
+    return render_template('notification_detail.html',notification=notification)
 
 
 
@@ -294,12 +307,22 @@ def notification_detail(notification_id):
 ##############################################################
 @app.route('/add_notification', methods=['GET', 'POST'])
 def add_notification():
-    if request.method == 'GET':
+    if request.method == 'GET': # お知らせ追加画面表示
         print('add_notification GET')
-        return render_template('notification_detail.html')
-    if request.method == 'POST':
-        action = request.form.get('action')
+        notification = {
+            'notificatoin_id':'',
+            'notification_title':'',
+            'notification_post_time':'',
+            'notification_post_status':''
+        }
+        return render_template('notification_detail.html',notification=notification)
+
+    if request.method == 'POST': # お知らせ追加処理
+        action = request.form.get('action') # 押下ボタン
         print('add_notification POST', action)
+
+        if action == 'cancel':
+            return redirect('/notification')
 
         # 入力内容の取得
         title = request.form.get('title')
@@ -307,23 +330,114 @@ def add_notification():
         show_calendar = 'showCalendar' in request.form
         reservationDatetime = request.form.get('reservationDatetime') if show_calendar else None
         visibility = request.form.get('visibility')
-        
-        ## ISO 8601形式をMySQL DATETIME形式に変換
-        formatted_datetiem = reservationDatetime.replace('T', ' ') + ':00'
-        ### 文字列->datetime object
-        datetime_obj = datetime.strptime(formatted_datetiem, '%Y-%m-%d %H:%M:%S')
+
+        # show_calendarをDBのDATETIME形式に変換
+        if reservationDatetime:
+            print(reservationDatetime)
+            ## ISO 8601形式をMySQL DATETIME形式に変換
+            formatted_datetiem = reservationDatetime.replace('T', ' ')
+            ### 文字列->datetime object
+            reservationDatetime = datetime.strptime(formatted_datetiem, '%Y-%m-%d %H:%M')
+
+        # 下書きか投稿するか
+        if action == 'save': # 下書き
+            notification_post_status = '0'
+        else : # post : 投稿
+            notification_post_status = '1'
+
 
         notification = {
             'notification_title':title,
-            'notification_post_status':'1',
-            'notification_post_time':datetime_obj,
+            'notification_post_status':notification_post_status,
+            'notification_post_time':reservationDatetime,
             'notification_content':content
         }
         print('notification',notification)
 
-        # DBへ情報登録
-        if notification_model().update_notification(notification):
-            return redirect('/notification')
+        try:
+            # 下書きをDBに登録
+            if notification_model().add_notification(notification):
+                return redirect('/notification')
+        except Exception as e:
+            return render_template('error.html',e=e)
         
 
 
+######################################################################
+# お知らせ修正
+######################################################################
+@app.route('/modify_notification/<int:notification_id>', methods=['GET', 'POST'])
+def modify_notification(notification_id):
+    if request.method=='GET':
+        print('modify_notification GET',notification_id)
+        notification = notification_model().get_notification(notification_id)
+        return render_template('modify_notification.html',notification=notification)
+
+    if request.method=='POST':
+        action = request.form.get('action') # 押下ボタン
+        print('modify_notification POST', action)
+
+        if action == 'cancel':
+            return redirect('/notification')
+
+        # 入力内容の取得
+        title = request.form.get('title')
+        content = request.form.get('content')
+        show_calendar = 'showCalendar' in request.form
+        reservationDatetime = request.form.get('reservationDatetime') if show_calendar else None
+        visibility = request.form.get('visibility')
+
+        # show_calendarをDBのDATETIME形式に変換
+        if reservationDatetime:
+            print(reservationDatetime)
+            ## ISO 8601形式をMySQL DATETIME形式に変換
+            formatted_datetiem = reservationDatetime.replace('T', ' ')
+            ### 文字列->datetime object
+            reservationDatetime = datetime.strptime(formatted_datetiem, '%Y-%m-%d %H:%M')
+
+        # 下書きか投稿するか
+        if action == 'save': # 下書き
+            notification_post_status = '0'
+        else : # post : 投稿
+            notification_post_status = '1'
+
+
+        notification = {
+            'notification_id':notification_id,
+            'notification_title':title,
+            'notification_post_status':notification_post_status,
+            'notification_post_time':reservationDatetime,
+            'notification_content':content
+        }
+        print('notification',notification)
+
+        try:
+            # 下書きをDBに登録
+            if notification_model().update_notification(notification):
+                return redirect('/notification')
+        except Exception as e:
+            return render_template('error.html',e=e)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################
+# エラーハンドリング
+######################################################################
+# @app.errorhandler()
+# def error1(error):
+#     print('hi')

@@ -594,7 +594,7 @@ VALUES ('System Maintenance', '1', 'The system will undergo maintenance on Octob
        ('Security Alert', '1', 'Please update your password to enhance security.'),
        ('Weekly Newsletter', '0', 'Here is your weekly update of the top stories.'),
        ('Holiday Notice', '1', 'The office will be closed during the national holiday.');
-
+# 0:下書き,1:投稿済み,2:削除
 
 #テーブル30
 CREATE TABLE NOTIFICATION_MGR

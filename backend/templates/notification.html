@@ -13,7 +13,7 @@
         <form action="/add_notification" method="get">
             <button type="submit">追加</button>
         </form>
-        <button>修正</button>
+        <form action="/delete_notification" method=""></form>
         <button>削除</button>
     </div>
 
@@ -24,19 +24,14 @@
     <div class="notice">
         <h3>お知らせ一覧</h3>
         {% for notification in notifications %}
-            {% set detail_url = url_for('notification_detail', notification_id=notification.notification_id) %}
-            <div class="notice-item" onclick="window.location.href='{{ detail_url }}'">
-                <div class="notice-id">お知らせID:{{ notification.notification_id }}</div>
-                <div class="notice-title">お知らせタイトル:{{ notification.notification_title }}</div>
-                <div class="notice-content">お知らせ内容:{{ notification.notification_content }}</div>
-                <div class="notice-post-time">投稿時間:{{ notification.notification_post_time }}</div>
-            </div>
+                {% set detail_url = url_for('modify_notification', notification_id=notification.notification_id) %}
+                <div class="notice-item" onclick="window.location.href='{{ detail_url }}'">
+                    <div class="notice-id">お知らせID:{{ notification.notification_id }}</div>
+                    <div class="notice-title">お知らせタイトル:{{ notification.notification_title }}</div>
+                    <div class="notice-content">お知らせ内容:{{ notification.notification_content }}</div>
+                    <div class="notice-post-time">投稿時間:{{ notification.notification_post_time }}</div>
+                </div>
         {% endfor %}
-        <ul>
-            {% for item in items %}
-                <li class="notice-item">{{ item }}</li>
-            {% endfor %}
-        </ul>
     </div>
 
 {% endblock %}

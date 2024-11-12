@@ -919,7 +919,7 @@ CREATE TABLE ADMIN
 (
     admin_id                 CHAR(10),
     admin_name               VARCHAR(64),
-    admin_password           VARCHAR(64),
+    admin_password           VARCHAR(255),
     password_expiration_date DATETIME,
     admin_permissions        char(7),
     PRIMARY KEY (admin_id)

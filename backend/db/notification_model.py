@@ -66,13 +66,13 @@ class notification_model:
             print('delete_notification',notification_id)
             with db as cursor:
                 cursor.execute(
-                    "SELECT * "
+                    "DELETE "
                     "FROM NOTIFICATION "
                     "WHERE notification_id = %s "
                     , (notification_id,)
                 )
-                result = cursor.fetchone()
-                print(result)
+                #result = cursor.fetchone()
+                #print(result)
             return 1
         except Exception as e:
             print('error',e)

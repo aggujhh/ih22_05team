@@ -419,7 +419,19 @@ def modify_notification(notification_id):
             return render_template('error.html',e=e)
         
 
-
+####################################################################
+# お知らせ削除
+####################################################################
+@app.route('/delete_notification', methods=['POST'])
+def delete_notification():
+    notification_id = request.form.get('notification_id')
+    print('delete_notification', notification_id)
+    try:
+        # DBから情報削除
+        if notification_model().delete_notification(notification_id):
+            return redirect('/notification')
+    except Exception as e:
+        return render_template('error.html',e=e)
 
 
 

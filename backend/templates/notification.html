@@ -13,8 +13,8 @@
         <form action="/add_notification" method="get">
             <button type="submit">追加</button>
         </form>
-        <form action="/delete_notification" method=""></form>
-        <button>削除</button>
+        <button onclick="deleteSelected()" style="display:block;">選択</button>
+        <button onclick="deleteSelected()" style="display:none;">削除</button>
     </div>
 
 {% endblock %}
@@ -38,4 +38,7 @@
 
 {% block script %}
     <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+    <script>
+        
+    </script>
 {% endblock %}

@@ -79,6 +79,10 @@
 
     <h2>お知らせ修正</h2>
     <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
+    <form action="/delete_notification" method="post">
+        <input type="hidden" name="notification_id" value="{{ notification.notification_id}}">
+        <button type="submit" >削除</button>
+    </form>
 
 {% endblock %}
 

@@ -59,3 +59,21 @@ class notification_model:
         except Exception as e:
             print('update_notification error',e)
             return 0
+
+    # お知らせ削除
+    def delete_notification(self,notification_id):
+        try:
+            print('delete_notification',notification_id)
+            with db as cursor:
+                cursor.execute(
+                    "SELECT * "
+                    "FROM NOTIFICATION "
+                    "WHERE notification_id = %s "
+                    , (notification_id,)
+                )
+                result = cursor.fetchone()
+                print(result)
+            return 1
+        except Exception as e:
+            print('error',e)
+            return 0

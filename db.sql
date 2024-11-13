@@ -950,3 +950,10 @@ VALUES
 ('0100000', '情報閲覧'),
 ('1000000', '管理者管理');
 
+
+
+-- ===================================================
+-- テストデータ作成 2024/11/13
+-- ===================================================
+INSERT INTO PRODUCER_APP(creator_application_id, creator_nickname_id, creator_mail, creator_password, creator_tel, creator_history, creator_application_status)
+VALUES ('U_01010000', 'hi', 'ih22senyou@gmail.com')

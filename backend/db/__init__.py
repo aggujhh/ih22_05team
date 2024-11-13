@@ -12,8 +12,8 @@ class SqlPool(object):
             blocking=True,  # 接続プールに利用可能な接続がない場合、待機するかどうか
             host='localhost',
             port=3306,
-            user='ih05team',
-            password='ih05_123456',
+            user='root',
+            password='',
             database='ih22_db',
             charset='utf8',
             autocommit=True  # データを自動コミットする

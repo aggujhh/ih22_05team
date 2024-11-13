@@ -1,7 +1,6 @@
 from . import db
 from routes import logger
 
-
 class Request_model:
     def add_request(self, user_id, request_id, data_list):
         logger.info(f"add_request 実行開始、引数: {user_id, request_id, data_list}")
@@ -160,3 +159,4 @@ class Request_model:
         except Exception as e:
             logger.error(f"load_requests 実行中にエラーが発生しました: {e}")
             return None
+

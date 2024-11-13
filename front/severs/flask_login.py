@@ -1,5 +1,6 @@
-from flask_login import UserMixin, login_user, LoginManager
+from flask_login import UserMixin, login_user, LoginManager, current_user
 from db.userm_model import Userm_model
+from severs.global_data import global_data
 from werkzeug.security import check_password_hash
 from routes import app
 
@@ -28,6 +29,8 @@ class Flask_login:
         result = Userm_model().login(mail_address)
         print("result:", result)
         if result and check_password_hash(result["user_password"], password):  # 認証成功時
-            login_user(User(result["nickname"]), remember=remember)  # ユーザをログイン状態にする
+            login_user(User(result["user_id"]), remember=remember)  # ユーザをログイン状態にする
+            nickname = Userm_model().fetch_nickname_by_userid(current_user.id)
+            global_data.set_nickname(current_user.id, nickname)
             return True  # ログイン成功を返す
         return False  # ログイン失敗を返す

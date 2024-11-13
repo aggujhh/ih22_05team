@@ -33,7 +33,7 @@
         {% if current_user.is_authenticated %}
             <div id=loginbox>
                 <div class="user_icon"></div>
-                <p>{{ current_user.id }}</p>
+                <p>{{ nickname }}</p>
                 <div class="new_request">
                     <form action="/new_request_base/01" method="get">
                         <button class="new_request_btn" type="button">新しい依頼投稿</button>
@@ -70,7 +70,7 @@
             <li class="creators"><a href="/redirect_creators" class="creators">制作者一覧</a></li>
             <li class="guide"><a href="/redirect_guide" class="guide">ご利用案内</a></li>
             <li class="news"><a href="/redirect_news" class="news">お知らせ</a></li>
-            <li class="contact"><a href="/redirect_contact" class="contact">お問い合わせ</a></li>
+            <li class="inquiry"><a href="/redirect_inquiry" class="inquiry">お問い合わせ</a></li>
             <li class="faq"><a href="/redirect_faq" class="faq">FAQ</a></li>
         </ul>
         {% if left_margin %}

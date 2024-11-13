@@ -16,46 +16,6 @@
 {% block content %}
 
     <div class="managers">
-        <table id="manager_table" border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>管理者名</th>
-                    <th>有効期限</th>
-                    <th>付与権限</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ admin.admin_id }}</td>
-                    <td>{{ admin.admin_name }}</td>
-                    <td>{{ admin.password_expiration_date }}</td>
-                    <td>
-                        {% for perm in admin.admin_permissions %}
-                            {{ perm }}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <form action="/admin_edit" method="post">
-                                <!-- 管理者の情報をhiddenフィールドで渡す（JSON形式） -->
-                                <input type="hidden" name="admin_id" value="{{ admin.admin_id }}">
-                                <input type="hidden" name="admin_name" value="{{ admin.admin_name }}">
-                                <input type="hidden" name="password_expiration_date" value="{{ admin.password_expiration_date }}">
-                                <input type="hidden" name="admin_permissions" value="{{ admin.admin_permissions | tojson }}">
-                            <button>編集</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <ul>
-            {% for item in items %}
-                <li class="notice-item">{{ item }}</li>
-            {% endfor %}
-        </ul>
-
-
         <form action="/register_admin" method="post">
             
             <label>管理者名: <input type="text" name="admin_name" value="{{ admin.admin_name }}"></label><br>
@@ -71,7 +31,7 @@
                 
             <button type="submit">管理者追加</button>
         </form>
-        <form action="">
+        <form action="/admin_manage">
             <button type="submit">戻る</button>
         </form>
     </div>

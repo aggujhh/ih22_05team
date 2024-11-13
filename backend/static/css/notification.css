@@ -4,6 +4,10 @@
     background-color: #fff;
     border: none;
     cursor: pointer;
+
+    #button{
+        text-align:right;
+    }
 }
 
 .content .notice{

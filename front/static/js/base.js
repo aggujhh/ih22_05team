@@ -76,26 +76,29 @@ textBoxs.forEach((textBox) => {
     })
 })
 
-
 // テキストエリアの入力した文字制限
 const textarea = document.querySelector("#creator_form textarea")
 const count_text = document.querySelector('.count_text')
 
-if (textarea) {
-    textarea.addEventListener("input", (e) => {
-        count_text.innerHTML = `${e.target.value.length}/1200文字`
-        if (e.target.value.length > 1200) {
-            count_text.style.color = "red"
-            textarea.style.color = "red"
-            textarea.parentNode.querySelector(".error_msg").innerText = `文字数は1200字を超えてはいけません。`
-        } else {
-            count_text.style.color = "#818181"
-            textarea.style.color = "#111"
-            textarea.parentNode.querySelector(".error_msg").innerText = ""
-        }
-
-    })
+function check_text_count(textarea, count_text) {
+    if (textarea) {
+        textarea.addEventListener("input", (e) => {
+            count_text.innerHTML = `${e.target.value.length}/1200文字`
+            if (e.target.value.length > 1200) {
+                count_text.style.color = "red"
+                textarea.style.color = "red"
+                textarea.parentNode.querySelector(".error_msg").innerText = `文字数は1200字を超えてはいけません。`
+            } else {
+                count_text.style.color = "#818181"
+                textarea.style.color = "#111"
+                textarea.parentNode.querySelector(".error_msg").innerText = ""
+            }
+        })
+    }
 }
+
+check_text_count(textarea, count_text)
+
 
 const new_request_btn = document.querySelector(".new_request_btn")
 if (new_request_btn) {

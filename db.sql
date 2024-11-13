@@ -594,7 +594,7 @@ VALUES ('System Maintenance', '1', 'The system will undergo maintenance on Octob
        ('Security Alert', '1', 'Please update your password to enhance security.'),
        ('Weekly Newsletter', '0', 'Here is your weekly update of the top stories.'),
        ('Holiday Notice', '1', 'The office will be closed during the national holiday.');
-
+# 0:下書き,1:投稿済み,2:削除
 
 #テーブル30
 CREATE TABLE NOTIFICATION_MGR
@@ -615,8 +615,7 @@ VALUES (1, 'U_00000001', NULL, '1'),
        (2, 'U_00000002', NULL, '0'),
        (3, 'U_00000001', NULL, '1'),
        (4, 'U_00000003', NULL, '0'),
-       (5, 'U_00000002', NULL, '1'),
-       ();
+       (5, 'U_00000002', NULL, '1');
 
 
 #テーブル32
@@ -909,4 +908,45 @@ CREATE TABLE TRANSACTION_MGR
 );
 
 
+
+-- ===================================================
+-- database 変更 2024/11/11
+-- ===================================================
+drop table admin;
+drop table admin_permissions;
+
+CREATE TABLE ADMIN
+(
+    admin_id                 CHAR(10),
+    admin_name               VARCHAR(64),
+    admin_password           VARCHAR(255),
+    password_expiration_date DATETIME,
+    admin_permissions        char(7),
+    PRIMARY KEY (admin_id)
+);
+
+INSERT INTO ADMIN (admin_id, admin_name, admin_password, password_expiration_date, admin_permissions)
+VALUES ('A_00000001', 'ロイド・フォージャー',   'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000001'),
+       ('A_00000002', 'ヨル・フォージャー',     'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000010'),
+       ('A_00000003', 'アーニャ・フォージャー', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000100'),
+       ('A_00000004', 'ボンド・フォージャー',   'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0001000'),
+       ('A_00000005', 'ユーリ・ブライアー',     'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0010000');
+
+
+CREATE TABLE admin_permissions
+(
+    permission_id   char(7)
+    permission_name varchar(100) not null,
+    PRIMARY KEY(permission)
+);
+
+INSERT INTO ADMIN_PERMISSIONS(permission_id, permission_name)
+VALUES
+('0000001', 'お知らせ'),
+('0000010', 'お問い合わせ'),
+('0000100', '制作者審査'),
+('0001000', 'アクションログ'),
+('0010000', 'アカウント関連'),
+('0100000', '情報閲覧'),
+('1000000', '管理者管理');
 

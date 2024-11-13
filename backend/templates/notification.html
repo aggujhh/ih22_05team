@@ -5,6 +5,7 @@
 {% block title %} お知らせ画面 {% endblock %}
 
 {% block header %}
+    <h2>お知らせ一覧</h2>
 
     <div class="button">
         <button>投稿済み</button>
@@ -22,7 +23,6 @@
 {% block content %}
 
     <div class="notice">
-        <h3>お知らせ一覧</h3>
         {% for notification in notifications %}
                 {% set detail_url = url_for('modify_notification', notification_id=notification.notification_id) %}
                 <div class="notice-item" onclick="window.location.href='{{ detail_url }}'">

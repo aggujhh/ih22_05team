@@ -80,14 +80,14 @@ textBoxs.forEach((textBox) => {
 const textarea = document.querySelector("#creator_form textarea")
 const count_text = document.querySelector('.count_text')
 
-function check_text_count(textarea, count_text) {
+function check_text_count(textarea, count_text, max) {
     if (textarea) {
         textarea.addEventListener("input", (e) => {
-            count_text.innerHTML = `${e.target.value.length}/1200文字`
-            if (e.target.value.length > 1200) {
+            count_text.innerHTML = `${e.target.value.length}/${max}文字`
+            if (e.target.value.length > max) {
                 count_text.style.color = "red"
                 textarea.style.color = "red"
-                textarea.parentNode.querySelector(".error_msg").innerText = `文字数は1200字を超えてはいけません。`
+                textarea.parentNode.querySelector(".error_msg").innerText = `文字数は${max}字を超えてはいけません。`
             } else {
                 count_text.style.color = "#818181"
                 textarea.style.color = "#111"
@@ -97,7 +97,7 @@ function check_text_count(textarea, count_text) {
     }
 }
 
-check_text_count(textarea, count_text)
+check_text_count(textarea, count_text, 1200)
 
 
 const new_request_btn = document.querySelector(".new_request_btn")

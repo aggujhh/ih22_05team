@@ -23,14 +23,14 @@ function inquiry() {
         select.style.color = "#333"
     })
 
-    check_text_count(textarea, count_text)
+    check_text_count(textarea, count_text, 1200)
     check_input(check_items, check_btn)
 }
 
 function check_input(check_items, check_btn) {
     const error_msg_list = document.querySelectorAll(".error_msg")
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const inquiry_form=document.querySelector("#inquiry_form")
+    const inquiry_form = document.querySelector("#inquiry_form")
 
     check_btn.addEventListener("click", () => {
         const text_length = document.querySelector("textarea").value.length

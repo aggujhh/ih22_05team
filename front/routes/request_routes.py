@@ -15,7 +15,6 @@ import json
 def request_details(request_id):
     result = Request_model().fetch_request_by_request_id(request_id)
     for index, photo in enumerate(result['photos']):
-        print("index, photo", index, photo)
         result['photos'][index] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{photo}"
     result['request_content'] = result['request_content'].replace("\r\n", "<br>")
     result['required_points'] = result['required_points'].replace("\r\n", "<br>")
@@ -31,19 +30,15 @@ def request_details(request_id):
 @app.route('/new_request_base/<step>', methods=['GET', 'POST'])
 @login_required
 def new_request_base(step):
-    global data_list
     if request.method == 'GET':
-        data_list = {
-            "genre": global_data.get_genre(current_user.id)
-        }
+        data_list = global_data.reset_data_list(current_user.id)
     else:
         for key, value in request.form.items():
             if key == "genre":
-                data_list[key] = json.loads(value)
-                global_data.set_genre(current_user.id, json.loads(value))
+                global_data.set_data_list(current_user.id, key, json.loads(value))
             else:
-                data_list[key] = value
-    print(data_list)
+                global_data.set_data_list(current_user.id, key, value)
+        data_list = global_data.get_data_list(current_user.id)
     return render_template(f"new_request_{step}.html", result=data_list)
 
 
@@ -56,6 +51,7 @@ def add_new_request():
     while request_model.have_request_id(request_id):
         request_id = secrets.token_hex(10)
     user_id = current_user.id
+    data_list = global_data.get_data_list(current_user.id)
     try:
         request_model.add_request(user_id, request_id, data_list)
         upload_img_of_new_request(request_id)

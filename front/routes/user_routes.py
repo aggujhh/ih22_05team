@@ -47,6 +47,9 @@ def login():
     if result:
         global_data.del_incorrect_password(mail_address)
         nickname = global_data.get_nickname(current_user.id)
+        avatar = Userm_model().get_avatar(current_user.id)
+        if avatar:
+            global_data.set_avatar(current_user.id, avatar)
         flash(f"おかえりなさい, {nickname}.", category='success')
         return redirect('/')
     else:
@@ -108,6 +111,7 @@ def send_email():
             authentication_code = "0" + str(random_number)
         case _:
             authentication_code = str(random_number)
+    print("set_session", email, authentication_code)
     Session().set_session_with_expiry(email, authentication_code, 600)
     msg = Message('[COSBARA]認証コードをご確認ください。', recipients=[email])
     msg.body = (
@@ -125,26 +129,6 @@ def send_email():
     mail.send(msg)
     print("发送成功", email)
     return jsonify({'message': '发送成功'})
-
-
-# 認証コードを確認する
-@app.route('/check_authentication_code', methods=['POST'])
-def check_authentication_code():
-    error_msg = ["", ""]
-    count = 0
-    mail_address = request.form.get("mail_address")
-    session_code = Session().get_session_with_expiry(mail_address)
-    if session_code is None:
-        error_msg[1] = "認証コードが無効です。もう一度ログインしてください。"
-        count += 1
-    elif request.form.get("code") != session_code:
-        error_msg[1] = "認証コードが間違っています。もう一度入力してください。"
-        count += 1
-    if count == 0:
-        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data,
-                               mail_address=mail_address)
-    else:
-        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data)
 
 
 # アカウント作成したフォームの正解性チェック
@@ -201,7 +185,7 @@ def check_registration(user_type):
             else:
                 Userm_model().add_creator_application(user)
             print("登録完成")
-            Flask_login().check_login(user["user_email_address"], password)
+            Flask_login().check_login(user["user_email_address"], password, remember=False)
             return render_template('register_completion.html', user_type=user_type, remember=False)
         except Exception as e:
             # エラーが発生した場合、エラーログを記録
@@ -250,7 +234,7 @@ def upload_img():
 @app.route('/forgot_password')
 def forgot_password():
     error_msg = ["", ""]
-    return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data)
+    return render_template('forgot_password.html', error_msg=error_msg, count=0)
 
 
 # パスワードを再設定
@@ -272,8 +256,8 @@ def reset_password():
         error_msg[1] = "パスワードが一致しません。もう一度入力してください。"
         count += 1
     if count != 0:
-        return render_template('forgot_password.html', error_msg=error_msg, global_data=global_data,
-                               mail_address=mail_address)
+        return render_template('forgot_password.html', error_msg=error_msg,
+                               mail_address=mail_address, count=0)
     # パスワードをハッシュ化する
     hashed_password = generate_password_hash(password)
     Userm_model().reset_ps(mail_address, hashed_password)
@@ -281,3 +265,24 @@ def reset_password():
     nickname = global_data.get_nickname(current_user.id)
     flash(f"おかえりなさい, {nickname}.", category='success')
     return redirect('/')
+
+
+# 認証コードを確認する
+@app.route('/check_authentication_code', methods=['POST'])
+def check_authentication_code():
+    error_msg = ["", ""]
+    count = 0
+    mail_address = request.form.get("hidden_mail_address")
+    session_code = Session().get_session_with_expiry(mail_address)
+    print("session_code:", mail_address, session_code, request.form.get("code"))
+    if session_code is None:
+        error_msg[1] = "認証コードが無効です。もう一度ログインしてください。"
+        count += 1
+    elif request.form.get("code") != session_code:
+        error_msg[1] = "認証コードが間違っています。もう一度入力してください。"
+        count += 1
+    if count == 0:
+        return render_template('forgot_password.html', error_msg=error_msg, count=0,
+                               mail_address=mail_address)
+    else:
+        return render_template('forgot_password.html', error_msg=error_msg, count=0)

@@ -21,8 +21,7 @@ def redirect_nav(nav_name):
     elif nav_name == "requests":
         results, count = Request_model().fetch_all_requests()
         for result in results:
-            result[
-                'image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
+            result['image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
         return render_template(f"{nav_name}.html", left_margin=left_margin, results=results, count=count['COUNT(*)'])
     elif nav_name == "inquiry":
         error_msg = []

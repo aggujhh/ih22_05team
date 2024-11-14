@@ -53,10 +53,13 @@ def inject_user_data():
     if current_user.is_authenticated:
         # 获取当前用户的昵称
         nickname = global_data.get_nickname(current_user.id)
+        avatar = global_data.get_avatar(current_user.id)
     else:
         nickname = None
+        avatar = None
     # 将 nickname 注入到模板上下文中
-    return {'nickname': nickname}
+    print('nickname', nickname, "avatar", avatar)
+    return {'nickname': nickname, "avatar": avatar}
 
 
 from . import user_routes
@@ -64,3 +67,4 @@ from . import nav_routes
 from . import request_routes
 from . import my_page_routes
 from . import inquiry_routes
+from . import test

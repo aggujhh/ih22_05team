@@ -509,7 +509,7 @@ VALUES ('A_00000001', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0
 #テーブル14
 CREATE TABLE admin_permissions
 (
-    permission_id char(7) ,
+    permission_id   char(7),
     permission_name varchar(100) not null,
     PRIMARY KEY (permission_id)
 );
@@ -605,8 +605,8 @@ CREATE TABLE NOTIFICATION_MGR
     notification_management char(1) not null,
     PRIMARY KEY (notification_id, user_id, admin_id),
     FOREIGN KEY (user_id) REFERENCES USERM (user_id),
-    FOREIGN KEY (notification_id) REFERENCES NOTIFICATION (notification_id)
-        CHECK ((user_id IS NOT FULL AND admin_id IS NULL)
+    FOREIGN KEY (notification_id) REFERENCES NOTIFICATION (notification_id),
+    CHECK ((user_id IS NOT NULL AND admin_id IS NULL)
         OR (user_id IS NULL AND admin_id IS NOT NULL))
 );
 
@@ -827,7 +827,7 @@ CREATE TABLE REQUEST
 
 CREATE TABLE REQUEST_CATEGORY
 (
-    request_id  varchar(64),
+    request_id    varchar(64),
     category_name varchar(20),
     primary key (request_id, category_name),
     FOREIGN KEY (request_id) REFERENCES REQUEST_DETAILS (request_id)
@@ -886,13 +886,14 @@ CREATE TABLE REQUEST_HISTORY
     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id)
 );
 
-CREATE TABLE DEALCONFIRMATION(
+CREATE TABLE DEALCONFIRMATION
+(
     contract_id      INT AUTO_INCREMENT,
     request_id       varchar(64) not null,
-    creator_id       char(10) not null,
+    creator_id       char(10)    not null,
     payment_amount   INT,
     contract_details TEXT,
-    contract_stage   char(1)  not null,
+    contract_stage   char(1)     not null,
     PRIMARY KEY (contract_id),
     FOREIGN KEY (request_id) REFERENCES REQUEST (request_id),
     FOREIGN KEY (creator_id) REFERENCES USERM (user_id)
@@ -927,27 +928,31 @@ CREATE TABLE ADMIN
 );
 
 INSERT INTO ADMIN (admin_id, admin_name, admin_password, password_expiration_date, admin_permissions)
-VALUES ('A_00000001', 'ロイド・フォージャー',   'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000001'),
-       ('A_00000002', 'ヨル・フォージャー',     'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000010'),
-       ('A_00000003', 'アーニャ・フォージャー', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0000100'),
-       ('A_00000004', 'ボンド・フォージャー',   'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0001000'),
-       ('A_00000005', 'ユーリ・ブライアー',     'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH),'0010000');
+VALUES ('A_00000001', 'ロイド・フォージャー', 'hashed_password_1', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000001'),
+       ('A_00000002', 'ヨル・フォージャー', 'hashed_password_2', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000010'),
+       ('A_00000003', 'アーニャ・フォージャー', 'hashed_password_3', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0000100'),
+       ('A_00000004', 'ボンド・フォージャー', 'hashed_password_4', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0001000'),
+       ('A_00000005', 'ユーリ・ブライアー', 'hashed_password_5', DATE_ADD(NOW(), INTERVAL 1 MONTH), '0010000');
 
 
 CREATE TABLE admin_permissions
 (
-    permission_id   char(7)
+    permission_id   char(7),
     permission_name varchar(100) not null,
-    PRIMARY KEY(permission)
+    PRIMARY KEY (permission_id)
 );
 
 INSERT INTO ADMIN_PERMISSIONS(permission_id, permission_name)
-VALUES
-('0000001', 'お知らせ'),
-('0000010', 'お問い合わせ'),
-('0000100', '制作者審査'),
-('0001000', 'アクションログ'),
-('0010000', 'アカウント関連'),
-('0100000', '情報閲覧'),
-('1000000', '管理者管理');
+VALUES ('0000001', 'お知らせ'),
+       ('0000010', 'お問い合わせ'),
+       ('0000100', '制作者審査'),
+       ('0001000', 'アクションログ'),
+       ('0010000', 'アカウント関連'),
+       ('0100000', '情報閲覧'),
+       ('1000000', '管理者管理');
 
+-- ===================================================
+-- database 変更 2024/11/12 陳昱光
+-- ===================================================
+-- 電話番号の項目削除
+ALTER TABLE inquiry DROP inquiry_tel;

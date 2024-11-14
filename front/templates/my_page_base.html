@@ -19,3 +19,5 @@
         {% block my_page_content %}{% endblock %}
     </section>
 {% endblock %}
+
+{% block script %}{{ url_for('static', filename='js/my_page.js') }}{% endblock %}

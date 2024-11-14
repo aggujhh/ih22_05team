@@ -48,7 +48,8 @@
             <div class="request_content">
                 <div class="user_box">
                     {% if result['icon_url'] %}
-                        <div class="user_icon">
+                        <div class="user_icon"
+                             style="background-image: url('{{ url_for('static', filename="img/uploads/"+result['user_id']+"/icon_url/image_icon_url.png") }}')">
                     {% else %}
                         <div class="user_icon"
                              style="background-image: url('{{ url_for('static', filename='img/default_avatar.png') }}')">
@@ -68,92 +69,92 @@
                             依頼者と打合せする
                         </button>
                     </div>
-                    </div>
-                    <div class="profile">
-                        {{ result['request_content']|safe }}
-                    </div>
+                </div>
+                <div class="profile">
+                    {{ result['request_content']|safe }}
                 </div>
             </div>
-            <div class="other">
-                <h3 class="title">その他情報</h3>
+        </div>
+        <div class="other">
+            <h3 class="title">その他情報</h3>
+            <div>
                 <div>
+                    <p>依頼した経験</p>
+                    {% if result['experience']=="0" %}
+                        <p>五回以上はある</p>
+                    {% elif result['experience']=="1" %}
+                        <p>1~５回はある</p>
+                    {% elif result['experience']=="2" %}
+                        <p>なし</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>欲しい生地と素材</p>
+                    {% if result['fabric_material']=="0" %}
+                        <p>ある程度決まっている</p>
+                    {% elif result['fabric_material']=="1" %}
+                        <p>決まっていない</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>再現度</p>
+                    {% if result['reproducibility']=="0" %}
+                        <p>細部まで再現して欲しい</p>
+                    {% elif result['reproducibility']=="1" %}
+                        <p>ある程度、制作者にお任せる</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>参考資料</p>
+                    {% if result['reference_material']=="0" %}
+                        <p>豊富に準備できる</p>
+                    {% elif result['reference_material']=="1" %}
+                        <p>最低限の資料は準備できる</p>
+                    {% elif result['reference_material']=="2" %}
+                        <p>あまり準備できない</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>返信頻度</p>
+                    {% if result['reply_frequency']=="0" %}
+                        <p>1~2時間以内の返信が可能</p>
+                    {% elif result['reply_frequency']=="1" %}
+                        <p>12時間以内には返信可能</p>
+                    {% elif result['reply_frequency']=="2" %}
+                        <p>1日以内には返信可能</p>
+                    {% elif result['reply_frequency']=="3" %}
+                        <p>なかなか返信できない</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>予算</p>
+                    {% if result['request_budget']=="0" %}
+                        <p>相談して決めたい</p>
+                    {% elif result['request_budget']=="1" %}
+                        <p>見積もりを出して欲しい</p>
+                    {% elif result['request_budget']=="2" %}
+                        <p>{{ result['required_amount'] }}円までしか出せない</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p>納期希望</p>
                     <div>
-                        <p>依頼した経験</p>
-                        {% if result['experience']=="0" %}
-                            <p>五回以上はある</p>
-                        {% elif result['experience']=="1" %}
-                            <p>1~５回はある</p>
-                        {% elif result['experience']=="2" %}
-                            <p>なし</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>欲しい生地と素材</p>
-                        {% if result['fabric_material']=="0" %}
-                            <p>ある程度決まっている</p>
-                        {% elif result['fabric_material']=="1" %}
-                            <p>決まっていない</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>再現度</p>
-                        {% if result['reproducibility']=="0" %}
-                            <p>細部まで再現して欲しい</p>
-                        {% elif result['reproducibility']=="1" %}
-                            <p>ある程度、制作者にお任せる</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>参考資料</p>
-                        {% if result['reference_material']=="0" %}
-                            <p>豊富に準備できる</p>
-                        {% elif result['reference_material']=="1" %}
-                            <p>最低限の資料は準備できる</p>
-                        {% elif result['reference_material']=="2" %}
-                            <p>あまり準備できない</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>返信頻度</p>
-                        {% if result['reply_frequency']=="0" %}
-                            <p>1~2時間以内の返信が可能</p>
-                        {% elif result['reply_frequency']=="1" %}
-                            <p>12時間以内には返信可能</p>
-                        {% elif result['reply_frequency']=="2" %}
-                            <p>1日以内には返信可能</p>
-                        {% elif result['reply_frequency']=="3" %}
-                            <p>なかなか返信できない</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>予算</p>
-                        {% if result['request_budget']=="0" %}
-                            <p>相談して決めたい</p>
-                        {% elif result['request_budget']=="1" %}
-                            <p>見積もりを出して欲しい</p>
-                        {% elif result['request_budget']=="2" %}
-                            <p>{{ result['required_amount'] }}円までしか出せない</p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p>納期希望</p>
-                        <div>
-                            <p>{{ result['year'] }}年</p>
-                            <p>{{ result['month'] }}</p>
-                            <p>{{ result['day'] }}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p>絶対欲しいポイント</p>
-                        <p>{{ result['required_points']|safe }}
-                        </p>
+                        <p>{{ result['year'] }}年</p>
+                        <p>{{ result['month'] }}</p>
+                        <p>{{ result['day'] }}</p>
                     </div>
                 </div>
+                <div>
+                    <p>絶対欲しいポイント</p>
+                    <p>{{ result['required_points']|safe }}
+                    </p>
+                </div>
+            </div>
 
-            </div>
-            <div class="foot">
-                <button></button>
-            </div>
+        </div>
+        <div class="foot">
+            <button></button>
+        </div>
     </section>
 {% endblock %}
 

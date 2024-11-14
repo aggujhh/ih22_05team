@@ -7,8 +7,10 @@ window.addEventListener("load", function () {
 
 function reset_time_down() {
     // カウントダウンとAjaxリクエストを使って、一定時間後にログインをリセットする処理
+    let mail_address
     const dis_btn = document.querySelector(".dis_btn")
-    const mail = document.querySelector('.login [type="hidden"]').value
+    const mail = document.querySelector('.login [type="hidden"]')
+    if (mail) mail_address = mail.value
     let count = 3
     if (dis_btn) {
         dis_btn.innerHTML = `ログイン(${count})`
@@ -22,7 +24,7 @@ function reset_time_down() {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        mail: mail
+                        mail: mail_address
                     },
                     success: function (response) {
                         // 请求成功时执行的函数

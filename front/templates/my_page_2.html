@@ -1,5 +1,65 @@
 {% extends 'my_page_base.html' %}
 
 {% block my_page_content %}
-    <article>プロフィール設定</article>
+    <article id="profile_Settings">
+        <h3>プロフィール設定</h3>
+        <div>
+            <div class="bg_img"
+                 style="background-image: url('{{ url_for('static', filename="img/uploads/"+current_user.id+"/background_photo_url/image_background_photo_url.png") }}')">
+                <input type="file" id="upload_bg_img" style="display: none">
+                <button>編集</button>
+            </div>
+        </div>
+        <div class="picture">
+            <div>
+                <div style="background-image: url('{{ url_for('static', filename="img/uploads/"+current_user.id+"/icon_url/image_icon_url.png") }}')">
+                    <input type="file" id="upload_picture" style="display: none">
+                    <button>編集</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="input_area">
+            <form action="/update_profile" method="post" id="update_profile">
+                <ul>
+                    <li>
+                        <p><small>*</small>ニックネーム</p>
+                        <input type="text" placeholder="ニックネームを入力してください" name="nickname"
+                               data-name="ニックネーム" value="{{ result["nickname"] }}">
+                        <small class="error_msg"></small>
+                    </li>
+                    <li>
+                        <p><small>*</small>性別</p>
+                        <div class="radio_box">
+                            <label><input type="radio" name="gender" value="0"
+                                          {% if result["gender"]=="0" %}checked{% endif %}>
+                                <p>未設定</p></label>
+                            <label><input type="radio" name="gender" value="1"
+                                          {% if result["gender"]=="1" %}checked{% endif %}>
+                                <p>男性</p></label>
+                            <label><input type="radio" name="gender" value="2"
+                                          {% if result["gender"]=="2" %}checked{% endif %}>
+                                <p>女性</p></label>
+                        </div>
+                        <small class="error_msg"></small>
+                    </li>
+                    <li>
+                        <p><small>*</small>プロフィール</p>
+                        <textarea placeholder="プロフィールを入力してください" name="profile"
+                                  data-name="プロフィール">{{ result["profile"] }}</textarea>
+                        <p class="count_text">0/1200文字</p>
+                        <small class="error_msg"></small>
+                    </li>
+                    <li>
+                        <p><small>*</small>趣味</p>
+                        <textarea placeholder="趣味を入力してください" name="hobby"
+                                  data-name="趣味">{{ result["hobby"] }}</textarea>
+                        <p class="count_text">0/800文字</p>
+                        <small class="error_msg"></small>
+                    </li>
+                </ul>
+                <button class="submit_btn" type="button">提出する</button>
+            </form>
+        </div>
+    </article>
 {% endblock %}

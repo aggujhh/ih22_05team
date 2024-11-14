@@ -20,7 +20,10 @@ class GlobalData:
         if user_id not in self.users:
             self.users[user_id] = {
                 "nickname": "",
-                "genre": ["", "", "", "", "", ""]
+                "data_list": {
+                    "genre": ["", "", "", "", "", ""]
+                },
+                "avatar": ""
             }
 
     def _ensure_mail(self, mail):
@@ -28,6 +31,14 @@ class GlobalData:
             self.mails[mail] = {
                 "incorrectPassword": 0,
             }
+
+    @ensure_user_data
+    def set_avatar(self, user_id, avatar):
+        self.users[user_id]["avatar"] = avatar
+
+    @ensure_user_data
+    def get_avatar(self, user_id):
+        return self.users[user_id]["avatar"]
 
     @ensure_user_data
     def set_nickname(self, user_id, nickname):
@@ -55,12 +66,19 @@ class GlobalData:
             del self.mails[mail]
 
     @ensure_user_data
-    def set_genre(self, user_id, genre):
-        self.users[user_id]["genre"] = genre
+    def set_data_list(self, user_id, key, value):
+        self.users[user_id]["data_list"][key] = value
 
     @ensure_user_data
-    def get_genre(self, user_id):
-        return self.users[user_id]["genre"]
+    def get_data_list(self, user_id):
+        return self.users[user_id]["data_list"]
+
+    @ensure_user_data
+    def reset_data_list(self, user_id):
+        self.users[user_id]["data_list"] = {
+            "genre": ["", "", "", "", "", ""]
+        }
+        return self.users[user_id]["data_list"]
 
 
 global_data = GlobalData()

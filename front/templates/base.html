@@ -32,7 +32,13 @@
 
         {% if current_user.is_authenticated %}
             <div id=loginbox>
-                <div class="user_icon"></div>
+                {% if avatar=="" %}
+                    <div class="user_icon"
+                         style="background-image: url('{{ url_for('static', filename="img/default_avatar.png") }}')"></div>
+                {% else %}
+                    <div class="user_icon"
+                         style="background-image: url('{{ url_for('static', filename="img/uploads/"+current_user.id+"/icon_url/image_icon_url.png") }}')"></div>
+                {% endif %}
                 <p>{{ nickname }}</p>
                 <div class="new_request">
                     <form action="/new_request_base/01" method="get">

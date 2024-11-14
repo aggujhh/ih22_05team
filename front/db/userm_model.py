@@ -88,19 +88,21 @@ class Userm_model:
             logger.error(f"fetch_nickname_by_userid関数 実行中にエラーが発生しました: {e}")
             return None
 
-    def get_avatar(self, user_id):
+    def get_avatar_and_user_type(self, user_id):
         logger.info(f"get_avatar関数 実行開始、引数:{user_id}")
         try:
             with db as cursor:
-                cursor.execute("SELECT icon_url "
+                cursor.execute("SELECT profile.icon_url,userm.user_type "
                                "FROM profile "
-                               "WHERE user_id = %s", user_id)
+                               "INNER JOIN userm "
+                               "ON profile.user_id=userm.user_id "
+                               "WHERE profile.user_id = %s", user_id)
                 result = cursor.fetchone()
                 if result:
-                    logger.info(f"アバター: {result['icon_url']} を取得しました")
-                    return result['icon_url']
+                    logger.info(f"データ: {result} を取得しました")
+                    return result
                 else:
-                    logger.warning("アバターが見つかりません")
+                    logger.warning("結果が見つかりません")
                     return None
         except Exception as e:
             logger.error(f"get_avatar関数 実行中にエラーが発生しました: {e}")

@@ -23,7 +23,8 @@ class GlobalData:
                 "data_list": {
                     "genre": ["", "", "", "", "", ""]
                 },
-                "avatar": ""
+                "avatar": "",
+                "user_type": "0"
             }
 
     def _ensure_mail(self, mail):
@@ -31,6 +32,14 @@ class GlobalData:
             self.mails[mail] = {
                 "incorrectPassword": 0,
             }
+
+    @ensure_user_data
+    def set_user_type(self, user_id, user_type):
+        self.users[user_id]["user_type"] = user_type
+
+    @ensure_user_data
+    def get_user_type(self, user_id):
+        return self.users[user_id]["user_type"]
 
     @ensure_user_data
     def set_avatar(self, user_id, avatar):

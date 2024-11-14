@@ -1,6 +1,145 @@
+/* 変数=================================================*/
+:root {
+    --color-y: #F2FD6B; /* 黄色 */
+    --color-p: #EC7FB1; /* ピンク色 */
+    --color-bp: #D66F9E; /* 濃いピンク色 */
+    --color-r: #FF6B6B; /* 赤色 */
+    --color-body: #F5F5F5; /* bodyの基本色 */
 
+    --font-size-large: 24px; /* 大きめ */
+    --font-size-semi-large: 20px; /* 少し大きめ */
+    --font-size-normal: 16px; /* 普通 */
+    --font-size-semi-small: 14px; /* 少し小さめ */
+    --font-size-small: 12px; /* 小さめ */
+}
 
+/*=======================================================*/
+/* 
 .news-filter{
     display: flex;
     flex-flow: row nowrap;
+}
+
+all-news-list{
+    display: none;
+} */
+
+body {
+    background-color: var(--color-body);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.news-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Big tab styles */
+.bigtab {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.bigtab button {
+    font-size: var(--font-size-normal);
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--color-p);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 0 5px;
+}
+
+.bigtab .youtab1 {
+    background-color: var(--color-p);
+}
+
+.bigtab .newsTab1 {
+    background-color: #fff;
+    color: var(--color-bp);
+}
+
+/* News filter section */
+.news-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.news-filter label {
+    font-size: var(--font-size-semi-small);
+    color: #666;
+}
+
+.news-filter input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* News list styling */
+.your-news-list, .all-news-list {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.your-news-list div, .all-news-list div {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.your-news-list div:hover, .all-news-list div:hover {
+    background-color: #f9f9f9;
+}
+
+.news-item-title {
+    font-weight: bold;
+    font-size: var(--font-size-semi-large);
+    color: #333;
+}
+
+.news-item-details {
+    font-size: var(--font-size-semi-small);
+    color: #999;
+}
+
+/* Pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pagination button {
+    font-size: var(--font-size-semi-small);
+    padding: 5px 10px;
+    margin: 0 3px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: var(--color-p);
+    color: #fff;
+}
+
+.menu-container{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 }

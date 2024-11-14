@@ -21,7 +21,7 @@ const newsItems = [
     const endIndex = startIndex + itemsPerPage;
     const pageItems = newsItems.slice(startIndex, endIndex);
   
-    const newsList = document.getElementById("news-list");
+    const newsList = document.getElementById("your-news-list");
     newsList.innerHTML = "";
   
     pageItems.forEach(item => {
@@ -31,7 +31,6 @@ const newsItems = [
       newsList.appendChild(newsItem);
     });
   }
-  
   // 初期ページを表示
   changePage(1);
   

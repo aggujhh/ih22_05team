@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/inquiry.css') }}">{% endblock %}
+
+{% block title %} お問い合わせ画面 {% endblock %}
+
+{% block header %}
+    <h2>お問い合わせ一覧</h2>
+
+    <div class="button">
+        <button>確認済み</button>
+        <button>未確認</button>
+        <form action="/add_inquiry" method="get">
+            <button type="submit">追加</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="items">
+        {% for inquiry in inquiries %}
+                {% set detail_url = url_for('inquiry_detail', inquiry_id=inquiry.inquiry_id) %}
+                <div class="item" onclick="window.location.href='{{ detail_url }}'">
+                    <div class="inquiry-id">お問い合わせID:{{ inquiry.inquiry_id }}</div>
+                    <div class="user_id">ユーザID:{{ inquiry.user_id }}</div>
+                    <div class="user_name">ユーザネーム:{{ inquiry.inquiry_name }}</div>
+                    <div class="inquiry_type">種類:{{ inquiry.inquiry_category }}</div>
+                    <div class="inquiry_time">受信時刻:{{ inquiry.inquiry_time }}</div>
+                </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+    <script>
+        
+    </script>
+{% endblock %}

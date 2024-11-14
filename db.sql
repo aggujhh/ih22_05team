@@ -24,6 +24,7 @@ CREATE TABLE USERM
     create_time   datetime     not null COMMENT '作成時間',
     login_time    datetime COMMENT 'ログイン時間'
 );
+-- user_type: 0:依頼者, 1:制作者
 
 INSERT INTO USERM (user_id, user_password, create_time)
 VALUES ('U_00000001', '123456', NOW()),
@@ -950,18 +951,30 @@ VALUES ('0000001', 'お知らせ'),
        ('0100000', '情報閲覧'),
        ('1000000', '管理者管理');
 
-<<<<<<< HEAD
 -- ===================================================
 -- database 変更 2024/11/12 陳昱光
 -- ===================================================
 -- 電話番号の項目削除
 ALTER TABLE inquiry DROP inquiry_tel;
-=======
 
 
 -- ===================================================
--- テストデータ作成 2024/11/13
+-- database 変更 2024/11/14 宮本康弘
 -- ===================================================
-INSERT INTO PRODUCER_APP(creator_application_id, creator_nickname_id, creator_mail, creator_password, creator_tel, creator_history, creator_application_status)
-VALUES ('U_01010000', 'hi', 'ih22senyou@gmail.com')
->>>>>>> 160fad9a69eae9ed3160f21802740b3438dc77f9
+-- DESIGN_PREVIEWの変更
+DROP TABLE DESIGN_PREVIEW;
+CREATE TABLE DESIGN_PREVIEW
+(
+    user_id   char(10),
+    image_id  INT AUTO_INCREMENT,
+    image_url VARCHAR(1000),
+    PRIMARY KEY (image_id), -- image_idを単独の主キーにする
+    FOREIGN KEY (user_id) REFERENCES USERM (user_id)
+);
+
+INSERT INTO DESIGN_PREVIEW (user_id, image_url)
+VALUES ('U_00000001', 'http://example.com/images/design1.jpg'),
+       ('U_00000002', 'http://example.com/images/design2.jpg'),
+       ('U_00000003', 'http://example.com/images/design3.jpg'),
+       ('U_00000004', 'http://example.com/images/design4.jpg'),
+       ('U_00000005', 'http://example.com/images/design5.jpg');

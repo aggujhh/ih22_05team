@@ -1,8 +1,8 @@
 # flaskより必要なモジュールをインポートする
-from flask import Flask
+from flask import Flask, send_from_directory
 from routes import app
 from config import HOST, PORT
-import os
+import os,sys
 
 
 # カスタムフィルターを定義

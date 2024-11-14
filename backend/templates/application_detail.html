@@ -100,15 +100,16 @@
 
             <div class="group">
                 <div id="img">
+                    <p>画像</p>
                 </div>
             </div>
 
-            <form action="/application_detail" method="post">
+            <form action="/application_detail/{{ creator.creator_application_id }}" method="post">
                 <div class="group">
                     <label>可否</label>
-                    <input type="radio" name="possibility" value="0" >
+                    <input type="radio" name="possibility" value="1" >
                     <label for="allow" class="radio-label">許可</label>
-                    <input type="radio" name="possibility" value="1" checked>
+                    <input type="radio" name="possibility" value="2" checked>
                     <label for="deny" class="radio-label">拒否</label>
                 </div>
 

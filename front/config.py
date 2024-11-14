@@ -22,9 +22,13 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 # クッキーの有効期限を7日間に設定
 REMEMBER_COOKIE_DURATION = timedelta(days=7)
 
+# frontとbackendとで共通の画像フォルダ
 SHARED_IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'shared_images')
 print(SHARED_IMAGES_DIR)
 os.makedirs(SHARED_IMAGES_DIR, exist_ok=True)
+
+# front側のdbにアクセス
+
 
 
 # 静的ファイルフォルダのパスを定義

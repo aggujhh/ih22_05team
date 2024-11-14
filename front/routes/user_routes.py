@@ -47,9 +47,13 @@ def login():
     if result:
         global_data.del_incorrect_password(mail_address)
         nickname = global_data.get_nickname(current_user.id)
-        avatar = Userm_model().get_avatar(current_user.id)
+        result = Userm_model().get_avatar_and_user_type(current_user.id)
+        avatar = result['icon_url']
+        user_type = result["user_type"]
         if avatar:
             global_data.set_avatar(current_user.id, avatar)
+        if user_type:
+            global_data.set_user_type(current_user.id, user_type)
         flash(f"おかえりなさい, {nickname}.", category='success')
         return redirect('/')
     else:

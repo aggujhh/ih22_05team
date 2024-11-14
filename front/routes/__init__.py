@@ -54,12 +54,20 @@ def inject_user_data():
         # 获取当前用户的昵称
         nickname = global_data.get_nickname(current_user.id)
         avatar = global_data.get_avatar(current_user.id)
+        user_type = global_data.get_user_type(current_user.id)
     else:
         nickname = None
         avatar = None
+        user_type = None
     # 将 nickname 注入到模板上下文中
-    print('nickname', nickname, "avatar", avatar)
-    return {'nickname': nickname, "avatar": avatar}
+    print('nickname:', nickname, " avatar:", avatar, " user_type:", user_type, type(user_type))
+    return {'nickname': nickname, "avatar": avatar, "user_type": user_type}
+
+
+
+@app.route('/shared_images/<path:filename>')
+def shared_images(filename):
+    return send_from_directory(app.config['SHARED_IMAGES_DIR'], filename)
 
 
 from . import user_routes

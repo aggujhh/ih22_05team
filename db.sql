@@ -594,7 +594,7 @@ VALUES ('System Maintenance', '1', 'The system will undergo maintenance on Octob
        ('Security Alert', '1', 'Please update your password to enhance security.'),
        ('Weekly Newsletter', '0', 'Here is your weekly update of the top stories.'),
        ('Holiday Notice', '1', 'The office will be closed during the national holiday.');
-
+# 0:下書き,1:投稿済み,2:削除
 
 #テーブル30
 CREATE TABLE NOTIFICATION_MGR
@@ -615,8 +615,7 @@ VALUES (1, 'U_00000001', NULL, '1'),
        (2, 'U_00000002', NULL, '0'),
        (3, 'U_00000001', NULL, '1'),
        (4, 'U_00000003', NULL, '0'),
-       (5, 'U_00000002', NULL, '1'),
-       ();
+       (5, 'U_00000002', NULL, '1');
 
 
 #テーブル32
@@ -921,7 +920,7 @@ CREATE TABLE ADMIN
 (
     admin_id                 CHAR(10),
     admin_name               VARCHAR(64),
-    admin_password           VARCHAR(64),
+    admin_password           VARCHAR(255),
     password_expiration_date DATETIME,
     admin_permissions        char(7),
     PRIMARY KEY (admin_id)
@@ -951,8 +950,18 @@ VALUES ('0000001', 'お知らせ'),
        ('0100000', '情報閲覧'),
        ('1000000', '管理者管理');
 
+<<<<<<< HEAD
 -- ===================================================
 -- database 変更 2024/11/12 陳昱光
 -- ===================================================
 -- 電話番号の項目削除
 ALTER TABLE inquiry DROP inquiry_tel;
+=======
+
+
+-- ===================================================
+-- テストデータ作成 2024/11/13
+-- ===================================================
+INSERT INTO PRODUCER_APP(creator_application_id, creator_nickname_id, creator_mail, creator_password, creator_tel, creator_history, creator_application_status)
+VALUES ('U_01010000', 'hi', 'ih22senyou@gmail.com')
+>>>>>>> 160fad9a69eae9ed3160f21802740b3438dc77f9

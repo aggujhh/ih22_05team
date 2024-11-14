@@ -13,13 +13,16 @@
     <div class="sidebar">
         <button class="close-button">閉じる</button>
         <div class="side-menu">
-            <form action="/notification" method="post">
+            <form action="/notification" method="get">
                 <button type="submit">お知らせ</button>
             </form>
             <button>お問い合わせ</button>
-            <button>制作者審査</button>
-            <button>管理者ログ</button>
-            <button>アカウント凍結</button>
+            <form action="/application_list" method="get">
+                <button type="submit">制作者審査</button>
+            </form>
+            <button>アクションログ</button>
+            <button>アカウント関連</button>
+            <button>情報閲覧</button>
             <form action="/admin_manage" method="get">
                 <button type="submit">管理者管理</button>
             </form>

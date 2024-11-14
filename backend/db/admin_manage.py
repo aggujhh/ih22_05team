@@ -127,14 +127,14 @@ class admin_manage:
                     "DELETE FROM ADMIN WHERE admin_id = %s "
                     , (admin_id,)
                 )
-            return 0
+            return 1
         except Exception as e:
             print("削除失敗:", e)
-            return -1
+            return 0
             
     # admin_idから管理者情報を更新
-    def modify_admin(self,admin_id):
-        print('modify_admin',admin_id)
+    def update_admin(self,admin):
+        print('update_admin',admin)
         try:
             with db as cursor:
                 cursor.execute(
@@ -142,8 +142,9 @@ class admin_manage:
                     "SET admin_name=%s, "
                     "    admin_permissions=%s "
                     "WHERE admin_id=%s "
+                    , (admin['admin_name'], admin['admin_permissions'], admin['admin_id'],)
                 )
-            return 0
+            return 1
         except Exception as e:
             print("更新失敗:",e)
-            return -1
+            return 0

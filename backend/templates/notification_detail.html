@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .form-container {
+            width: 100%;
+            padding: 20px;
+            background-color: #cfcfcf;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 100px;
+            resize: none;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 5px;
+        }
+        .form-group label.radio-label {
+            font-weight: normal;
+            margin-right: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 30%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button#post {
+            background-color: #4caf50;
+            color: white;
+        }
+        .buttons button#save {
+            background-color: #2196f3;
+            color: white;
+        }
+        .buttons button#cancel {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block title %} お知らせ追加画面 {% endblock %}
+
+{% block header %}
+
+    <h2>お知らせ追加</h2>
+    <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
+
+{% endblock %}
+
+{% block content %}
+
+    <form action="/add_notification" method="post">
+        <div class="form-container">
+            <div class="form-group">
+                <label for="title">タイトル</label>
+                <input type="text" id="title" name="title" placeholder="タイトル" value="{{ notification.notification_title }}">
+            </div>
+
+            <div class="form-group">
+                <label for="content">投稿内容</label>
+                <textarea id="content" name="content" placeholder="投稿内容">{{ notification.notification_content }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showCalendarCheckbox" name="showCalendar"{% if notification.notification_post_time %} checked {% endif %}>予約投稿
+                </label>
+                <div id="calendar" {% if notification.notification_post_time %} style="display:block;" {% else %} style="display:none;" {% endif %}>
+                    <p>投稿日時</p>
+                    <label for="reservationDatetime">日時を選択:</label>
+                    <input type="datetime-local" id="reservationDatetime" name="reservationDatetime" value="{{ notification.notification_post_time }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>公開範囲</label>
+                <input type="radio" id="public" name="visibility" value="public" >
+                <label for="public" class="radio-label">全体公開</label>
+                
+                <!-- <input type="radio" id="creator-only" name="visibility" value="creator-only">
+                <label for="creator-only" class="radio-label">製作者のみ公開</label>
+                
+                <input type="radio" id="requester-only" name="visibility" value="requester-only">
+                <label for="requester-only" class="radio-label">依頼者のみ公開</label> -->
+            </div>
+
+            <div class="buttons">
+                <button type="submit" name="action" value="post">投稿</button>
+                <button type="submit" name="action" value="save">保存</button>
+                <button type="submit" name="action" value="cancel">キャンセル</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/admin_manage.js') }}"></script>
+    <script>
+        // 予約投稿のチェックボックスが押下されたら、その状態に応じてカレンダーの非表示
+        document.getElementById('showCalendarCheckbox').addEventListener('click',function(){
+            var calendar = document.getElementById('calendar');
+            var checkbox = document.getElementById('showCalendarCheckbox');
+
+            if (checkbox.checked) {
+                calendar.style.display = 'block';
+            } else {
+                calendar.style.display = 'none';
+            }
+        })
+
+        //投稿のときと下書き保存での入力チェック必要
+    </script>
+{% endblock %}

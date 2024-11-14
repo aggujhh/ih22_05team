@@ -1,6 +1,41 @@
 {% extends 'base.html' %}
-
+{% block style %}static/css/news.css{% endblock %}
 
 {% block content %}
-お知らせ
+<div class="news-container">
+    <h2>お知らせ一覧</h2>
+
+    <div class="bigtab">
+        <button class="youtab1" type="button">あなた宛</button>
+        <button class="newsTab1" type="button">ニュース</button>
+    </div>
+
+
+    <div class="news-filter">
+        <label>
+            <input type="radio" name="newsTab" value="all" checked onchange="changeTab('all')"> すべて
+        </label>
+        <label>
+            <input type="radio" name="newsTab" value="news" onchange="changeTab('new')"> 未読
+        </label>
+        <label>
+            <input type="radio" name="newsTab" value="events" onchange="changeTab('notnew')"> 既読
+        </label>
+    </div>
+
+    <!-- お知らせ一覧表示 -->
+    <div id="news-list" class="news-list">
+        <!-- JavaScriptでお知らせを表示 -->
+    </div>
+
+    <!-- ページネーション -->
+    <div id="pagination" class="pagination">
+        <button onclick="changePage(1)">1</button>
+        <button onclick="changePage(2)">2</button>
+        <button onclick="changePage(3)">3</button>
+        <!-- 必要に応じてボタンを追加 -->
+    </div>
+</div>
 {% endblock %}
+
+{% block script %}static/js/news.js{% endblock %}

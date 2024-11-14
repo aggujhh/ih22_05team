@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">{% endblock %}
+
+{% block title %} アカウント申請者一覧画面 {% endblock %}
+
+{% block header %}
+    <h2>制作者申請一覧</h2>
+{% endblock %}
+
+{% block content %}
+
+    <div class="application">
+        {% for creator in creator_list %}
+            {% set detail_url = url_for('application_detail', creator_application_id=creator.creator_application_id) %}
+            <div class="application-item" onclick="window.location.href='{{ detail_url }}'">
+                <div class="creator_id">申請ID:{{ creator.creator_application_id }}</div>
+                <div class="creator_nickname_id">ニックネーム:{{ creator.creator_nickname_id }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- <div class="application-detail">
+    <div class="application-detail" style="display:none;">
+        <div class="detail-group">
+            <label for="info">申請者情報</label>
+            <input type="text" id="mail" name="mail" value="">
+        </div>
+    </div> -->
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+    <script>
+    //    $('.application-item').on('click',function(){
+    //         console.log('application-item click');
+
+    //         id = $(this).find('.creator_id').text();
+    //         name = $(this).find('.creator_nickname_id').text();
+            
+    //    });
+    </script>
+{% endblock %}

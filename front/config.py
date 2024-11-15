@@ -27,10 +27,6 @@ SHARED_IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath
 print(SHARED_IMAGES_DIR)
 os.makedirs(SHARED_IMAGES_DIR, exist_ok=True)
 
-# front側のdbにアクセス
-
-
-
 # 静的ファイルフォルダのパスを定義
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')

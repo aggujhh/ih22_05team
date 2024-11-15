@@ -8,7 +8,7 @@ import os,sys
 # カスタムフィルターを定義
 @app.template_filter('contains')
 def contains(value, collection):
-    print('reach contains, vlaue: collection:',value,collection)
+    print('reach contains, value: collection:',value,collection)
     return value in collection
 
 # アプリケーションの実行

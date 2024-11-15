@@ -107,9 +107,9 @@
             <form action="/application_detail/{{ creator.creator_application_id }}" method="post">
                 <div class="group">
                     <label>可否</label>
-                    <input type="radio" name="possibility" value="1" >
+                    <input type="radio" id="allow" name="possibility" value="1" >
                     <label for="allow" class="radio-label">許可</label>
-                    <input type="radio" name="possibility" value="2" checked>
+                    <input type="radio" id="deny" name="possibility" value="2" checked>
                     <label for="deny" class="radio-label">拒否</label>
                 </div>
 

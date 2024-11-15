@@ -10,56 +10,42 @@ class inquiry_model:
                 cursor.execute(
                     "SELECT inquiry_id, user_id, inquiry_name, inquiry_category, inquiry_time "
                     "FROM inquiry " 
+                    "WHERE inquiry_status != '2' "
                 )
                 results = cursor.fetchall()
             return results
         except Exception as e:
             print('取り出し失敗',e)
     
-    # お知らせ追加
-    def add_notification(self,notification):
-        try:
-            print('add_notification')
-            with db as cursor:
-                cursor.execute(
-                    "INSERT INTO NOTIFICATION(notification_title, notification_post_status, notification_post_time, notification_content) "
-                    "VALUES(%s, %s, %s, %s) "
-                    , (notification['notification_title'], notification['notification_post_status'], notification['notification_post_time'], notification['notification_content'], )
-                )
-            return 1
-        except Exception as e:
-            print('add_notification error',e)
-            return 0
 
-    # お知らせ取り出し
-    def get_notification(self,notification_id):
+    # お問い合わせ取り出し
+    def get_inquiry(self,inquiry_id):
         with db as cursor:
+            print('get_inquiry')
             cursor.execute(
-                "SELECT notification_id, notification_title, notification_content, notification_post_time "
-                "FROM NOTIFICATION "
-                "WHERE notification_id = %s "
-                , (notification_id,)
+                "SELECT * "
+                "FROM inquiry "
+                "WHERE inquiry_id = %s "
+                , (inquiry_id,)
             )
             result = cursor.fetchone()
         return result
 
-    # お知らせ修正
-    def update_notification(self,notification):
+    # お問い合わせ修正
+    def update_inquiry(self,data):
         try:
-            print('add_notification')
+            print('update_inquiry')
             with db as cursor:
                 cursor.execute(
-                    "UPDATE NOTIFICATION "
-                    "SET notification_title = %s, "
-                    "    notification_post_status = %s, "
-                    "    notification_post_time = %s, "
-                    "    notification_content = %s "
-                    "WHERE notification_id = %s "
-                    ,(notification['notification_title'], notification['notification_post_status'], notification['notification_post_time'], notification['notification_content'], notification['notification_id'], )
+                    "UPDATE INQUIRY "
+                    "SET inquiry_status = %s, "
+                    "    inquiry_contents = %s "
+                    "WHERE inquiry_id = %s "
+                    ,(data['inquiry_status'], data['inquiry_contents'], data['inquiry_id'],)
                 )
             return 1
         except Exception as e:
-            print('update_notification error',e)
+            print('update_inquiry error',e)
             return 0
 
     # お知らせ削除
@@ -79,3 +65,4 @@ class inquiry_model:
         except Exception as e:
             print('error',e)
             return 0
+

@@ -32,9 +32,30 @@ def inquiry_list():
 ##############################################
 # お問い合わせ詳細画面
 ##############################################
-@app.route('/inquiry_detail')
-def inquiry_detail():
-    print('inquiry_detail')
+@app.route('/inquiry_detail<string:inquiry_id>', methods=['GET','POST'])
+def inquiry_detail(inquiry_id):
+    if request.method == 'GET':
+        print('inquiry_detail GET')
+        inquiry = inquiry_model().get_inquiry(inquiry_id)
+        print('inquiry',inquiry)
+        status = ['未確認', '対応中', '解決', '保留']
+        category = ['アカウントについて','取引について','通報']
+        inquiry['inquiry_category'] = category[int(inquiry['inquiry_category'])]
+        return render_template('inquiry_detail.html',inquiry=inquiry, status=status)
+    
+    if request.method == 'POST':
+        print('inquiry_detail POST' )
+        data = request.form
+        print('data',data)
+        print('status category',data['inquiry_status'], data['inquiry_category'])
+
+        if inquiry_model().update_inquiry(data):
+            print('yes')
+        else:
+            print('no')
+
+        return redirect('inquiry_list')
+
 # @app.route('/inquiry_detail/<string:creator_application_id>', methods=['GET','POST'])
 # def inquiry_detail(creator_application_id):
 #     if request.method=='GET': # 申請詳細画面の表示

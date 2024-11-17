@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            background-color: #cfcfcf;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        .group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .group input[type="text"],
+        .group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .group textarea {
+            height: 100px;
+            resize: none;
+        }
+        .group input[type="radio"] {
+            margin-right: 5px;
+        }
+        .group label.radio-label {
+            font-weight: normal;
+            margin-right: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            width: 30%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button#post {
+            background-color: #4caf50;
+            color: white;
+        }
+        .buttons button#save {
+            background-color: #2196f3;
+            color: white;
+        }
+        .buttons button#cancel {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block title %} お問い合わせ詳細画面 {% endblock %}
+
+{% block header %}
+
+    <h2>お問い合わせ詳細</h2>
+    <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="{{ url_for('inquiry_detail', inquiry_id=inquiry.inquiry_id) }}" method="post">
+            <div class="group">
+                <label for="inquiry_id">お問い合わせID</label>
+                <input type="text" id="inquiry_id" name="inquiry_id" value="{{ inquiry.inquiry_id }}">
+            </div>            
+
+            <div class="group">
+                <label for="user_id">ユーザID</label>
+                <input type="text" id="user_id" name="user_id" value="{{ inquiry.user_id }}">
+            </div>
+
+            <div class="group">
+                <label for="inquiry_time">受信時間</label>
+                <input type="text" id="inquiry_time" name="inquiry_time" value="{{ inquiry.inquiry_time }}">
+            </div>
+
+            <div class="group">
+                <label for="inquiry_status">ステータス設定</label>
+                <select id="inquiry_status" name="inquiry_status">
+                    {% for i in range(status | length) %}
+                        <option value="{{ i }}" {% if i == inquiry.inquiry_status %} selected="selected" {% endif %}>{{ status[i] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="group">
+                <label for="inquiry_category">お問い合わせ種類</label>
+                <input type="text" id="inquiry_category" name="inquiry_category" value="{{ inquiry.inquiry_category }}">
+                <!-- <select id="inquiry_category" name="inquiry_category">
+                    {% for i in range(category | length) %}
+                        <option value="{{ i }}" {% if i == inquiry.inquiry_category %} selected="selected" {% endif %}>{{ category[i] }}</option>
+                    {% endfor %}
+                </select> -->
+            </div>
+
+            <div class="group">
+                <label for="inquiry_content">お問い合わせ内容</label>
+                <textarea id="inquiry_content" name="inquiry_contents">{{ inquiry.inquiry_contents }}</textarea>
+            </div>
+
+            <div class="button">
+                <button type="submit">決定</button>
+            </div>
+
+        </form>
+        <div class="button">
+            <form action="/inquiry_list" method="get">
+                <button type="submit">お問い合わせ一覧</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+    <script>
+    </script>
+{% endblock %}

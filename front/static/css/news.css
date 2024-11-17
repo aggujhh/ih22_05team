@@ -14,20 +14,20 @@
 }
 
 /*=======================================================*/
-/* 
-.news-filter{
-    display: flex;
-    flex-flow: row nowrap;
-}
-
-all-news-list{
+.all-news-list{
     display: none;
-} */
-
+}
 body {
     background-color: var(--color-body);
     font-family: 'Arial', sans-serif;
     color: #333;
+}
+
+.all-check-box{
+    display: flex;
+    justify-content: flex-start;
+    border-top: 1.5px dashed #818181;
+    padding: 1.2% 0;
 }
 
 .news-container {
@@ -40,14 +40,17 @@ h2 {
     font-weight: bold;
     color: #333;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 5px;
 }
 
 /* Big tab styles */
 .bigtab {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     margin-bottom: 20px;
+    gap: 2%;
+    width: 100%
 }
 
 .bigtab button {
@@ -58,7 +61,7 @@ h2 {
     color: #fff;
     cursor: pointer;
     border-radius: 20px;
-    margin: 0 5px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* ホバーアニメーション */
 }
 
 .bigtab .youtab1 {
@@ -69,13 +72,21 @@ h2 {
     background-color: #fff;
     color: var(--color-bp);
 }
+/* ホバー時のアニメーション */
+.bigtab .youtab1:hover {
+    background-color: var(--color-bp);
+}
+
+.bigtab .newsTab1:hover {
+    background-color: #dadada;
+}
 
 /* News filter section */
 .news-filter {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 15px;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .news-filter label {
@@ -89,13 +100,12 @@ h2 {
 
 /* News list styling */
 .your-news-list, .all-news-list {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
+    border-top: 1.5px dashed #818181;
 }
 
 .your-news-list div, .all-news-list div {
     padding: 15px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1.5px dashed #818181;
     display: flex;
     justify-content: space-between;
     align-items: center;

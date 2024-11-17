@@ -10,8 +10,9 @@
         <button class="youtab1" type="button">あなた宛</button>
         <button class="newsTab1" type="button">ニュース</button>
     </div>
+</div>
 
-
+<div class="page1">
     <div class="news-filter">
         <label>
             <input type="radio" name="newsTab" value="all" checked onchange="changeTab('all')"> すべて
@@ -23,12 +24,18 @@
             <input type="radio" name="newsTab" value="events" onchange="changeTab('notnew')"> 既読
         </label>
     </div>
+
+
+<div class="all-check-box">
+    <input type="checkbox" id="all-check" name="all-check" />
+    <label for="all-check">全て選択</label>
 </div>
 
     <!-- お知らせ一覧表示 -->
     <div id="your-news-list" class="your-news-list">
         <!-- JavaScriptでお知らせを表示 -->
     </div>
+</div>
 
     <div id="all-news-list" class="all-news-list">
         <!-- JavaScriptでお知らせを表示 -->

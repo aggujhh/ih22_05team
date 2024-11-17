@@ -1,14 +1,14 @@
 # flaskより必要なモジュールをインポートする
-from flask import Flask
+from flask import Flask, send_from_directory
 from routes import app
 from config import HOST, PORT
-import os
+import os,sys
 
 
 # カスタムフィルターを定義
 @app.template_filter('contains')
 def contains(value, collection):
-    print('reach contains, vlaue: collection:',value,collection)
+    print('reach contains, value: collection:',value,collection)
     return value in collection
 
 # アプリケーションの実行

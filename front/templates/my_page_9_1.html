@@ -1,0 +1,83 @@
+{% extends 'my_page_9.html' %}
+
+{% block production_management_content %}
+    <div class="setting_area">
+        <h3>情報設定</h3>
+        <form>
+            <ul>
+                <li>
+                    <p><small>*</small>依頼状態</p>
+                    <div>
+                        <p>現時点で作品を制作することが可能ですか？</p>
+                        <div class="toggle_switch" name="mapTypeControl">
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <p><small>*</small>得意分野</p>
+                    <ul>
+                        <li><label><input type="checkbox" id="checkAll">全部</label></li>
+                        <li>
+                            <label><input type="checkbox" id="clothing" class="ck"
+                                          value="衣装" {% if result["genre"][0] != "" %}checked{% endif %}>衣装</label>
+                        </li>
+                        <li><label><input type="checkbox" id="modeling" class="ck"
+                                          value="造形" {% if result["genre"][1] != "" %}checked{% endif %}> 造形</label>
+                        </li>
+                        <li><label><input type="checkbox" id="props" class="ck"
+                                          value="小道具" {% if result["genre"][2] != "" %}checked{% endif %}>
+                            小道具</label>
+                        </li>
+                        <li><label><input type="checkbox" id="wig" class="ck" value="ウィッグ"
+                                          {% if result["genre"][3] != "" %}checked{% endif %}>ウィッグ</label>
+                        </li>
+                        <li><label><input type="checkbox" id="accessory" class="ck"
+                                          value="アクセサリー" {% if result["genre"][4] != "" %}checked{% endif %}>
+                            アクセサリー</label></li>
+                        <li><label><input type="checkbox" id="others" class="ck"
+                                          value="その他"
+                                          {% if result["genre"][5] != "" %}checked{% endif %}>その他</label>
+                        </li>
+
+                    </ul>
+                    <input type="hidden" name="genre">
+                </li>
+                <li>
+                    <p><small>*</small>所有している道具</p>
+                    <input type="text" placeholder="所有している道具を入力してください" name="mail_address">
+                </li>
+                <li>
+                    <p><small>*</small>お知らせ</p>
+                    <textarea placeholder="例）制作一時停止のお知らせ
+日程：〇月〇日から〇月〇日まで
+内容：期間中、制作活動を一時停止いたします。
+ご不便をおかけいたしますが、何卒ご理解とご協力をお願い申し上げます。" name="details"></textarea>
+                </li>
+                <li>
+                    <p><small>*</small>制作可能イメージ図</p>
+                    <div>
+                        <div><input type="file" id="upload_img" style="display: none"></div>
+                        <input type="hidden" name="image" data-name="制作可能イメージ図">
+                        <div class="preview_area">
+                            <label class="add_box" for="upload_img">
+                                <div class="add">
+                                    <div class="a">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <small class="error_msg"></small>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="next_step_btn">次へ</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

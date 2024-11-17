@@ -6,6 +6,8 @@ const article = document.querySelector("article")
 window.addEventListener("load", () => {
     if (article.id === "profile_Settings") {
         my_page2()
+    } else if (article.id === "production_management") {
+        my_page9()
     }
 })
 
@@ -142,4 +144,19 @@ function validateImages(image) {
         return true
     }
     return false
+}
+
+function my_page9() {
+    const navs = document.querySelectorAll("#production_management >nav >div")
+    navs.forEach((e, i) => {
+        if (i !== 0) {
+            e.addEventListener("click", () => {
+                window.location.href = `/my_page/9/${i}`;
+            })
+        }
+    })
+
+    set_toggle()
+    check_box()
+    const imagesArray = add_and_delete_images()
 }

@@ -119,3 +119,120 @@ if (new_request_btn) {
 }
 
 
+function set_toggle() {
+    const slider = document.querySelector(".slider")
+    const toggle_switch = document.querySelector(".toggle_switch")
+    toggle_switch.addEventListener("click", (e) => {
+        toggle_switch.classList.toggle("off")
+        slider.classList.toggle("left")
+    })
+}
+
+
+function check_box() {
+    const checkAll = document.querySelector('#checkAll')
+    const cks = document.querySelectorAll('.ck')
+    let genre_list = ["", "", "", "", "", ""]
+    if (checkAll) {
+        checkAll.addEventListener('click', function () {
+            genre_list = []
+            for (let i = 0; i < cks.length; i++) {
+                cks[i].checked = this.checked
+            }
+            reset_genre_list()
+        })
+
+        for (let i = 0; i < cks.length; i++) {
+            cks[i].addEventListener('click', function () {
+                checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
+                reset_genre_list()
+            })
+        }
+
+        function reset_genre_list() {
+            genre_list = ["", "", "", "", "", ""]
+            for (let i = 0; i < cks.length; i++) {
+                if (cks[i].checked) {
+                    genre_list[i] = cks[i].value
+                }
+                document.querySelector('[name="genre"]').value = JSON.stringify(genre_list)
+            }
+            checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
+        }
+
+        reset_genre_list()
+    }
+}
+
+function add_and_delete_images() {
+    // 画像追加かつ表示
+    const fileInput = document.querySelector('[type="file"]');  // ファイル入力要素を取得
+    const preview_area = document.querySelector(".preview_area");  // 画像プレビューエリアを取得
+    let preview_area_temp
+    if (preview_area) {
+        preview_area_temp = preview_area.innerHTML;  // プレビューエリアの初期状態を保存
+    }
+    let imagesArray = [];  // 画像データを保存するための配列
+
+    // ファイルが選択された時のイベントリスナー
+    if (fileInput) {
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];  // 最初に選択されたファイルを取得
+            if (file) {
+                if (validateImages(file)) return//画像の形式とサイズが違う場合
+                const reader = new FileReader();  // FileReaderを使用してファイルを読み込む
+                reader.onload = function (e) {
+                    imagesArray.push(e.target.result);  // 画像データを配列に追加
+                    updatePreview();  // プレビューを更新
+                };
+                reader.readAsDataURL(file);  // ファイルをData URLとして読み込む
+            }
+        });
+    }
+
+
+    // プレビューエリアを更新する関数
+    function updatePreview() {
+        preview_area.innerHTML = preview_area_temp;  // プレビューエリアを初期状態に戻す
+        for (let index = imagesArray.length - 1; index >= 0; index--) {
+            const imageData = imagesArray[index];
+            preview_area.insertAdjacentHTML('afterbegin',
+                `<div class="preview" style="background-image:url(${imageData})">
+                        <button class="close_btn" data-index="${index}">✖</button>
+                    </div>`
+            );
+        }
+    }
+
+    preview_area.addEventListener('click', (event) => {
+        if (event.target.classList.contains('close_btn')) {
+            const index = event.target.getAttribute('data-index');  // ボタンのインデックスを取得
+            imagesArray.splice(index, 1);  // 指定の画像を削除
+            updatePreview();  // プレビューエリアを更新
+        }
+    });
+
+
+    //画像の形式とサイズをチェックする
+    function validateImages(image) {
+        preview_area.nextElementSibling.innerHTML = ""
+        const maxSize = 2 * 1024 * 1024;  // 最大2MB
+        const allowedFormats = ['image/jpeg', 'image/png', 'image/jpg'];  // 許可される画像形式
+        let count = 0
+        // 画像形式をチェック
+        if (!allowedFormats.includes(image.type)) {
+            console.log(image.type)
+            preview_area.nextElementSibling.innerHTML += "サポートされていない画像形式です。JPEG、PNG、jpg形式のみ使用可能です。<br>"
+            count++
+        }
+        // 画像サイズをチェック
+        if (image.size > maxSize) {
+            preview_area.nextElementSibling.innerHTML += "画像サイズが2MBの制限を超えています。"
+            count++
+        }
+        return count !== 0
+    }
+
+    return imagesArray
+}
+

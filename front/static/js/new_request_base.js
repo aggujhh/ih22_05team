@@ -3,7 +3,7 @@ console.log("new_request.js")
 // 画像追加かつ表示
 const fileInput = document.querySelector('[type="file"]');  // ファイル入力要素を取得
 const preview_area = document.querySelector(".preview_area");  // 画像プレビューエリアを取得
-// const creator_image = document.querySelector('[name="creator_image"]')
+
 let preview_area_temp
 let imagesArray; // 画像データを保存するための配列
 
@@ -358,38 +358,7 @@ if (prev_step_btn) {
 }
 
 
-const checkAll = document.querySelector('#checkAll')
-const cks = document.querySelectorAll('.ck')
-let genre_list = ["", "", "", "", "", ""]
-if (checkAll) {
-    checkAll.addEventListener('click', function () {
-        genre_list = []
-        for (let i = 0; i < cks.length; i++) {
-            cks[i].checked = this.checked
-        }
-        reset_genre_list()
-    })
-
-    for (let i = 0; i < cks.length; i++) {
-        cks[i].addEventListener('click', function () {
-            checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
-            reset_genre_list()
-        })
-    }
-
-    function reset_genre_list() {
-        genre_list = ["", "", "", "", "", ""]
-        for (let i = 0; i < cks.length; i++) {
-            if (cks[i].checked) {
-                genre_list[i] = cks[i].value
-            }
-            document.querySelector('[name="genre"]').value = JSON.stringify(genre_list)
-        }
-        checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
-    }
-
-    reset_genre_list()
-}
+check_box()
 
 const step_4 = document.querySelector(".step_4")
 if (step_4) {

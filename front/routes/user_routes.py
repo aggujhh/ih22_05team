@@ -163,7 +163,7 @@ def check_registration(user_type):
         user["user_id"] = creator_user_id
         user["tel"] = request.form.get("tel")
         user["creator_history"] = request.form.get("creator_history")
-        user["creator_image"] = json.loads(request.form.get("creator_image"))
+        user["image"] = json.loads(request.form.get("image"))
         phone_pattern = r"^(0\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{4}$"
         if not re.match(phone_pattern, user["tel"]):
             error_msg[3] = "電話番号の形式が正しくありません。再入力してください。"

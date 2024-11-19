@@ -9,6 +9,7 @@ class notification_model:
                 "SELECT notification_id, notification_title, notification_post_time, notification_content "
                 "FROM NOTIFICATION " 
                 "WHERE notification_post_status IN ('0','1') "
+                "ORDER BY notification_id DESC"
             )
             results = cursor.fetchall()
         print("はい",results)

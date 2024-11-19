@@ -132,35 +132,19 @@ function set_toggle() {
 function check_box() {
     const checkAll = document.querySelector('#checkAll')
     const cks = document.querySelectorAll('.ck')
-    let genre_list = ["", "", "", "", "", ""]
     if (checkAll) {
+        checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
         checkAll.addEventListener('click', function () {
-            genre_list = []
             for (let i = 0; i < cks.length; i++) {
                 cks[i].checked = this.checked
             }
-            reset_genre_list()
         })
 
         for (let i = 0; i < cks.length; i++) {
             cks[i].addEventListener('click', function () {
                 checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
-                reset_genre_list()
             })
         }
-
-        function reset_genre_list() {
-            genre_list = ["", "", "", "", "", ""]
-            for (let i = 0; i < cks.length; i++) {
-                if (cks[i].checked) {
-                    genre_list[i] = cks[i].value
-                }
-                document.querySelector('[name="genre"]').value = JSON.stringify(genre_list)
-            }
-            checkAll.checked = cks.length === document.querySelectorAll('.ck:checked').length
-        }
-
-        reset_genre_list()
     }
 }
 
@@ -183,7 +167,7 @@ function add_and_delete_images() {
                 const reader = new FileReader();  // FileReaderを使用してファイルを読み込む
                 reader.onload = function (e) {
                     imagesArray.push(e.target.result);  // 画像データを配列に追加
-                    updatePreview();  // プレビューを更新
+                    updatePreview(preview_area_temp);  // プレビューを更新
                 };
                 reader.readAsDataURL(file);  // ファイルをData URLとして読み込む
             }
@@ -192,23 +176,72 @@ function add_and_delete_images() {
 
 
     // プレビューエリアを更新する関数
-    function updatePreview() {
+    function updatePreview(preview_area_temp) {
         preview_area.innerHTML = preview_area_temp;  // プレビューエリアを初期状態に戻す
-        for (let index = imagesArray.length - 1; index >= 0; index--) {
+        for (let index = 0; index < imagesArray.length; index++) {
             const imageData = imagesArray[index];
-            preview_area.insertAdjacentHTML('afterbegin',
+            const children = preview_area.children;
+            // 获取倒数第二个元素
+            const target = children[children.length - 1];
+            target.insertAdjacentHTML('beforebegin',
                 `<div class="preview" style="background-image:url(${imageData})">
-                        <button class="close_btn" data-index="${index}">✖</button>
-                    </div>`
+                <button class="close_btn">✖</button>
+            </div>`
             );
         }
     }
 
     preview_area.addEventListener('click', (event) => {
+        console.log(imagesArray)
         if (event.target.classList.contains('close_btn')) {
-            const index = event.target.getAttribute('data-index');  // ボタンのインデックスを取得
-            imagesArray.splice(index, 1);  // 指定の画像を削除
-            updatePreview();  // プレビューエリアを更新
+            const parent = event.target.parentNode; // 获取按钮的父节点
+            const imageUrl = parent.style.backgroundImage; // 获取父节点的背景图片
+            // 提取背景图片的 URL（去掉 'url("...")' 的包装）
+            const imageData = imageUrl.slice(5, -2);
+            // 找到对应图片在 imagesArray 中的索引
+            const index = imagesArray.indexOf(imageData);
+            if (index >= 0) {
+                imagesArray.splice(index, 1); // 从 imagesArray 中移除对应的图片数据
+                console.log(imagesArray)
+                parent.remove();
+            }
+            // preview_area_temp = preview_area.innerHTML
+
+        } else if (event.target.classList.contains("delete_btn")) {
+            const image_name = event.target.dataset.name
+            console.log("image_name", image_name)
+            $.ajax({
+                url: 'http://127.0.0.1:5000/delete_image',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    image_name
+                },
+                success: (response) => {
+                    alert(response.message)
+                    event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+                    const tempContainer = document.createElement('div');
+                    tempContainer.innerHTML = preview_area.innerHTML; // 加载缓存内容
+
+                    let child = tempContainer.lastElementChild;
+                    for (let i = 0; i < imagesArray.length && child; i++) {
+                        const toRemove = child.previousElementSibling; // 获取倒数第二个子元素
+                        if (toRemove) {
+                            tempContainer.removeChild(toRemove); // 删除目标子元素
+                        }
+                        child = child.previousElementSibling; // 更新指针
+                    }
+
+
+                    // 更新 preview_area_temp
+                    preview_area_temp = tempContainer.innerHTML;
+                },
+                error: function (xhr, status, error) {
+                    // 请求失败时执行的函数
+                    console.error('Error response:', error.response);
+                    console.error('Error message:', error.message);
+                }
+            });
         }
     });
 

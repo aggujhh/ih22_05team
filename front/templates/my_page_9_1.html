@@ -3,16 +3,23 @@
 {% block production_management_content %}
     <div class="setting_area">
         <h3>情報設定</h3>
-        <form>
+        <form action="/update_creator_setting" method="post" id="creator_setting_form">
             <ul>
                 <li>
-                    <p><small>*</small>依頼状態</p>
+                    <p><small>*</small>依頼可能状態</p>
                     <div>
                         <p>現時点で作品を制作することが可能ですか？</p>
-                        <div class="toggle_switch" name="mapTypeControl">
-                            <span class="slider"></span>
-                        </div>
+                        {% if result['request_availability']=='1' %}
+                            <div class="toggle_switch">
+                                <span class="slider"></span>
+                            </div>
+                        {% else %}
+                            <div class="toggle_switch off">
+                                <span class="slider left"></span>
+                            </div>
+                        {% endif %}
                     </div>
+                    <input type="hidden" name="request_availability">
                 </li>
                 <li>
                     <p><small>*</small>得意分野</p>
@@ -20,39 +27,44 @@
                         <li><label><input type="checkbox" id="checkAll">全部</label></li>
                         <li>
                             <label><input type="checkbox" id="clothing" class="ck"
-                                          value="衣装" {% if result["genre"][0] != "" %}checked{% endif %}>衣装</label>
+                                          value="衣装"
+                                          {% if result['categories'][0] == '1' %}checked{% endif %}>衣装</label>
                         </li>
                         <li><label><input type="checkbox" id="modeling" class="ck"
-                                          value="造形" {% if result["genre"][1] != "" %}checked{% endif %}> 造形</label>
+                                          value="造形" {% if result['categories'][1] == '1' %}checked{% endif %}>
+                            造形</label>
                         </li>
                         <li><label><input type="checkbox" id="props" class="ck"
-                                          value="小道具" {% if result["genre"][2] != "" %}checked{% endif %}>
+                                          value="小道具" {% if result['categories'][2] == '1' %}checked{% endif %}>
                             小道具</label>
                         </li>
                         <li><label><input type="checkbox" id="wig" class="ck" value="ウィッグ"
-                                          {% if result["genre"][3] != "" %}checked{% endif %}>ウィッグ</label>
+                                          {% if result['categories'][3] == '1' %}checked{% endif %}>ウィッグ</label>
                         </li>
                         <li><label><input type="checkbox" id="accessory" class="ck"
-                                          value="アクセサリー" {% if result["genre"][4] != "" %}checked{% endif %}>
+                                          value="アクセサリー"
+                                          {% if result['categories'][4] == '1' %}checked{% endif %}>
                             アクセサリー</label></li>
                         <li><label><input type="checkbox" id="others" class="ck"
                                           value="その他"
-                                          {% if result["genre"][5] != "" %}checked{% endif %}>その他</label>
+                                          {% if result['categories'][5] == '1' %}checked{% endif %}>その他</label>
                         </li>
 
                     </ul>
-                    <input type="hidden" name="genre">
+                    <input type="hidden" name="expertise">
                 </li>
                 <li>
                     <p><small>*</small>所有している道具</p>
-                    <input type="text" placeholder="所有している道具を入力してください" name="mail_address">
+                    <input type="text" placeholder="所有している道具を入力してください" name="owned_tools"
+                           value="{{ result['owned_tools'] }}">
                 </li>
                 <li>
                     <p><small>*</small>お知らせ</p>
                     <textarea placeholder="例）制作一時停止のお知らせ
 日程：〇月〇日から〇月〇日まで
 内容：期間中、制作活動を一時停止いたします。
-ご不便をおかけいたしますが、何卒ご理解とご協力をお願い申し上げます。" name="details"></textarea>
+ご不便をおかけいたしますが、何卒ご理解とご協力をお願い申し上げます。"
+                              name="details">{{ result['creator_notification'] }}</textarea>
                 </li>
                 <li>
                     <p><small>*</small>制作可能イメージ図</p>
@@ -60,6 +72,14 @@
                         <div><input type="file" id="upload_img" style="display: none"></div>
                         <input type="hidden" name="image" data-name="制作可能イメージ図">
                         <div class="preview_area">
+                            {% if result['image_paths'] %}
+                                {% for i in result['image_paths'] %}
+                                    <div class="preview"
+                                         style="background-image:url({{ url_for('static', filename = i) }})">
+                                        <button class="delete_btn" type="button" data-name="{{ result['images'][loop.index0] }}">✖</button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             <label class="add_box" for="upload_img">
                                 <div class="add">
                                     <div class="a">
@@ -80,4 +100,12 @@
             </ul>
         </form>
     </div>
+{% endblock %}
+
+{% block script_area %}
+    {% if alert_message %}
+        <script>
+            alert("{{ alert_message }}");
+        </script>
+    {% endif %}
 {% endblock %}

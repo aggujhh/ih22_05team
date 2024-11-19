@@ -313,6 +313,7 @@ main > h2 {
                 }
 
                 > li:nth-of-type(5) {
+                    .delete_btn,
                     .close_btn {
                         top: 5px;
                         right: 5px;

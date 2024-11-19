@@ -334,6 +334,7 @@ if (next_step_btn) {
             localStorage.setItem("imagesArray", JSON.stringify(imagesArray))
         }
         localStorage.setItem("progress_value_list", JSON.stringify(progress_value_list))
+        reset_genre_list()
         let num = Number(document.querySelector("section>section").getAttribute("class").split("_")[1])
         document.querySelector("section>section form").action = "/new_request_base/0" + String(num + 1)
         document.querySelector("section>section form").submit();
@@ -351,14 +352,26 @@ if (prev_step_btn) {
             localStorage.setItem("imagesArray", JSON.stringify(imagesArray))
         }
         localStorage.setItem("progress_value_list", JSON.stringify(progress_value_list))
+        reset_genre_list()
         let num = Number(document.querySelector("section>section").getAttribute("class").split("_")[1])
         document.querySelector("section>section form").action = "/new_request_base/0" + String(num - 1)
         document.querySelector("section>section form").submit();
     })
 }
 
-
 check_box()
+
+function reset_genre_list() {
+    let genre_list = ["", "", "", "", "", ""]
+    const cks = document.querySelectorAll('.ck')
+    for (let i = 0; i < cks.length; i++) {
+        if (cks[i].checked) {
+            genre_list[i] = cks[i].value
+        }
+        document.querySelector('[name="genre"]').value = JSON.stringify(genre_list)
+    }
+}
+
 
 const step_4 = document.querySelector(".step_4")
 if (step_4) {

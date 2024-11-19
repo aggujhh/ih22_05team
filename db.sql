@@ -955,7 +955,8 @@ VALUES ('0000001', 'お知らせ'),
 -- database 変更 2024/11/12 陳昱光
 -- ===================================================
 -- 電話番号の項目削除
-ALTER TABLE inquiry DROP inquiry_tel;
+ALTER TABLE inquiry
+    DROP inquiry_tel;
 
 
 -- ===================================================
@@ -978,3 +979,22 @@ VALUES ('U_00000001', 'http://example.com/images/design1.jpg'),
        ('U_00000003', 'http://example.com/images/design3.jpg'),
        ('U_00000004', 'http://example.com/images/design4.jpg'),
        ('U_00000005', 'http://example.com/images/design5.jpg');
+
+
+-- ===================================================
+-- database 変更 2024/11/18 陳昱光
+-- ===================================================
+-- EXPERTISEの変更
+ALTER TABLE expertise
+    DROP category_id;
+ALTER TABLE expertise
+    ADD category_name char(60);
+
+-- design_previewの変更
+ALTER TABLE design_preview
+    DROP image_id;
+ALTER TABLE design_preview
+    change image_url images varchar(255);
+ALTER TABLE design_preview
+    change image_url images varchar(255);
+ALTER TABLE design_preview MODIFY images TEXT;

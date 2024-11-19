@@ -151,6 +151,7 @@ table {
         background-repeat: no-repeat;
         position: relative;
 
+        .delete_btn,
         .close_btn {
             height: 30px;
             width: 30px;
@@ -166,6 +167,7 @@ table {
             right: 5px;
         }
 
+        .delete_btn:hover,
         .close_btn:hover {
             background: #FF3578;
             color: #fff;

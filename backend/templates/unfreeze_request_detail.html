@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            background-color: #cfcfcf;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        .group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .group input[type="text"],
+        .group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .group textarea {
+            height: 100px;
+            resize: none;
+        }
+        .group input[type="radio"] {
+            margin-right: 5px;
+        }
+        .group label.radio-label {
+            font-weight: normal;
+            margin-right: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            width: 30%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button#post {
+            background-color: #4caf50;
+            color: white;
+        }
+        .buttons button#save {
+            background-color: #2196f3;
+            color: white;
+        }
+        .buttons button#cancel {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block title %} 解凍申請詳細画面 {% endblock %}
+
+{% block header %}
+
+    <h2>解凍申請詳細</h2>
+    <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
+    <div class="button">
+        <form action="/unfreeze_request" method="get">
+            <button type="submit">解凍申請一覧へ</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="{{ url_for('unfreeze_request_detail', unfreeze_request_id=data.unfreeze_request_id) }}" method="post">
+            <div class="group">
+                <label for="unfreeze_request_id">解凍申請ID</label>
+                <input type="text" id="unfreeze_request_id" name="unfreeze_request_id" value="{{ data.unfreeze_request_id }}">
+            </div>            
+
+            <div class="group">
+                <label for="user_id">ユーザID</label>
+                <input type="text" id="user_id" name="user_id" value="{{ data.user_id }}">
+            </div>
+
+            <div class="group">
+                <label for="unfreeze_request_email">申請者メール</label>
+                <input type="text" id="unfreeze_request_email" name="unfreeze_request_email" value="{{ data.unfreeze_request_email }}">
+            </div>
+
+            <div class="group">
+                <label for="unfreeze_request_reason">申請理由</label>
+                <textarea id="unfreeze_request_reason" name="unfreeze_request_reason">{{ data.unfreeze_request_reason }}</textarea>
+            </div>
+
+            <div class="group">
+                <label>解凍可否</label>
+                <input type="radio" id="undecied" name="unfreeze_request_status" value="0" checked="checked">
+                <label for="undecied" class="radio-label">未確認</label>
+                <input type="radio" id="admit" name="unfreeze_request_status" value="1" >
+                <label for="admit" class="radio-label">承認</label>
+                <input type="radio" id="reject" name="unfreeze_request_status" value="2">
+                <label for="reject" class="radio-label">却下</label>
+            </div>
+
+            <div class="button">
+                <button type="submit">決定</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+    <script>
+    </script>
+{% endblock %}

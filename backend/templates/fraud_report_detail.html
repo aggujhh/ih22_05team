@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            background-color: #cfcfcf;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        .group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .group input[type="text"],
+        .group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .group textarea {
+            height: 100px;
+            resize: none;
+        }
+        .group input[type="radio"] {
+            margin-right: 5px;
+        }
+        .group label.radio-label {
+            font-weight: normal;
+            margin-right: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            width: 30%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button#post {
+            background-color: #4caf50;
+            color: white;
+        }
+        .buttons button#save {
+            background-color: #2196f3;
+            color: white;
+        }
+        .buttons button#cancel {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block title %} 不正検知詳細画面 {% endblock %}
+
+{% block header %}
+
+    <h2>不正検知詳細</h2>
+    <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
+    <div class="button">
+        <form action="/fraud_reports" method="get">
+            <button type="submit">不正検知一覧</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+            <div class="group">
+                <label for="fraud_report_id">不正検知ID</label>
+                <input type="text" id="fraud_report_id" name="fraud_report_id" value="{{ report.fraud_report_id }}">
+            </div>            
+
+            <div class="group">
+                <label for="reported_time">報告時刻</label>
+                <input type="text" id="reported_time" name="reported_time" value="{{ report.reported_time }}">
+            </div>
+
+            <div class="group">
+                <label for="reporter_user_id">報告ユーザID</label>
+                <input type="text" id="reporter_user_id" name="reporter_user_id" value="{{ report.reporter_user_id }}">
+            </div>
+
+            <div class="group">
+                <label for="reported_user_id">被報告ユーザID</label>
+                <input type="text" id="reported_user_id" name="reported_user_id" value="{{ report.reported_user_id }}">
+            </div>
+
+            <!-- <div class="group">
+                <label for="fraud_report_status">ステータス設定</label>
+                <select id="fraud_report_status" name="fraud_report_status">
+                    {% for i in range(status | length) %}
+                        <option value="{{ i }}" {% if i == fraud_report.fraud_report_status %} selected="selected" {% endif %}>{{ status[i] }}</option>
+                    {% endfor %}
+                </select>
+            </div> -->
+
+            <div class="group">
+                <label for="detection_type">検知種類</label>
+                <input type="text" id="detection_type" name="detection_type" value="{{ report.detection_type }}">
+            </div>
+
+        <form action="{{ url_for('fraud_report_detail', fraud_report_id=report.fraud_report_id) }}" method="post">
+            <div class="group">
+                <label>違反判定</label>
+                <input type="radio" id="undecied" name="violation_judgment" value="0" checked="checked">
+                <label for="undecied" class="radio-label">未判定</label>
+                <input type="radio" id="violation" name="violation_judgment" value="1" >
+                <label for="violation" class="radio-label">違反</label>
+                <input type="radio" id="nonviolation" name="violation_judgment" value="2">
+                <label for="nonviolation" class="radio-label">違反でない</label>
+            </div>
+
+            <div class="group">
+                <label for="violation_reason">違反理由</label>
+                <textarea id="violation_reason" name="violation_reason">{{ report.violation_reason }}</textarea>
+            </div>
+
+            <div class="button">
+                <button type="submit">決定</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+    <script>
+    </script>
+{% endblock %}

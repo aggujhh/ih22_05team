@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/inquiry.css') }}">{% endblock %}
+
+{% block title %} 解凍申請一覧画面 {% endblock %}
+
+{% block header %}
+    <h2>解凍申請一覧</h2>
+
+    <div class="button">
+        <form action="/fraud_reports" method="GET">
+            <button type="submit">不正検知一覧へ</button>
+        </form>
+        <button>全部</button>
+        <button>未確認</button>
+        <button>対応中</button>
+        <button>解決</button>
+        <button>保留</button>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    
+    <p>{{msg}}</p>
+
+    <div class="items">
+        {% for a in data %}
+                {% set detail_url = url_for('unfreeze_request_detail', unfreeze_request_id=a.unfreeze_request_id) %}
+                <div class="item" onclick="window.location.href='{{ detail_url }}'">
+                    <div class="unfreeze_request_id">解凍ID:{{ a.unfreeze_request_id }}</div>
+                    <div class="user_id">ユーザID:{{ a.user_id }}</div>
+                    <div class="unfreeze_request_email">申請者メール:{{ a.unfreeze_request_email }}</div>
+                    <div class="unfreeze_request_reason">申請理由:{{ a.unfreeze_request_reason }}</div>
+                    <div class="unfreeze_request_status">申請判定:{{ a.unfreeze_request_status }}</div>
+                </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+    <script>
+        
+    </script>
+{% endblock %}

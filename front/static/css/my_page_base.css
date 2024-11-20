@@ -133,6 +133,214 @@ main > h2 {
         }
     }
 
+    #production_management {
+        width: 100%;
+        background: none;
+
+        nav {
+            width: 100%;
+            height: 140px;
+            background: none;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            border-top: 1.5px solid #ec7fb1;
+            border-bottom: 1.5px solid #ec7fb1;
+            background: #fff;
+            margin-bottom: 20px;
+
+            > div {
+
+                > p {
+                    font-size: 20px;
+                    font-weight: bold;
+                    text-align: center;
+                    color: #ec7fb1;
+                }
+
+                > div {
+                    width: 100%;
+                    height: 90px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                        path {
+                            fill: #ec7fb1;
+                        }
+                    }
+                }
+            }
+
+            > .a {
+                cursor: pointer;
+            }
+
+            > .a.active {
+                background: #ec7fb1;
+
+                p {
+                    color: #f3f3f3;
+                }
+
+                path {
+                    fill: #f3f3f3;
+                }
+            }
+
+            > .a:hover {
+                background: #ec7fb1;
+            }
+
+            > .a:hover p {
+                color: #f3f3f3;
+            }
+
+            > .a:hover path {
+                fill: #f3f3f3;
+            }
+
+            .title {
+                font-family: "Kaisei HarunoUmi", serif;
+                color: #ec7fb1;
+                font-weight: bold;
+                font-size: 40px;
+                text-align: center;
+                line-height: 138px;
+            }
+        }
+
+        .setting_area {
+            background: #fff;
+
+            > form > ul {
+                padding: 20px 60px;
+
+                > li {
+                    display: grid;
+                    grid-template-columns: 1fr 3.3fr;
+                    margin-bottom: 20px;
+                    line-height: 35px;
+                    font-weight: bold;
+                }
+
+                > li:nth-of-type(1) {
+                    > div {
+                        position: relative;
+
+                        > p {
+                            font-weight: normal;
+                        }
+
+                        .toggle_switch {
+                            height: 30px;
+                            width: 60px;
+                            border-radius: 30px;
+                            background-color: #ffec1a;
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            border: 1.5px solid #ec7fb1;
+                            right: 20%;
+                            transition: 0.6s;
+                            cursor: pointer;
+                        }
+
+                        #del_btn {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            right: 0;
+                            padding: 5px 20px;
+                            background-color: #2664d7;
+                            border-radius: 5px;
+                            color: #d3d3d3;
+                            border: none;
+                        }
+
+                        .slider {
+                            height: 20px;
+                            width: 20px;
+                            border-radius: 50%;
+                            background-color: #ec7fb1;
+                            position: absolute;
+                            top: 50%;
+                            right: 5px;
+                            transform: translateY(-50%);
+                            transition: 0.6s;
+                        }
+
+                        .off {
+                            background-color: #e6e1e5;
+                            border: 1.5px solid #8d8d8d;
+                        }
+
+                        .left {
+                            transform: translateX(-28px) translateY(-50%);
+                            background: #8d8d8d;
+                        }
+
+                    }
+                }
+
+                > li:nth-of-type(2) {
+
+                    > ul {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: start;
+                        align-items: center;
+                        gap: 15px;
+
+                        label {
+                            color: #818181;
+
+                            input {
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+
+
+                }
+
+                > li:nth-of-type(4) {
+                    height: 150px;
+
+                    textarea {
+                        padding: 10px 20px;
+                    }
+                }
+
+                > li:nth-of-type(5) {
+                    .delete_btn,
+                    .close_btn {
+                        top: 5px;
+                        right: 5px;
+                    }
+
+                    margin-bottom: 40px;
+                }
+
+
+                > li:last-of-type {
+                    position: relative;
+
+                    button {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        padding: 8px 80px;
+                        background: #ec7fb1;
+                        color: #f3f3f3;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+
+    }
+
 
     .input_area {
         padding: 80px 150px;

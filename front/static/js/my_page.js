@@ -6,6 +6,8 @@ const article = document.querySelector("article")
 window.addEventListener("load", () => {
     if (article.id === "profile_Settings") {
         my_page2()
+    } else if (article.id === "production_management") {
+        my_page9()
     }
 })
 
@@ -143,3 +145,60 @@ function validateImages(image) {
     }
     return false
 }
+
+function my_page9() {
+    const navs = document.querySelectorAll("#production_management >nav >div")
+    const request_availability = document.querySelector('[name="request_availability"]')
+    const toggle_switch = document.querySelector('.toggle_switch')
+    const next_step_btn = document.querySelector('.next_step_btn')
+    const images_input = document.querySelector('[name="image"]')
+    navs.forEach((e, i) => {
+        if (i !== 0) {
+            e.addEventListener("click", () => {
+                window.location.href = `/my_page/9/${i}`;
+            })
+        }
+    })
+
+    set_toggle()
+    check_box()
+    let imagesArray = add_and_delete_images()
+    next_step_btn.addEventListener("click", () => {
+        const preview = document.querySelector(".preview")
+        if (toggle_switch.classList.contains("off")) {
+            request_availability.value = "0"
+        } else {
+            request_availability.value = "1"
+        }
+        get_expertise_list_data()
+        images_input.value = JSON.stringify({images: imagesArray})
+        console.log(images_input.value)
+
+
+
+        document.querySelector("#creator_setting_form").submit()
+    })
+
+
+}
+
+function get_expertise_list_data() {
+    let list = [0, 0, 0, 0, 0, 0]
+    const cks = document.querySelectorAll('.ck')
+    for (let i = 0; i < cks.length; i++) {
+        if (cks[i].checked) {
+            list[i] = 1
+        }
+    }
+    document.querySelector('[name="expertise"]').value = JSON.stringify(list)
+}
+
+
+// function delete_image() {
+//     const preview_area = document.querySelector(".preview_area");
+//     // const delete_btn = document.querySelectorAll(".delete_btn")
+//     preview_area.addEventListener("click", function (event) {
+//
+//     })
+// }
+

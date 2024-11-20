@@ -7,13 +7,13 @@
     <h2>お知らせ一覧</h2>
 
     <div class="bigtab">
-        <button class="youtab1" type="button">あなた宛</button>
-        <button class="newsTab1" type="button">ニュース</button>
+        <button class="youtab1" type="button">ニュース</button>
+        <button class="newsTab1" type="button">あなた宛</button>
     </div>
 </div>
 
 <div class="page1">
-    <div class="news-filter">
+    <!-- <div class="news-filter">
         <label>
             <input type="radio" name="newsTab" value="all" checked onchange="changeTab('all')"> すべて
         </label>
@@ -23,23 +23,35 @@
         <label>
             <input type="radio" name="newsTab" value="events" onchange="changeTab('notnew')"> 既読
         </label>
-    </div>
+    </div> -->
 
 
-<div class="all-check-box">
+<!-- <div class="all-check-box">
     <input type="checkbox" id="all-check" name="all-check" />
     <label for="all-check">全て選択</label>
-</div>
+</div> -->
 
     <!-- お知らせ一覧表示 -->
     <div id="your-news-list" class="your-news-list">
-        <!-- JavaScriptでお知らせを表示 -->
+        <!-- ここに埋め込み -->
+    {% for notification in notifications %}
+        <div class="news-item">
+            <h3>{{ notification.notification_title }}</h3>
+            <p>{{ notification.notification_content }}</p>
+        </div>
+    {% endfor %}
     </div>
 </div>
 
-    <div id="all-news-list" class="all-news-list">
-        <!-- JavaScriptでお知らせを表示 -->
-    </div>
+    <!-- <div id="all-news-list" class="all-news-list"> -->
+        <!-- ここに埋め込み -->
+    <!-- {% for notification in notifications %}
+        <div class="news-item">
+            <h3>{{ notification.notification_title }}</h3>
+            <p>{{ notification.notification_content }}</p>
+        </div>
+    {% endfor %}
+    </div> -->
 
     <!-- ページネーション -->
     <div id="pagination" class="pagination">

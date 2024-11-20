@@ -1,7 +1,7 @@
 from . import app
 from flask import render_template, request, redirect
 from db.request_model import Request_model
-
+from db.notification_model import notification_model
 
 @app.route("/")
 def hello():
@@ -18,6 +18,10 @@ def redirect_nav(nav_name):
     left_margin = request.form.get("left_margin")
     if nav_name == "index":
         return redirect('/')
+    elif nav_name == "news":
+        print("newsに接続しました")
+        notifications = notification_model().get_notifications()
+        return render_template('news.html', notifications=notifications)
     elif nav_name == "requests":
         results, count = Request_model().fetch_all_requests()
         for result in results:

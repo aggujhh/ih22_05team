@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block link_area %}
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+HarunoUmi&family=Yusei+Magic&display=swap" rel="stylesheet">
+{% endblock %}
 {% block style %}{{ url_for('static', filename='css/my_page_base.css') }}{% endblock %}
 
 {% block content %}
@@ -7,11 +10,15 @@
     <section id="my_page_base">
         <nav>
             <ul>
-                {% for i in page_name_list %}
-                    {% if loop.index0 + 1 == page_num %}
-                        <li class="active"><a href="#" onclick="event.preventDefault();">➤ {{ i }}</a></li>
+                {% for key,value in page_name_list.items() %}
+                    {% if key == page_num %}
+                        <li class="active"><a href="#" onclick="event.preventDefault();">➤ {{ value }}</a></li>
                     {% else %}
-                        <li><a href="/my_page/{{ loop.index0 + 1 }}">➤ {{ i }}</a></li>
+                        {% if key == "1" and user_type=="1" %}
+                            <li><a href="/my_page/9">➤ {{ value }}</a></li>
+                        {% else %}
+                            <li><a href="/my_page/{{ key }}">➤ {{ value }}</a></li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </ul>

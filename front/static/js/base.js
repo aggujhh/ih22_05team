@@ -1,5 +1,13 @@
 console.log("base.js");
 
+window.addEventListener("load", function () {
+    const left_margin = document.querySelectorAll('header nav li')[0].offsetLeft + 'px'
+    const short_line = document.querySelector(".short_line")
+    if (short_line.style.left === "0px") {
+        short_line.style.left = left_margin
+    }
+})
+
 const logo = document.querySelector("#logo-container")
 logo.addEventListener("click", () => window.location.href = '/')
 
@@ -269,3 +277,14 @@ function add_and_delete_images() {
     return imagesArray
 }
 
+function throttle(func, wait) {
+    let timeout = null;
+    return function () {
+        if (!timeout) {
+            timeout = setTimeout(() => {
+                func.apply(this);
+                timeout = null;
+            }, wait);
+        }
+    };
+}

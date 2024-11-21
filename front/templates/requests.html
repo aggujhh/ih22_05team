@@ -37,7 +37,6 @@
         <div class="request-list">
             <form action="/request/" method="post" class="get_request_id"></form>
             <ul>
-                <div class="loader" id="loading"></div>
                 {% for result in results %}
                     <li class="request_box" data-id="{{ result['request_id'] }}">
                         <div class="request_img"
@@ -57,7 +56,11 @@
                         {% endif %}
                         <div class="request_category">
                             {% for i in result['categories'] %}
-                                <p>{{ i }}</p>
+                                {% if loop.index0 == 2 %}
+                                    <p>...</p>
+                                {% elif loop.index0 < 2 %}
+                                    <p>{{ i }}</p>
+                                {% endif %}
                             {% endfor %}
                         </div>
                         <button class="apply_btn">応募する</button>

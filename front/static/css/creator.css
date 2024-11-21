@@ -1,0 +1,230 @@
+#creator_view {
+
+    .header {
+        height: 50vh;
+        width: 100vw;
+        margin-left: -21.45%;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .5);
+        position: relative;
+        margin-bottom: 100px;
+
+        .background_img_box {
+            width: 100%;
+            height: 85%;
+            background-image: url('../img/test_bg_img.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .user_box {
+            height: 240px;
+            width: 240px;
+            border-radius: 50%;
+            border: 5px solid #ec7fb1;
+            position: absolute;
+            left: 15%;
+            bottom: -5vh;
+            background-image: url('../img/uploads/user_icon/88d826498f1f34f760eaf2ba1bd53530.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .5);
+        }
+    }
+
+    .middle {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-column-gap: 40px;
+        height: 180vh;
+        margin-bottom: 40px;
+
+
+        > div:nth-of-type(1) {
+
+            > div {
+                background: #fff;
+                border: 1.5px solid #ec7fb1;
+                padding: 40px 20px;
+            }
+
+            > div:first-of-type {
+                margin-bottom: 40px;
+
+                > div {
+                    margin-bottom: 10px;
+                }
+
+                > div:first-of-type {
+                    display: grid;
+                    grid-template-columns: 1fr 1.2fr;
+                    grid-column-gap: 5px;
+
+                    .nickname {
+                        font-size: 20px;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 170px;
+
+                        .gender {
+                            display: inline-block;
+                            font-size: 25px;
+                            font-weight: bold;
+                            transform: translateY(-5px) rotate(45deg);
+                            font-family: "Gamja Flower", sans-serif;
+                        }
+                    }
+
+                    > div:nth-of-type(2) {
+                        display: grid;
+                        grid-template-columns: 4fr 1fr;
+                        grid-column-gap: 10px;
+
+
+                        .star-box {
+                            position: relative;
+                            background: #818181;
+                            height: 28px;
+                            width: 142.4px;
+                            overflow: hidden;
+
+                            #top_stars {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                fill: #fff;
+                                height: 100%;
+                                width: 100%;
+                            }
+
+                            .bottom_stars {
+                                height: 100%;
+                                width: 50%;
+                                background: #ffbc0b;
+                                transform: translateX(-5px) skew(-20deg) scaleX(1.08);
+                            }
+                        }
+
+                        .num {
+                            padding: 3px 6px;
+                            height: 28px;
+                            background: #ffbc0b;
+                            color: #fff;
+                            font-weight: bold;
+                            border-radius: 5px;
+                        }
+                    }
+                }
+
+                > div:nth-of-type(2) {
+                    display: flex;
+                }
+
+                > div:nth-of-type(3) {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px;
+
+                    > div {
+                        padding: 3px 6px;
+                        background: red;
+                        border-radius: 5px;
+                    }
+                }
+
+                > div:nth-of-type(4) {
+                    background: #6ec5b8;
+                    color: #fff;
+                    font-weight: bold;
+                    line-height: 40px;
+                    text-align: center;
+                    border-radius: 40px;
+                    margin-bottom: 40px;
+                }
+
+                > div:nth-of-type(5),
+                > div:nth-of-type(7) {
+                    border-bottom: 1.5px dashed #ec7fb1;
+                    margin-bottom: 40px;
+                }
+
+                > div:nth-of-type(6) {
+                    display: flex;
+                    color: #ec7fb1;
+                    gap: 5px;
+                }
+
+                > p:nth-of-type(1) {
+                    margin-bottom: 40px;
+                }
+
+                > div:nth-of-type(8) {
+                    display: flex;
+                    color: #ec7fb1;
+                    gap: 5px;
+                }
+
+                > p:nth-of-type(2) {
+                    margin-bottom: 40px;
+                }
+
+                > button {
+                    padding: 8px 26px 8px 40px;
+                    background: #6ec5b8;
+                    border-radius: 5px;
+                    color: #fff;
+                    font-size: 16px;
+                    position: relative;
+                    overflow: hidden;
+
+                    > svg {
+                        position: absolute;
+                        top: 22%;
+                        left: 15px;
+                    }
+                }
+
+            }
+
+            .review_box {
+                > div:nth-of-type(1) {
+                    display: flex;
+                    color: #ec7fb1;
+                    gap: 5px;
+                    margin-bottom: 20px;
+                }
+
+                > div:nth-of-type(2) {
+                    height: 110px;
+                    display: grid;
+                    grid-template-columns: 1fr 4fr 6fr 1fr;
+                    grid-column-gap: 2px;
+
+                    > div {
+                        background: red;
+                    }
+                }
+            }
+        }
+
+        > div:nth-of-type(2) {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-row-gap: 40px;
+
+            > div {
+                background: #fff;
+                border: 1.5px solid #ec7fb1;
+            }
+        }
+    }
+
+    .fooder {
+        height: 50vh;
+        background: #fff;
+        border: 1.5px solid #ec7fb1;
+    }
+}

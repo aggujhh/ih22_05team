@@ -106,7 +106,6 @@
 
 #requests_view .request-list li {
     position: relative;
-    /*background: #111;*/
     height: 380px;
     transition: 0.6s;
     cursor: pointer;

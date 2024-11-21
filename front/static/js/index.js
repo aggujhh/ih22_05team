@@ -67,7 +67,7 @@ function timer() {
     time = setInterval(() => {
         add();
         // position();
-    }, 3000)
+    }, 4000)
 }
 
 //点击左键
@@ -77,7 +77,6 @@ carousel_left_btn.addEventListener("click", () => {
 //点击右键
 carousel_right_btn.addEventListener("click", () => {
     add();
-    console.log(123)
     // position();
 })
 

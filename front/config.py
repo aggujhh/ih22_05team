@@ -14,7 +14,7 @@ SECRET_KEY = secrets.token_hex(16)  # 16バイトの安全な秘密鍵を生成
 # PERMANENT_SESSION_LIFETIME = timedelta(hours=1)
 
 # ファイルサイズ制限、最大2MB
-MAX_CONTENT_LENGTH = 2 * 1024 * 1024
+MAX_CONTENT_LENGTH = 20 * 1024 * 1024
 
 # 許可されているファイル拡張子
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}

@@ -4,16 +4,39 @@ from db.request_model import Request_model
 from db.notification_model import notification_model
 from db.creator_model import Creator_model
 import os
+import math
 from flask_login import current_user
 
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
-    results, count = Request_model().fetch_all_requests()
-    for result in results:
+    requests, requests_count = Request_model().fetch_all_requests()
+    for result in requests:
         result['image_path'] = f"img/uploads/{result['user_id']}/requests/{result['request_id']}/{result['photo_name']}"
-    print(results)
-    return render_template('index.html', left_margin="0px", results=results)
+    creators, creators_count = Creator_model().fetch_all_creators()
+    creators_count = math.ceil(int(creators_count['COUNT(*)']) / 4)
+
+    for result in creators:
+        icon_path = f"img/uploads/{result['user_id']}/icon_url/image_icon_url.png"
+        file_path = os.path.join(app.config['STATIC_DIR'], icon_path)
+        if not os.path.exists(file_path):
+            icon_path = f"/img/default_avatar.png"
+        result["icon_path"] = icon_path
+        if result['creator_notification'] is not None:
+            result['creator_notification'] = result['creator_notification'].replace("\r\n", "<br>")
+        if result['categorys']:
+            result['category_stages'] = result['categorys'].split(",")
+            result['category_names'] = ["衣装", "造形", "小道具", "ウィッグ", "アクセサリー", "その他"]
+            result['category_colors'] = ["#F28C8E", "#FCB869", "#CACA61", "#3FABA4", "#6591C0", "#AC7EAE"]
+        if result['images']:
+            result['images_list'] = result['images'].split(",")
+            if len(result['images_list']) > 3:
+                result['images_list'] = result['images_list'][:3]
+            for i in range(len(result['images_list'])):
+                result['images_list'][
+                    i] = f"/img/uploads/{result['user_id']}/design_preview/{result['images_list'][i]}"
+    return render_template('index.html', left_margin="0px", requests=requests, creators=creators,
+                           creators_count=creators_count)
 
 
 # すべてのナビのページへのリダイレクト
@@ -53,7 +76,6 @@ def redirect_nav(nav_name):
                 for i in range(len(result['images_list'])):
                     result['images_list'][
                         i] = f"/img/uploads/{result['user_id']}/design_preview/{result['images_list'][i]}"
-
 
         print(results, count)
         return render_template('creators.html', left_margin=left_margin, results=results, count=count['COUNT(*)'])

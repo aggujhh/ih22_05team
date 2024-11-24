@@ -59,8 +59,6 @@ def inject_user_data():
         nickname = None
         avatar = None
         user_type = None
-    # 将 nickname 注入到模板上下文中
-    print('nickname:', nickname, " avatar:", avatar, " user_type:", user_type, type(user_type))
     return {'nickname': nickname, "avatar": avatar, "user_type": user_type}
 
 

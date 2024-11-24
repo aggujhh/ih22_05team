@@ -32,7 +32,7 @@ function load_creator() {
                     const creators_list = document.querySelector(".creators-list >ul")
                     if (!response.data) {
                         load_flag = false
-                        creators_list.innerHTML += "<p>すべての制作者はこちらで以上となります。</p>"
+                        creators_list.innerHTML += "<p style='color: #FF3578'>すべての制作者はこちらで以上となります。</p>"
                         console.log("Loader should be hidden now");
                         return
                     }

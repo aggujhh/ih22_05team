@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COSBARA</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+            background: #333;
+
+            > img {
+                max-height: 90vh;
+                width: auto;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            form > img {
+                width: 80px;
+                height: auto;
+                margin: 30px 40px;
+                cursor: pointer;
+                transition: 0.6s;
+            }
+
+            form > img:hover {
+                transform: scaleX(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+<form action="/creator/{{ user_id }}" method="post">
+    <input type="hidden" name="to_bottom" value="True">
+    <img class="back" src="{{ url_for('static', filename="img/return.png") }}">
+</form>
+<img src="{{ url_for('static', filename=result) }}">
+<script>
+    let windowHeight = window.innerHeight;
+    console.log("窗口高度: ", windowHeight);
+    document.querySelector(".back").addEventListener("click", (e) => {
+        e.target.parentNode.submit()
+    })
+</script>
+</body>
+</html>

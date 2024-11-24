@@ -3,7 +3,7 @@ console.log("base.js");
 window.addEventListener("load", function () {
     const left_margin = document.querySelectorAll('header nav li')[0].offsetLeft + 'px'
     const short_line = document.querySelector(".short_line")
-    if (short_line.style.left === "0px") {
+    if (short_line && short_line.style.left === "0px") {
         short_line.style.left = left_margin
     }
 })

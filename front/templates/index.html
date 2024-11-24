@@ -2,7 +2,9 @@
 
 {% block link_area %}
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/star_font.css') }}">
 {% endblock %}
+
 
 {% block style %}static/css/index.css{% endblock %}
 
@@ -68,7 +70,7 @@
         <div>
             <form action="/request/" method="post" class="get_request_id"></form>
             <ul>
-                {% for result in results %}
+                {% for result in requests %}
                     <li data-id="{{ result['request_id'] }}">
                         <div class="request_img"
                              style="background-image: url('{{ url_for('static', filename=result['image_path']) }}')">
@@ -98,25 +100,25 @@
                     </li>
                 {% endfor %}
                 {% for i in range(4) %}
-                    {% if results[i] %}
-                        <li data-id="{{ results[i]['request_id'] }}">
+                    {% if requests[i] %}
+                        <li data-id="{{ requests[i]['request_id'] }}">
                             <div class="request_img"
-                                 style="background-image: url('{{ url_for('static', filename=results[i]['image_path']) }}')">
+                                 style="background-image: url('{{ url_for('static', filename=requests[i]['image_path']) }}')">
                                 <div class="request_text">
                                     <p class="request_title">
-                                        {{ results[i]['request_title'] }}</p>
-                                    <p class="request_time">納期希望　{{ results[i]['request_deadline'] }}まで</p>
+                                        {{ requests[i]['request_title'] }}</p>
+                                    <p class="request_time">納期希望　{{ requests[i]['request_deadline'] }}まで</p>
                                 </div>
                             </div>
-                            {% if results[i]['request_status']=="0" %}
+                            {% if requests[i]['request_status']=="0" %}
                                 <div class="request_statu">制作者募集中</div>
-                            {% elif results[i]['request_status']=="1" %}
+                            {% elif requests[i]['request_status']=="1" %}
                                 <div class="request_statu">制作中</div>
                             {% else %}
                                 <div class="request_statu">成約完了</div>
                             {% endif %}
                             <div class="request_category">
-                                {% for i in results[i]['categories'] %}
+                                {% for i in requests[i]['categories'] %}
                                     {% if loop.index0 == 2 %}
                                         <p>...</p>
                                     {% elif loop.index0 < 2 %}
@@ -137,6 +139,116 @@
             <button>もっと見る >></button>
         </form>
     </div>
+    <div id="creators_box">
+        <h3>制作者たち</h3>
+        <div class="creators-list">
+            <ul>
+                {% if creators %}
+                    {% for result in creators %}
+                        <li class="creator_box">
+                            <div class="user_icon_box">
+                                {% if result['request_availability'] == '1' %}
+                                    <div>
+                                        <p>制作可能</p>
+                                        <div class="triangle"></div>
+                                    </div>
+                                {% else %}
+                                    <div class="stop_temporarily">
+                                        <p>制作一時停止</p>
+                                        <div class="triangle"></div>
+                                    </div>
+                                {% endif %}
+                                <div class="user_icon"
+                                     style="background-image: url({{ url_for('static', filename=result['icon_path']) }})">
+                                    <img src="{{ url_for('static', filename='img/gold.svg') }}">
+                                </div>
+                            </div>
+                            <div class="user_content">
+                                <div>
+                                    <div class="user_name">
+                                        {{ result['nickname'] }}
+                                        {% if result['gender']=="1" %}
+                                            <div class="user_gender" style="color: #43AEF5">♂</div>
+                                        {% elif result['gender']=="2" %}
+                                            <div class="user_gender">♀</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="evaluation_box">
+                                        <div class="star-rating" title="70%">
+                                            <div class="back-stars">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <div class="front-stars" style="width: 70%">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="point">4.5</div>
+                                    </div>
+                                    <div class="req_count">制作件数：18</div>
+                                </div>
+                                <div class="strong_field">
+                                    得意分野
+                                    {% if result['category_stages'] %}
+                                        {% for i in result['category_stages'] %}
+                                            {% if i=="1" %}
+                                                <div class="tag"
+                                                     style="background: {{ result['category_colors'][loop.index0] }}">{{ result['category_names'][loop.index0] }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="profile">
+                                    {{ result['creator_notification']|safe }}
+                                </div>
+                                <form action="/creator/{{ result['user_id'] }}" method="post">
+                                    <button>プロフィールを見る</button>
+                                </form>
+                            </div>
+                            <div class="user_img">
+                                {% for i in result['images_list'] %}
+                                    <div><img
+                                            src="{{ url_for('static', filename=i) }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="paging_box">
+            {% if creators_count>5 %}
+                {% for i in range( 3 ) %}
+                    {% if i == 0 %}
+                        <div class="page current">{{ i+1 }}</div>
+                    {% else %}
+                        <div class="page">{{ i+1 }}</div>
+                    {% endif %}
+                {% endfor %}
+                <div class="elp">...</div>
+                <div class="page">{{ creators_count }}</div>
+            {% else %}
+                {% for i in range( creators_count ) %}
+                    {% if i == 0 %}
+                        <div class="page current">{{ i+1 }}</div>
+                    {% else %}
+                        <div class="page">{{ i+1 }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
 
+{% block script_area %}
+    <script src="{{ url_for('static', filename='lib/fontawesome.js') }}"></script>{% endblock %}
 {% block script %}{{ url_for('static', filename='js/index.js') }}{% endblock %}

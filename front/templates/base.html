@@ -32,13 +32,8 @@
 
         {% if current_user.is_authenticated %}
             <div id=loginbox>
-                {% if avatar=="" %}
-                    <div class="user_icon"
-                         style="background-image: url('{{ url_for('static', filename="img/default_avatar.png") }}')"></div>
-                {% else %}
-                    <div class="user_icon"
-                         style="background-image: url('{{ url_for('static', filename="img/uploads/"+current_user.id+"/icon_url/image_icon_url.png") }}')"></div>
-                {% endif %}
+                <div class="user_icon"
+                     style="background-image: url('{{ url_for('static', filename=avatar) }}')"></div>
                 <p>{{ nickname }}</p>
                 <div class="new_request">
                     <form action="/new_request_base/01" method="get">
@@ -168,12 +163,11 @@
     </div>
 </footer>
 
-
-{% block script_area %}{% endblock %}
 <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 <script src="{% block script %}{% endblock %}"></script>
 <script src="{% block overlay_script %}{% endblock %}"></script>
+{% block script_area %}{% endblock %}
 </body>
 </html>

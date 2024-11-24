@@ -57,3 +57,26 @@ class Creator_model:
         except Exception as e:
             logger.error(f"load_creators 実行中にエラーが発生しました: {e}")
             return None
+
+    def fetch_creator_by_id(self, user_id):
+        logger.info(f"fetch_creator_by_id 実行開始")
+        try:
+            with db as cursor:
+                cursor.execute("SELECT creator.*, "
+                               "expertise.categorys, "
+                               "design_preview.images, "
+                               "profile.* "
+                               "FROM creator "
+                               "INNER JOIN expertise "
+                               "ON creator.user_id = expertise.user_id "
+                               "INNER JOIN design_preview "
+                               "ON creator.user_id = design_preview.user_id "
+                               "INNER JOIN profile "
+                               "ON creator.user_id = profile.user_id "
+                               "WHERE creator.user_id=%s", user_id)
+                result = cursor.fetchone()
+            logger.info(f"fetch_creator_by_id 実行成功しました。data,count>>> ${result}")
+            return result
+        except Exception as e:
+            logger.error(f"fetch_creator_by_id 実行中にエラーが発生しました: {e}")
+            return None

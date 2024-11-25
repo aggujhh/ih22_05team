@@ -1,6 +1,7 @@
 from . import app
 from flask import Flask,render_template, request, flash, redirect,jsonify
 from secrets import token_hex
+from flask_login import login_required
 from db.application_model import creator_request_model
 from db.userm_model import Userm_model
 from db.inquiry_model import inquiry_model
@@ -18,6 +19,7 @@ import logging
 # お問い合わせ一覧画面
 ##############################################
 @app.route('/inquiry_list')
+@login_required 
 def inquiry_list():
     print('inquiry_list')
     msg = ''
@@ -33,6 +35,7 @@ def inquiry_list():
 # お問い合わせ詳細画面
 ##############################################
 @app.route('/inquiry_detail/<string:inquiry_id>', methods=['GET','POST'])
+@login_required 
 def inquiry_detail(inquiry_id):
     if request.method == 'GET':
         print('inquiry_detail GET')

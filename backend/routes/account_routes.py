@@ -2,10 +2,7 @@
 
 from . import app
 from flask import Flask,render_template, request, flash, redirect,jsonify
-from secrets import token_hex
-from db.application_model import creator_request_model
-from db.userm_model import Userm_model
-from db.inquiry_model import inquiry_model
+from flask_login import login_required
 from db.account_model import account_model
 import logging
 
@@ -17,6 +14,7 @@ import logging
 
 # 不正検知一覧画面表示
 @app.route('/fraud_reports')
+@login_required 
 def fraud_reports():
     print('fraud_reports')
     # DBから情報取り出し
@@ -26,6 +24,7 @@ def fraud_reports():
 
 # 不正検知詳細
 @app.route('/fraud_report_detail/<string:fraud_report_id>', methods=(['GET','POST']))
+@login_required 
 def fraud_report_detail(fraud_report_id):
 
     # 不正検知詳細画面表示
@@ -60,6 +59,7 @@ def fraud_report_detail(fraud_report_id):
 
 # 凍結解除申請一覧表示
 @app.route('/unfreeze_request')
+@login_required 
 def unfreeze_request():
     print('unfreeze_request')
     # DBへSQL文依頼,一覧情報取得
@@ -70,6 +70,7 @@ def unfreeze_request():
 
 # 凍結解除詳細
 @app.route('/unfreeze_request_detail/<string:unfreeze_request_id>', methods=(['GET','POST']))
+@login_required 
 def unfreeze_request_detail(unfreeze_request_id):
     if request.method == 'GET':
         print('unfreeze_request_id')

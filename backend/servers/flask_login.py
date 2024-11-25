@@ -6,7 +6,7 @@ from routes import app
 # LoginManagerクラスのインスタンスを作成（ユーザのログイン管理を行う）
 login_manager = LoginManager()
 login_manager.init_app(app)  # FlaskアプリにLoginManagerを設定
-login_manager.login_view = 'admin_login'  # ログインページのビュー関数を指定
+login_manager.login_view = 'redirect_admin'  # ログインページのビュー関数を指定
 
 
 # ログイン時にユーザのロードを行う関数
@@ -37,6 +37,7 @@ class Flask_login:
         result = admin_model().login(id)
         print("result",result)
         if result is not None:
+            login_user(User(id))
             return True
         else:
             return False

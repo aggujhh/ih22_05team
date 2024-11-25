@@ -59,3 +59,4 @@ from . import admin_routes
 from . import application_routes
 from . import inquiry_routes
 from . import account_routes
+from . import data_routes

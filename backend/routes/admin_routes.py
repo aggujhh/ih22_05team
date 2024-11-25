@@ -43,7 +43,6 @@ def roleName_to_bin(roles):
     return result
 
 
-## 
 
 
 
@@ -53,12 +52,6 @@ def roleName_to_bin(roles):
 # 処理
 ######################################################################
 
-
-
-
-
-
-# ログインページの表示
 
 # 管理者ログインページ表示
 @app.route("/")
@@ -74,7 +67,7 @@ def login():
     id = request.form.get("adminid")
     password = request.form.get("adminps")
     if id == "":
-        error_msg[0] = "メールアドレスを空欄にしてはいけません。再入力してください。"
+        error_msg[0] = "管理者IDを空欄にしてはいけません。再入力してください。"
         count += 1
     if password == "":
         error_msg[1] = "パスワードを空欄にしてはいけません。再入力してください。"
@@ -88,7 +81,6 @@ def login():
     if result:
         global_data.incorrectPassword = 0
         flash(f"おかえりなさい, {id}.", category='success')
-
         return render_template('menu.html')
     else:
         global_data.incorrectPassword += 1
@@ -119,6 +111,7 @@ def logout():
 # 管理者管理
 #######################################################################
 @app.route('/admin_manage')
+@login_required 
 def admin_mange():
     
     # DBから管理者一覧取得
@@ -164,6 +157,7 @@ def admin_edit():
 # 管理者追加
 #######################################################################
 @app.route('/register_admin', methods=['GET', 'POST'])
+@login_required 
 def add_admin():
     if request.method == 'GET':
         # 管理者追加画面を表示
@@ -223,6 +217,7 @@ def add_admin():
 # 管理者削除
 #####################################################################
 @app.route('/admin/delete/<admin_id>', methods=['DELETE'])
+@login_required 
 def delete_admin(admin_id):
     # DBから該当の管理者を削除
     try:
@@ -233,12 +228,6 @@ def delete_admin(admin_id):
         return jsonify({"message": "削除に失敗しました"}), 500
     except Exception as e:
         return jsonify({"message": "予期しないエラーが発生しました。"}), 500
-
-
-
-
-
-
 
 
 
@@ -270,6 +259,7 @@ def modify_admin():
 # お知らせ画面表示
 ##############################################################
 @app.route('/notification', methods=['GET'])
+@login_required 
 def notification():
     print('notification')
     ##notification_id = '1'
@@ -292,6 +282,7 @@ def notification():
 # お知らせ詳細表示
 ##############################################################
 @app.route('/notification/<int:notification_id>')
+@login_required 
 def notification_detail(notification_id):
     print('notification_detail')
 
@@ -306,6 +297,7 @@ def notification_detail(notification_id):
 # お知らせ追加
 ##############################################################
 @app.route('/add_notification', methods=['GET', 'POST'])
+@login_required 
 def add_notification():
     if request.method == 'GET': # お知らせ追加画面表示
         print('add_notification GET')
@@ -367,6 +359,7 @@ def add_notification():
 # お知らせ修正
 ######################################################################
 @app.route('/modify_notification/<int:notification_id>', methods=['GET', 'POST'])
+@login_required 
 def modify_notification(notification_id):
     if request.method=='GET':
         print('modify_notification GET',notification_id)
@@ -423,6 +416,7 @@ def modify_notification(notification_id):
 # お知らせ削除
 ####################################################################
 @app.route('/delete_notification', methods=['POST'])
+@login_required 
 def delete_notification():
     notification_id = request.form.get('notification_id')
     print('delete_notification', notification_id)

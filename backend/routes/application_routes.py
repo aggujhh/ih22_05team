@@ -1,6 +1,7 @@
 from . import app
 from flask import Flask,render_template, request, flash, redirect,jsonify
 from secrets import token_hex
+from flask_login import login_required
 from db.application_model import creator_request_model
 from db.userm_model import Userm_model
 import logging
@@ -17,6 +18,7 @@ import logging
 # 制作者申請画面
 ##############################################
 @app.route('/application_list')
+@login_required 
 def application_list():
     print('application_list')
     msg = ''
@@ -32,6 +34,7 @@ def application_list():
 # 制作者申請詳細画面
 ##############################################
 @app.route('/application_detail/<string:creator_application_id>', methods=['GET','POST'])
+@login_required 
 def application_detail(creator_application_id):
     if request.method=='GET': # 申請詳細画面の表示
         print('/application_detail GET')

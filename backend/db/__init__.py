@@ -13,7 +13,7 @@ class SqlPool(object):
             host='localhost',
             port=3306,
             user='root',
-            password='123456',
+            password='',
             database='ih22_db',
             charset='utf8',
             autocommit=True  # データを自動コミットする

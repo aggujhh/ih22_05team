@@ -985,16 +985,20 @@ VALUES ('U_00000001', 'http://example.com/images/design1.jpg'),
 -- database 変更 2024/11/18 陳昱光
 -- ===================================================
 -- EXPERTISEの変更
+ALTER TABLE expertise DROP FOREIGN KEY expertise_ibfk_1;
+ALTER TABLE expertise DROP PRIMARY KEY;
 ALTER TABLE expertise
     DROP category_id;
 ALTER TABLE expertise
     ADD category_name char(60);
+ALTER TABLE expertise CHANGE COLUMN category_name categorys CHAR(60);
 
 -- design_previewの変更
+--外部キー制約削除
+ALTER TABLE design_preview DROP FOREIGN KEY design_preview_ibfk_1;
+--プライマリーキー削除
+ALTER TABLE design_preview DROP PRIMARY KEY;
 ALTER TABLE design_preview
     DROP image_id;
 ALTER TABLE design_preview
-    change image_url images varchar(255);
-ALTER TABLE design_preview
-    change image_url images varchar(255);
-ALTER TABLE design_preview MODIFY images TEXT;
+    change image_url images TEXT;

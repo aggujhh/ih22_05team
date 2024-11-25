@@ -15,7 +15,7 @@
         top: 50%;
         right: -50px;
         transform: translateY(-50%);
-        padding: 5px;
+        padding: 5px 10px;
         background: #fe8080;
         color: #fff;
         font-weight: bold;
@@ -102,6 +102,7 @@
 
                 .user_icon_box {
                     /*padding-top: 20px;*/
+
                     > div:first-of-type {
                         position: relative;
                         height: 35px;
@@ -126,6 +127,16 @@
                             border-right-color: #6ec5b8;
                             bottom: -16px;
                             left: 20px;
+                        }
+                    }
+
+                    > div:first-of-type.stop_temporarily {
+                        background: #d66161;
+                        width: 80%;
+
+                        .triangle {
+                            border-top-color: #d66161;
+                            border-right-color: #d66161;
                         }
                     }
 
@@ -212,6 +223,16 @@
                         }
                     }
 
+                    .profile {
+                        max-width: 100%;
+                        max-height: 105px;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 5;
+                        -webkit-box-orient: vertical;
+                        text-overflow: ellipsis;
+                    }
+
                     .strong_field {
                         display: flex;
                         align-items: center;
@@ -235,9 +256,10 @@
                         }
                     }
 
-                    button {
+                    form button {
                         background: #6EC5B8;
                         width: 40%;
+                        height: 100%;
                         color: #fff;
                         font-weight: bold;
                         border-radius: 5px;
@@ -245,16 +267,19 @@
                 }
 
                 .user_img {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
                     grid-column-gap: 10px;
+                    align-items: center;
+                    /*height: 60%;*/
+
                     div {
-                        height: 60%;
                         aspect-ratio: 1 / 1;
-                        img{
+                        overflow: hidden;
+
+                        img {
                             width: 100%;
-                            height: auto;
+                            height: 100%;
                         }
                     }
                 }

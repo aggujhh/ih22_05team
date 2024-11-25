@@ -8,7 +8,6 @@ from severs.global_data import global_data
 import json
 import uuid
 
-
 page_name_list = {
     "1": "依頼管理",
     "2": "プロフィール設定",
@@ -74,12 +73,13 @@ def production_management(num):
         alert_message = request.args.get('alert_message')
         result = My_page_model().fetch_creator_data_by_id(current_user.id)
         saved_image_names = get_user_instances(current_user.id)
-        saved_image_names.reset(result['images'])
-        print(saved_image_names.get())
-        result['image_paths'] = []
-        for i in result['images']:
-            image_path = f"img/uploads/{current_user.id}/design_preview/{i}"
-            result['image_paths'].append(image_path)
+        if 'images' in result:
+            saved_image_names.reset(result['images'])
+            print(saved_image_names.get())
+            result['image_paths'] = []
+            for i in result['images']:
+                image_path = f"img/uploads/{current_user.id}/design_preview/{i}"
+                result['image_paths'].append(image_path)
         return render_template(f'my_page_9_1.html', page_num="1", page_name_list=page_name_list, num=num,
                                result=result, alert_message=alert_message)
     return render_template(f'my_page_9_{num}.html', page_num="1", page_name_list=page_name_list, num=num)

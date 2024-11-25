@@ -9,7 +9,7 @@
     <section id="creators_view">
         <div class="title">
             <h2>制作者一覧</h2>
-            <p class="creators_count">999</p>
+            <p class="creators_count">{{ count }}</p>
         </div>
 
         <div class="filter-options">
@@ -32,69 +32,85 @@
 
         <div class="creators-list">
             <ul>
-                <div class="loader" id="loading"></div>
-                <li class="creator_box">
-                    <div class="user_icon_box">
-                        <div>
-                            <p>依頼可能</p>
-                            <div class="triangle"></div>
-                        </div>
-                        <div class="user_icon">
-                            <img src="{{ url_for('static', filename='img/gold.svg') }}">
-                        </div>
-                    </div>
-                    <div class="user_content">
-                        <div>
-                            <div class="user_name">
-                                COSBARA
-                                <div class="user_gender">♀</div>
-                            </div>
-                            <div class="evaluation_box">
-                                <div class="star-rating" title="70%">
-                                    <div class="back-stars">
-                                        <i class="fa fa-star" ></i>
-                                        <i class="fa fa-star" ></i>
-                                        <i class="fa fa-star" ></i>
-                                        <i class="fa fa-star" ></i>
-                                        <i class="fa fa-star" ></i>
-                                        <div class="front-stars" style="width: 70%">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
+                {% if results %}
+                    {% for result in results %}
+                        <li class="creator_box">
+                            <div class="user_icon_box">
+                                {% if result['request_availability'] == '1' %}
+                                    <div>
+                                        <p>制作可能</p>
+                                        <div class="triangle"></div>
                                     </div>
+                                {% else %}
+                                    <div class="stop_temporarily">
+                                        <p>制作一時停止</p>
+                                        <div class="triangle"></div>
+                                    </div>
+                                {% endif %}
+                                <div class="user_icon"
+                                     style="background-image: url({{ url_for('static', filename=result['icon_path']) }})">
+                                    <img src="{{ url_for('static', filename='img/gold.svg') }}">
                                 </div>
-                                <div class="point">4.5</div>
                             </div>
-                            <div class="req_count">制作件数：18</div>
-                        </div>
-                        <div class="strong_field">
-                            得意分野
-                            <div class="tag">衣装</div>
-                            <div class="tag">小道具</div>
-                        </div>
-                        <div class="profile">
-                            女子の体のラインをキレイに見せる衣装が得意です。<br>
-                            完全な独学ですが、20年近く自作コスプレイヤーとして100種以上の衣装を作ってきました。<br>
-                            オリジナル衣装、小物、アクセサリーや衣装の一部など、パーツのみのご相談もお待ちしてます...
-                        </div>
-                        <button>プロフィールを見る</button>
-                    </div>
-                    <div class="user_img">
-                        <div><img src="{{ url_for('static', filename='img/uploads/creator_images/user_id/服1.png') }}"></div>
-                        <div><img src="{{ url_for('static', filename='img/uploads/creator_images/user_id/服2.png') }}"></div>
-                        <div><img src="{{ url_for('static', filename='img/uploads/creator_images/user_id/服3.png') }}"></div>
-                    </div>
-                </li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
-                <li class="creator_box"></li>
+                            <div class="user_content">
+                                <div>
+                                    <div class="user_name">
+                                        {{ result['nickname'] }}
+                                        {% if result['gender']=="1" %}
+                                            <div class="user_gender" style="color: #43AEF5">♂</div>
+                                        {% elif result['gender']=="2" %}
+                                            <div class="user_gender">♀</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="evaluation_box">
+                                        <div class="star-rating" title="70%">
+                                            <div class="back-stars">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <div class="front-stars" style="width: 70%">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="point">4.5</div>
+                                    </div>
+                                    <div class="req_count">制作件数：18</div>
+                                </div>
+                                <div class="strong_field">
+                                    得意分野
+                                    {% if result['category_stages'] %}
+                                        {% for i in result['category_stages'] %}
+                                            {% if i=="1" %}
+                                                <div class="tag"
+                                                     style="background: {{ result['category_colors'][loop.index0] }}">{{ result['category_names'][loop.index0] }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="profile">
+                                    {{ result['creator_notification']|safe }}
+                                </div>
+                            <form action="/creator/{{ result['user_id'] }}" method="post">
+                                <button>プロフィールを見る</button>
+                            </form>
+                            </div>
+                            <div class="user_img">
+                                {% for i in result['images_list'] %}
+                                    <div><img
+                                            src="{{ url_for('static', filename=i) }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
     </section>

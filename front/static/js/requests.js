@@ -1,20 +1,6 @@
 console.log("requests.js")
 
 
-function throttle(func, wait) {
-    let timeout = null;
-    return function () {
-        if (!timeout) {
-            timeout = setTimeout(() => {
-                func.apply(this);
-                timeout = null;
-            }, wait);
-        }
-    };
-}
-
-
-const loader = document.querySelector(".loader")
 let load_count = 0
 let load_flag = true
 const windows_scroll = throttle(() => {
@@ -53,7 +39,13 @@ const windows_scroll = throttle(() => {
                         request_status = "<div className='request_statu'>成約完了</div>"
                     }
 
-                    const categories = e.categories.map(category => `<p>${category}</p>`).join('')
+                    const categories = e.categories
+                        .slice(0, 3) // 只取前三个
+                        .map((category, index) => {
+                            // 第三个显示为 "..."
+                            return index === 2 ? `<p>...</p>` : `<p>${category}</p>`;
+                        })
+                        .join('');
                     request_list.innerHTML += `<li class="request_box" data-id="${e.request_id}">
                         <div class="request_img"
                              style="background-image: url('${e.image_path}')">

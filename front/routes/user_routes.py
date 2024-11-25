@@ -48,7 +48,11 @@ def login():
         global_data.del_incorrect_password(mail_address)
         nickname = global_data.get_nickname(current_user.id)
         result = Userm_model().get_avatar_and_user_type(current_user.id)
-        avatar = result['icon_url']
+        icon_path = f"img/uploads/{current_user.id}/icon_url/image_icon_url.png"
+        file_path = os.path.join(app.config['STATIC_DIR'], icon_path)
+        if not os.path.exists(file_path):
+            icon_path = f"img/default_avatar.png"
+        avatar = icon_path
         user_type = result["user_type"]
         if avatar:
             global_data.set_avatar(current_user.id, avatar)

@@ -998,7 +998,7 @@ ALTER TABLE expertise CHANGE COLUMN category_name categorys CHAR(60);
 ALTER TABLE design_preview DROP FOREIGN KEY design_preview_ibfk_1;
 --プライマリーキー削除
 ALTER TABLE design_preview DROP PRIMARY KEY;
-ALTER TABLE design_preview
-    DROP image_id;
+-- ALTER TABLE design_preview
+--     DROP image_id;
 ALTER TABLE design_preview
     change image_url images TEXT;

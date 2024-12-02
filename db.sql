@@ -991,10 +991,9 @@ ALTER TABLE expertise
     ADD category_name char(60);
 
 -- design_previewの変更
+ALTER TABLE design_preview DROP PRIMARY KEY;
 ALTER TABLE design_preview
     DROP image_id;
+ALTER TABLE design_preview ADD PRIMARY KEY (user_id);
 ALTER TABLE design_preview
-    change image_url images varchar(255);
-ALTER TABLE design_preview
-    change image_url images varchar(255);
-ALTER TABLE design_preview MODIFY images TEXT;
+    change image_url images TEXT;

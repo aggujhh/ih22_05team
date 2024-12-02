@@ -1,0 +1,109 @@
+main > h2 {
+    grid-column: 1 / -1;
+    line-height: 100px;
+}
+
+
+#guide {
+    display: flex; /* ヘッダーとの間隔を調整 */
+    gap: 20px;
+
+    /* サイドバーのリスト項目スタイル */
+
+    .sidebar ul {
+        background: #ec7fb1;
+        min-width: 300px;
+    }
+
+    .sidebar li {
+        position: relative;
+        padding: 18px 25px; /* 三角形アイコンのスペースを確保 */
+        font-size: 16px;
+        color: #fff;
+        cursor: pointer;
+        border-bottom: 1.5px dashed #ddd; /* 各 li の下に区切り線を追加 */
+        transition: background-color 0.3s;
+    }
+
+
+    .sidebar .active {
+       color: #FFEC1A;
+    }
+
+    .sidebar li:hover {
+        color: #FFEC1A;
+    }
+
+    /* サイドバーのタイトルスタイル */
+
+    .sidebar-title {
+        font-size: var(--font-size-large);
+        font-weight: bold;
+        color: var(--color-p);
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    /* メインコンテンツエリア */
+
+    .content {
+        flex: 1;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 40px;
+        border-radius: 5px;
+    }
+
+    /* セクションのタイトルスタイル */
+
+    .section-content h3 {
+        font-size: var(--font-size-large);
+        color: var(--color-p); /* タイトルテキストをピンク色に設定 */
+        display: flex; /* アイコンとテキストを整列 */
+        align-items: center; /* アイコンとテキストを垂直に中央揃え */
+        margin-bottom: 40px;
+        padding-bottom: 5px; /* 下線との間隔を確保 */
+        border-bottom: 2px solid var(--color-p); /* ピンクの下線を追加 */
+    }
+
+    /* シールドアイコンスタイル */
+
+    .icon.shield-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: url('../img/Vector.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-right: 8px; /* アイコンとテキストの間隔を調整 */
+    }
+
+    /* 段落スタイル */
+
+    .section-content p {
+        margin-bottom: 20px;
+        font-size: var(--font-size-normal);
+    }
+
+    /* 注意テキストのスタイル */
+
+    .notice-text {
+        color: rgb(243, 112, 112); /* テキスト色を赤に設定 */
+        font-weight: bold; /* テキストを太字に設定（オプション） */
+        margin-bottom: 60px !important;
+    }
+
+    /* 動画コンテナ */
+
+    .video-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .video-container iframe {
+        width: 100%;
+        height: 450px;
+    }
+
+}

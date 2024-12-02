@@ -102,7 +102,7 @@ def application_detail(creator_application_id):
         if status == '2':
             print('deny',status)
             creator_request_model().change_status(creator['creator_application_id'], status)# 制作者申請のステータスを承認に変更
-            log_model().update_log(current_user.id,'制作者申請 却下',f'申請情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator['creator_nickname_id']}')    
+            log_model().update_log(current_user.id,'制作者申請 却下',f'申請情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator["creator_nickname_id"]}')    
             
         return redirect('/application_list')
 

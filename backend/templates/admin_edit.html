@@ -17,11 +17,11 @@
 
     <div class="managers">
         <form action="/modify_admin" method="post">
-            <label>ユーザID:<input type="text" name="admin_id" value="{{ admin.admin_id }}"> </label>
+            <label>ユーザID:<input type="text" name="admin_id" value="{{ admin.admin_id }}" readonly> </label>
             
             
             <label>ユーザー名: <input type="text" name="admin_name" value="{{ admin.admin_name }}"></label><br>
-            <label>パスワード有効期限: <input type="text" name="password_expiration_date" value="{{ admin.password_expiration_date }}"></label><br>
+            <label>パスワード有効期限: <input type="text" name="password_expiration_date" value="{{ admin.password_expiration_date }}" readonly></label><br>
             
             
             <div id="pre_permissoins">

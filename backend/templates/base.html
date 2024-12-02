@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="sidebar" style="z-index: 99999999;">
         <button class="close-button">閉じる</button>
         <div class="side-menu">
             <form action="/notification" method="get">
@@ -22,15 +22,21 @@
             <form action="/application_list" method="get">
                 <button type="submit">制作者審査</button>
             </form>
-            <button>アクションログ</button>
+            <form action="/log" method="get">
+                <button>アクションログ</button>
+            </form>
             <form action="/fraud_reports" method="get">
                 <button type="submit">アカウント関連</button>
             </form>
-            <button>情報閲覧</button>
+            <form action="/data" method="post">
+                <button type="submit">情報閲覧</button>
+            </form>
             <form action="/admin_manage" method="get">
                 <button type="submit">管理者管理</button>
             </form>
-            <button>ログアウト</button>
+            <form action="/logout" method="get">
+                <button>ログアウト</button>
+            </form>
         </div>
     </div>
     <div class="main-content">

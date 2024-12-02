@@ -70,6 +70,17 @@
             background-color: #f44336;
             color: white;
         }
+        
+        #img {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            .img {
+                width: 100px;
+                height: auto;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -87,9 +98,13 @@
         <div class="container">
             <div class="group">
                 <label for="info">申請者の情報</label>
+                <p>申請者ID</p>
                 <input type="text" id="application_id" name="application_id" value="{{ creator.creator_application_id }}">
+                <p>ニックネーム</p>
                 <input type="text" id="nickname_id" name="nickname_id" value="{{ creator.creator_nickname_id }}">
+                <p>メールアドレス</p>
                 <input type="text" id="mail" name="mail" value="{{ creator.creator_mail }}">
+                <p>電話番号</p>
                 <input type="text" id="tel" name="tel" value="{{ creator.creator_tel }}">
             </div>
 
@@ -99,8 +114,11 @@
             </div>
 
             <div class="group">
+                <p>画像</p>
                 <div id="img">
-                    <p>画像</p>
+                    {% for data in images_url %}
+                        <img class='img' src="{{ url_for('shared_images', filename=data) }}" alt="Shared Image">
+                    {% endfor %}
                 </div>
             </div>
 

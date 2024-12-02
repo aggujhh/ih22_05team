@@ -1,45 +1,38 @@
 {% extends 'base.html' %}
 
-{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/inquiry.css') }}">{% endblock %}
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inquiry.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+{% endblock %}
 
 {% block title %} 情報画面 {% endblock %}
 
 {% block header %}
-    <h2>情報閲覧</h2>
+    <h1>情報閲覧</h1>
 
-    <div class="button">
+    <!-- <div class="button">
         <button type="submit">表示方法</button>
         <button>項目の追加</button>
         <button>項目削除</button>
-        <!-- 項目は追加したものがバツ印がついた状態で並び,バツ印をクリックするとその項目の表示が消える -->
+        項目は追加したものがバツ印がついた状態で並び,バツ印をクリックするとその項目の表示が消える
         <button>表示期間の指定</button>
         <button>外部出力</button>
-    </div>
+    </div> -->
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="items">
-        {% for report in reports %}
-                {% set detail_url = url_for('fraud_report_detail', fraud_report_id=report.fraud_report_id) %}
-                <div class="item" onclick="window.location.href='{{ detail_url }}'">
-                    <div class="fraud_report_id">不正情報報告ID:{{ report.fraud_report_id }}</div>
-                    <div class="reported_time">報告時刻:{{ report.reported_time }}</div>
-                    <div class="reporter_user_id">報告者ユーザID:{{ report.reporter_user_id }}</div>
-                    <div class="reported_user_id">被報告者ユーザID:{{ report.reported_user_id }}</div>
-                    <div class="detection_type">検知種類:{{ report.detection_type }}</div>
-                    <div class="violation_judgment">違反判定:{{ report.violation_judgment }}</div>
-                    <div class="violation_reason">違反理由:{{ report.violation_reason }}</div>
-                </div>
-        {% endfor %}
-    </div>
-
+    <div id="chart" style="width: 600px;height:400px;"></div>
+    <script>
+        var chartDom = document.getElementById('chart');
+        var myChart = echarts.init(chartDom);
+        var option = {{ chart_options | safe }};
+        myChart.setOption(option);
+    </script>
 {% endblock %}
 
 {% block script %}
     <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
-    <script>
-        
-    </script>
+
 {% endblock %}

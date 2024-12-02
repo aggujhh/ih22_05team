@@ -3,6 +3,8 @@ from flask import render_template, request, flash, redirect,jsonify
 from servers.flask_login import Flask_login
 from db.admin_manage import admin_manage
 from db.notification_model import notification_model
+from db.log_model import log_model
+from decorators.permission_decorators import permission_required
 from flask_login import current_user, login_required, logout_user
 from werkzeug.security import generate_password_hash
 from datetime import datetime
@@ -43,7 +45,6 @@ def roleName_to_bin(roles):
     return result
 
 
-## 
 
 
 
@@ -53,12 +54,6 @@ def roleName_to_bin(roles):
 # 処理
 ######################################################################
 
-
-
-
-
-
-# ログインページの表示
 
 # 管理者ログインページ表示
 @app.route("/")
@@ -70,33 +65,35 @@ def redirect_admin():
 @app.route("/menu", methods=['POST'])
 def login():
     error_msg = ["", ""]
+    msg = ''
     count = 0
     id = request.form.get("adminid")
     password = request.form.get("adminps")
     if id == "":
-        error_msg[0] = "メールアドレスを空欄にしてはいけません。再入力してください。"
+        error_msg[0] = "管理者IDを空欄にしてはいけません。再入力してください。"
         count += 1
     if password == "":
         error_msg[1] = "パスワードを空欄にしてはいけません。再入力してください。"
         count += 1
     if count != 0:
-        return render_template('admin_login.html', error_msg=error_msg, global_data=global_data)
+        return render_template('admin_login.html', error_msg=error_msg, msg=msg,global_data=global_data)
 
     print(id, password)
-    result = Flask_login().check_admin_login(id, password)
+    result = Flask_login().check_admin_login(id, password, remember=True)
     print(result)
     if result:
         global_data.incorrectPassword = 0
         flash(f"おかえりなさい, {id}.", category='success')
-
+        log_model().update_log(id,'ログイン','ログイン')
         return render_template('menu.html')
     else:
-        global_data.incorrectPassword += 1
-        if global_data.incorrectPassword >= 3:
-            flash(f"パスワードを3回間違えたため、10秒後にもう一度お試しください。", category='danger')
-        else:
-            flash(f"ユーザー名またはパスワードが正しくありません。", category='danger')
-        return redirect('/')
+        #global_data.incorrectPassword += 1
+        #if global_data.incorrectPassword >= 3:
+        #    flash(f"パスワードを3回間違えたため、10秒後にもう一度お試しください。", category='danger')
+        #else:
+        #    flash(f"ユーザー名またはパスワードが正しくありません。", category='danger')
+        msg = 'もう一度入力してください'
+        return render_template('admin_login.html', error_msg=error_msg,msg=msg)
 
 
 
@@ -108,6 +105,7 @@ def login():
 @login_required
 def logout():
     # セッションタイムアウト
+    log_model().update_log(current_user.id,'ログアウト','ログアウト')
     return redirect('/')
 
 
@@ -119,18 +117,22 @@ def logout():
 # 管理者管理
 #######################################################################
 @app.route('/admin_manage')
+@login_required 
+@permission_required(0)
 def admin_mange():
+    log_model().update_log(current_user.id,'管理者管理画面アクセス','管理者管理画面アクセス')
     
     # DBから管理者一覧取得
     admins = admin_manage().get_alladmin()
+    print('current admin_id',current_user.id)
     print(admins)
-
     return render_template('admin_manage.html',admins=admins)
 
 #######################################################################
 # 管理者編集
 #######################################################################
 @app.route('/admin_edit', methods=['POST'])
+@permission_required(0)
 def admin_edit():
     
     # データの取得
@@ -158,12 +160,15 @@ def admin_edit():
     roles = [perm['permission_name'] for perm in permissions]
     print('roles',roles)
 
+    log_model().update_log(current_user.id,'管理者編集アクセス',f'変更後の情報 管理者:{admin_id},権限:{roles}')
     return render_template('admin_edit.html',admin=admin,roles=roles)
 
 #######################################################################
 # 管理者追加
 #######################################################################
 @app.route('/register_admin', methods=['GET', 'POST'])
+@login_required 
+@permission_required(0)
 def add_admin():
     if request.method == 'GET':
         # 管理者追加画面を表示
@@ -174,6 +179,7 @@ def add_admin():
         print('roles',roles)
         admin = admin_manage().get_adminT_columns()
 
+        log_model().update_log(current_user.id,'管理者追加画面アクセス','管理者追加画面アクセス')
         return render_template('register_admin.html', admin=admin, roles=roles)
     
     if request.method == 'POST':
@@ -214,6 +220,9 @@ def add_admin():
 
         # 登録完了画面表示
         admin['admin_password'] = admin_password
+        admin['admin_permissions'] = admin_permissions
+
+        log_model().update_log(current_user.id,'管理者追加',f'管理者追加 追加管理者:{admin_id},名前:{admin_name},権限:{roles}')
         return render_template('register_completion.html',admin=admin)
 
 
@@ -223,12 +232,15 @@ def add_admin():
 # 管理者削除
 #####################################################################
 @app.route('/admin/delete/<admin_id>', methods=['DELETE'])
+@login_required 
+@permission_required(0)
 def delete_admin(admin_id):
     # DBから該当の管理者を削除
     try:
         print('delete_admin',admin_id)
         # 削除SQLの呼び出し
-        if admin_manage().delete_admin(admin_id):
+        if admin_id != current_user.id and admin_manage().delete_admin(admin_id): 
+            log_model().update_log(current_user.id,'管理者削除',f'管理者削除 削除された管理者:{admin_id}')
             return jsonify({"message": "削除が完了しました"}), 200
         return jsonify({"message": "削除に失敗しました"}), 500
     except Exception as e:
@@ -237,16 +249,11 @@ def delete_admin(admin_id):
 
 
 
-
-
-
-
-
-
 ##################################################################
 # 管理者修正
 ##################################################################
 @app.route('/modify_admin', methods=['POST'])
+@permission_required(0)
 def modify_admin():
     try:
         print('modify_admin')
@@ -259,6 +266,7 @@ def modify_admin():
 
         # 受け取った情報をDBに登録
         if admin_manage().update_admin(admin):
+            log_model().update_log(current_user.id,'管理者修正',f'修正後の情報 管理者ID:{admin["admin_id"]},管理者名:{admin["admin_name"]},権限:{admin["admin_permissions"]}')
             return redirect('/admin_manage')
     except Exception as e:        
         return render_template('error.html',e=e)
@@ -270,6 +278,8 @@ def modify_admin():
 # お知らせ画面表示
 ##############################################################
 @app.route('/notification', methods=['GET'])
+@login_required 
+@permission_required(6)
 def notification():
     print('notification')
     ##notification_id = '1'
@@ -284,6 +294,7 @@ def notification():
 
     # DBからお知らせたちを取得
     notifications = notification_model().get_notifications()
+    log_model().update_log(current_user.id,'お知らせ表示','お知らせ表示')
     return render_template('notification.html',notifications=notifications)
 
 
@@ -292,12 +303,15 @@ def notification():
 # お知らせ詳細表示
 ##############################################################
 @app.route('/notification/<int:notification_id>')
+@login_required 
+@permission_required(6)
 def notification_detail(notification_id):
     print('notification_detail')
 
     # お知らせ取り出し
     notification = notification_model().get_notification(notification_id)
 
+    log_model().update_log(current_user.id,'お知らせ詳細表示','お知らせ詳細表示')
     return render_template('notification_detail.html',notification=notification)
 
 
@@ -306,6 +320,8 @@ def notification_detail(notification_id):
 # お知らせ追加
 ##############################################################
 @app.route('/add_notification', methods=['GET', 'POST'])
+@login_required 
+@permission_required(6)
 def add_notification():
     if request.method == 'GET': # お知らせ追加画面表示
         print('add_notification GET')
@@ -315,6 +331,7 @@ def add_notification():
             'notification_post_time':'',
             'notification_post_status':''
         }
+        log_model().update_log(current_user.id,'お知らせ追加画面表示','お知らせ追加画面表示')
         return render_template('notification_detail.html',notification=notification)
 
     if request.method == 'POST': # お知らせ追加処理
@@ -357,6 +374,7 @@ def add_notification():
         try:
             # 下書きをDBに登録
             if notification_model().add_notification(notification):
+                log_model().update_log(current_user.id,'お知らせ追加',f'追加するお知らせ タイトル:{title},投稿状態:{action},投稿日時:{reservationDatetime},内容:{content}')
                 return redirect('/notification')
         except Exception as e:
             return render_template('error.html',e=e)
@@ -367,10 +385,13 @@ def add_notification():
 # お知らせ修正
 ######################################################################
 @app.route('/modify_notification/<int:notification_id>', methods=['GET', 'POST'])
+@login_required 
+@permission_required(6)
 def modify_notification(notification_id):
     if request.method=='GET':
         print('modify_notification GET',notification_id)
         notification = notification_model().get_notification(notification_id)
+        log_model().update_log(current_user.id,'お知らせ修正画面表示',f'お知らせ修正画面表示 id:{notification_id}')
         return render_template('modify_notification.html',notification=notification)
 
     if request.method=='POST':
@@ -414,6 +435,7 @@ def modify_notification(notification_id):
         try:
             # 下書きをDBに登録
             if notification_model().update_notification(notification):
+                log_model().update_log(current_user.id,'お知らせ修正',f'修正後のお知らせ ID:{notification_id},タイトル:{title},投稿状態:{notification_post_status},投稿日時:{reservationDatetime},内容:{content}')
                 return redirect('/notification')
         except Exception as e:
             return render_template('error.html',e=e)
@@ -423,12 +445,15 @@ def modify_notification(notification_id):
 # お知らせ削除
 ####################################################################
 @app.route('/delete_notification', methods=['POST'])
+@login_required 
+@permission_required(6)
 def delete_notification():
     notification_id = request.form.get('notification_id')
     print('delete_notification', notification_id)
     try:
         # DBから情報削除
         if notification_model().delete_notification(notification_id):
+            log_model().update_log(current_user.id,'お知らせ削除',f'削除されたお知らせ id:{notification_id}')
             return redirect('/notification')
     except Exception as e:
         return render_template('error.html',e=e)

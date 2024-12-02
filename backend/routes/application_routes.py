@@ -1,8 +1,11 @@
 from . import app
 from flask import Flask,render_template, request, flash, redirect,jsonify
 from secrets import token_hex
+from flask_login import login_required, current_user
 from db.application_model import creator_request_model
 from db.userm_model import Userm_model
+from db.log_model import log_model
+from decorators.permission_decorators import permission_required
 import logging
 
 
@@ -17,6 +20,8 @@ import logging
 # 制作者申請画面
 ##############################################
 @app.route('/application_list')
+@login_required 
+@permission_required(4)
 def application_list():
     print('application_list')
     msg = ''
@@ -25,6 +30,7 @@ def application_list():
     print(creator_list)
     if not creator_list:
         msg = '0件です'
+    log_model().update_log(current_user.id,'制作者申請画面','制作者申請画面')    
     return render_template('application_list.html',creator_list=creator_list, msg=msg)
 
 
@@ -32,13 +38,25 @@ def application_list():
 # 制作者申請詳細画面
 ##############################################
 @app.route('/application_detail/<string:creator_application_id>', methods=['GET','POST'])
+@login_required 
+@permission_required(4)
 def application_detail(creator_application_id):
     if request.method=='GET': # 申請詳細画面の表示
         print('/application_detail GET')
         creator = creator_request_model().get_detail(creator_application_id)
         print('creator',creator)
-        ## 画像
-        return render_template('application_detail.html', creator=creator)
+        # 画像
+        ## image_urlの切り出し
+        images_url = []
+        for data in creator['product_image_url']:
+            print('data',data)
+            stbl = data['product_image_url'].split("\\")[-1]
+            images_url.append(stbl)
+        print(images_url)
+
+
+        log_model().update_log(current_user.id,'制作者申請詳細画面',f'表示情報 id:{creator_application_id}')    
+        return render_template('application_detail.html', creator=creator,images_url=images_url)
 
     if request.method=='POST': # 申請詳細の反映
         print('/application_detail POST')
@@ -72,6 +90,8 @@ def application_detail(creator_application_id):
                 creator_request_model().change_status(creator['creator_application_id'], status)# 制作者申請のステータスを承認に変更
                 print(3)
                 # mail送信
+
+                log_model().update_log(current_user.id,'制作者申請 承認',f'承認情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator['creator_nickname_id']}')    
             except Exception as e:
                 # エラーが発生した場合、エラーログを記録
                 logging.error(f"Error occurred: {e}")
@@ -82,6 +102,7 @@ def application_detail(creator_application_id):
         if status == '2':
             print('deny',status)
             creator_request_model().change_status(creator['creator_application_id'], status)# 制作者申請のステータスを承認に変更
+            log_model().update_log(current_user.id,'制作者申請 却下',f'申請情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator['creator_nickname_id']}')    
             
         return redirect('/application_list')
 

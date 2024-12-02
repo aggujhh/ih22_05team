@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, send_from_directory
 from datetime import timedelta, datetime
 import logging
 import os
@@ -55,7 +55,16 @@ class Global_data():
 
 global_data = Global_data()
 
+@app.route('/shared_images/<path:filename>')
+def shared_images(filename):
+    return send_from_directory(app.config['SHARED_IMAGES_DIR'], filename)
+
+
+
 from . import admin_routes
 from . import application_routes
 from . import inquiry_routes
 from . import account_routes
+from . import data_routes
+from . import log_routes
+from . import test

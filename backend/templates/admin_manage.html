@@ -13,6 +13,13 @@
 
 {% block content %}
 
+    <!--削除確認モーダル-->
+    <div id="deleteModal" style="display:none;">
+        <p>本当に削除しますか？</p>
+        <button onclick="deleteAdmin()">はい</button>
+        <button onclick="closeModal()">いいえ</button>
+    </div>
+
     <div class="managers">
         <table id="manager_table" border="1">
             <thead>
@@ -54,12 +61,7 @@
         </ul>
     </div>
 
-    <!--削除確認モーダル-->
-    <div id="deleteModal" style="display:none;">
-        <p>本当に削除しますか？</p>
-        <button onclick="deleteAdmin()">はい</button>
-        <button onclick="closeModal()">いいえ</button>
-    </div>
+
 
 {% endblock %}
 

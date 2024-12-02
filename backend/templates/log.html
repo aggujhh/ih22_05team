@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">{% endblock %}
+
+{% block title %} ログ閲覧画面 {% endblock %}
+
+{% block header %}
+    <h1>ログ閲覧</h1>
+{% endblock %}
+
+{% block content %}
+    
+    <div class="log">
+        <table id="table" border="1">
+            <thead>
+                <tr>
+                    <th>ログID</th>
+                    <th>管理者ID</th>
+                    <th>概要</th>
+                    <th>詳細</th>
+                    <th>時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in log %}
+                    <tr>
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.admin_id }}</td>
+                        <td>{{ data.action }}</td>
+                        <td>{{ data.details }}</td>
+                        <td>{{ data.time }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+{% endblock %}

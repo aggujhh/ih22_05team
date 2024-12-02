@@ -1,15 +1,63 @@
 {% extends 'base.html' %}
 
-{% block overlay_style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">{% endblock %}
+{% block overlay_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+    <style>
+        #button{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+
+            form{
+                margin: 0;
+
+                button {
+                    width: 100%;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+            }
+        }
+    </style>
+{% endblock %}
 
 {% block title %} メニュー画面 {% endblock %}
 
 {% block header %}
+
+    <h2>メニュー</h2>
+
 {% endblock %}
 
 {% block content %}
+    <div id="button">
+        <form action="/notification" method="get">
+            <button type="submit">お知らせ</button>
+        </form>
+        <form action="/inquiry_list" method="get">
+            <button type="submit">お問い合わせ</button>
+        </form>
+        <form action="/application_list" method="get">
+            <button type="submit">制作者審査</button>
+        </form>
+        <form action="/log" method="get">
+            <button>アクションログ</button>
+        </form>
+        <form action="/fraud_reports" method="get">
+            <button type="submit">アカウント関連</button>
+        </form>
+        <form action="/data" method="post">
+            <button type="submit">情報閲覧</button>
+        </form>
+        <form action="/admin_manage" method="get">
+            <button type="submit">管理者管理</button>
+        </form>
+        <!-- <form action="/logout" method="get">
+            <button>ログアウト</button>
+        </form> -->
+    </div>
 {% endblock %}
 
 {% block script %}
-    <script src="{{ url_for('static', filename='js/notificatoin.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin_manage.js') }}"></script>
 {% endblock %}

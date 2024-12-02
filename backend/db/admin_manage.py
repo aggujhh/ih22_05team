@@ -9,6 +9,7 @@ class admin_manage:
             cursor.execute(
                 "SELECT admin_id, admin_name, admin_password, password_expiration_date, admin_permissions "
                 "FROM ADMIN "
+                "WHERE status = '1' "
             )
             result = cursor.fetchall()
         
@@ -124,7 +125,10 @@ class admin_manage:
         try:
             with db as cursor:
                 cursor.execute(
-                    "DELETE FROM ADMIN WHERE admin_id = %s "
+                    #"DELETE FROM ADMIN WHERE admin_id = %s "
+                    "UPDATE ADMIN "
+                    "SET status = '0' "
+                    "WHERE admin_id = %s "
                     , (admin_id,)
                 )
             return 1

@@ -4,12 +4,25 @@ const imagesArray = {}
 const article = document.querySelector("article")
 
 window.addEventListener("load", () => {
-    if (article.id === "profile_Settings") {
+    if (article.id === "request_management") {
+        my_page1()
+    } else if (article.id === "profile_Settings") {
         my_page2()
     } else if (article.id === "production_management") {
         my_page9()
     }
 })
+
+function my_page1() {
+    const navs = document.querySelectorAll("#request_management >nav >div")
+    navs.forEach((e, i) => {
+        if (i !== 0) {
+            e.addEventListener("click", () => {
+                window.location.href = `/my_page/1/${i}`;
+            })
+        }
+    })
+}
 
 function my_page2() {
     const upload_bg_img = document.querySelector("#upload_bg_img")
@@ -173,7 +186,6 @@ function my_page9() {
         get_expertise_list_data()
         images_input.value = JSON.stringify({images: imagesArray})
         console.log(images_input.value)
-
 
 
         document.querySelector("#creator_setting_form").submit()

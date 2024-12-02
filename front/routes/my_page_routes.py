@@ -56,7 +56,9 @@ def my_page(page_num):
     user_type = global_data.get_user_type(current_user.id)
     if user_type == "1":
         page_name_list["1"] = "制作管理"
-    if int(page_num) == 2:
+    if int(page_num) == 1:
+        return redirect('/my_page/1/1')
+    elif int(page_num) == 2:
         result = My_page_model().fetch_profile_by_id(current_user.id)
         print(result)
         return render_template(f'my_page_2.html', page_num=page_num, page_name_list=page_name_list, result=result)
@@ -64,6 +66,12 @@ def my_page(page_num):
         return redirect('/my_page/9/1')
 
     return render_template(f'my_page_{page_num}.html', page_num=page_num, page_name_list=page_name_list)
+
+
+@app.route("/my_page/1/<num>")
+@login_required
+def request_management(num):
+    return render_template(f'my_page_1_{num}.html', page_num="1", page_name_list=page_name_list, num=num)
 
 
 @app.route("/my_page/9/<num>")

@@ -1,6 +1,44 @@
 {% extends 'base.html' %}
-
+{% block style %}{{ url_for('static', filename='css/guide.css') }}{% endblock %}
 
 {% block content %}
-ご利用案内1234455t
+    <h2>ご利用案内</h2>
+    <section id="guide">
+        <!-- サイドバー -->
+        <aside class="sidebar">
+            <ul>
+                <li class="active">▶ COSBARAとは？</li>
+                <li>▶ 成功・納品までのステップ</li>
+                <li>▶ 送料</li>
+                <li>▶ お支払い方法</li>
+                <li>▶ クーポン</li>
+                <li>▶ ポイント</li>
+                <li>▶ こういう人にはご注意</li>
+            </ul>
+        </aside>
+
+        <!-- メインコンテンツエリア -->
+        <section class="content">
+            <div class="section-content">
+                <h3><i class="icon shield-icon"></i> COSBARAとは？</h3>
+                <p>
+                    COSBARA(コウバラ)はマンガ・アニメ・ゲームに登場するキャラクターや創作キャラクターに「なりきりたい」と思う依頼者と、そのなりきりたい希望を叶える制作者をマッチングするサービスです！</p>
+                <p>
+                    依頼者はコスプレに必要なアイテムを揃えられるのはもちろんのこと、日用品にも利用できるアイテムを注文することもできます！制作者は自身の制作技術やノウハウを仕事にすることができ、クリエイターとしての活躍に利用することができます！</p>
+                <p>
+                    COSBARAでは衣装やアイテムを依頼したい「依頼者」とその依頼を請け負って仕事をする「制作者」の2種類の登録が可能なマッチングサービスです。</p>
+                <p>
+                    トラブルになりやすい契約関係はCOSBARAが用意している成約フォームを利用すれば未然に防ぐことが可能です。また金銭の管理もCOSBARAが行うので、依頼者も制作者もリスク無く安心してご利用いただくことが可能です。</p>
+                <p class="notice-text">
+                    ※制作者の登録には事前審査を行っており、審査完了までに最大2営業日ほどお時間をいただく場合がございます。</p>
+                <!-- 動画コンテナ -->
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/IVhPuXByR08?si=wEwm0SnMyQZOiVCB"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </section>
 {% endblock %}

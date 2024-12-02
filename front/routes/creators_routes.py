@@ -1,6 +1,5 @@
 from . import app
 from flask import render_template, request, jsonify
-from flask_login import current_user
 from db.creator_model import Creator_model
 import os
 

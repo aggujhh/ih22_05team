@@ -1002,3 +1002,26 @@ ALTER TABLE design_preview DROP PRIMARY KEY;
 --     DROP image_id;
 ALTER TABLE design_preview
     change image_url images TEXT;
+
+
+
+
+-- ===================================================
+-- database 変更 2024/11/25 宮本康弘
+-- ===================================================
+CREATE TABLE LOG
+(
+    id   INT AUTO_INCREMENT,
+    admin_id CHAR(10),
+    action   CHAR(255),
+    details  TEXT,
+    time     DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    PRIMARY KEY (id),
+    FOREIGN KEY(admin_id) REFERENCES ADMIN (admin_id)
+);
+
+--- ==================================================
+--- database 変更 宮本康弘
+--- ==================================================
+ALTER TABLE ADMIN
+ADD COLUMN status CHAR(1) DEFAULT '1' NOT NULL;

@@ -77,11 +77,11 @@
 
 {% block header %}
 
-    <h2>不正検知詳細</h2>
+    <h1>不正検知詳細</h1>
     <!-- <button onclick="location.href='/register_admin'">管理者追加</button> -->
     <div class="button">
         <form action="/fraud_reports" method="get">
-            <button type="submit">不正検知一覧</button>
+            <button type="submit">一覧</button>
         </form>
     </div>
 
@@ -92,22 +92,22 @@
     <div class="container">
             <div class="group">
                 <label for="fraud_report_id">不正検知ID</label>
-                <input type="text" id="fraud_report_id" name="fraud_report_id" value="{{ report.fraud_report_id }}">
+                <input type="text" id="fraud_report_id" name="fraud_report_id" value="{{ report.fraud_report_id }}" readonly>
             </div>            
 
             <div class="group">
                 <label for="reported_time">報告時刻</label>
-                <input type="text" id="reported_time" name="reported_time" value="{{ report.reported_time }}">
+                <input type="text" id="reported_time" name="reported_time" value="{{ report.reported_time }}" readonly>
             </div>
 
             <div class="group">
                 <label for="reporter_user_id">報告ユーザID</label>
-                <input type="text" id="reporter_user_id" name="reporter_user_id" value="{{ report.reporter_user_id }}">
+                <input type="text" id="reporter_user_id" name="reporter_user_id" value="{{ report.reporter_user_id }}" readonly>
             </div>
 
             <div class="group">
                 <label for="reported_user_id">被報告ユーザID</label>
-                <input type="text" id="reported_user_id" name="reported_user_id" value="{{ report.reported_user_id }}">
+                <input type="text" id="reported_user_id" name="reported_user_id" value="{{ report.reported_user_id }}" readonly>
             </div>
 
             <!-- <div class="group">
@@ -121,7 +121,7 @@
 
             <div class="group">
                 <label for="detection_type">検知種類</label>
-                <input type="text" id="detection_type" name="detection_type" value="{{ report.detection_type }}">
+                <input type="text" id="detection_type" name="detection_type" value="{{ report.detection_type }}" readonly>
             </div>
 
         <form action="{{ url_for('fraud_report_detail', fraud_report_id=report.fraud_report_id) }}" method="post">

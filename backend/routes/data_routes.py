@@ -1,13 +1,9 @@
 from . import app
-from flask import Flask,render_template, request, flash, redirect,jsonify
-from secrets import token_hex
-from flask_login import login_required
-from db.application_model import creator_request_model
-from db.userm_model import Userm_model
-from db.inquiry_model import inquiry_model
-from db.account_model import account_model
+from flask import Flask,render_template, request
+from flask_login import login_required, current_user
 from db.data_model import data_model
-import logging
+from db.log_model import log_model
+from decorators.permission_decorators import permission_required
 import datetime,re
 # グラフ
 from pyecharts import options as opts
@@ -91,6 +87,7 @@ def format_data(dict,key):
 # 情報閲覧画面表示
 @app.route('/data', methods=(['POST','PUT']))
 @login_required 
+@permission_required(1)
 def data():
     if request.method == 'POST':
         print('data')
@@ -142,4 +139,5 @@ def data():
         #    .render("data.html")
         )
 
+        log_model().update_log(current_user.id,'情報閲覧画面表示','情報閲覧画面表示')
         return render_template('data.html',chart_options=c.dump_options_with_quotes())

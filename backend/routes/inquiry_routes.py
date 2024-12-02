@@ -1,11 +1,9 @@
 from . import app
-from flask import Flask,render_template, request, flash, redirect,jsonify
-from secrets import token_hex
-from flask_login import login_required
-from db.application_model import creator_request_model
-from db.userm_model import Userm_model
+from flask import Flask,render_template, request, redirect
+from flask_login import login_required,current_user
 from db.inquiry_model import inquiry_model
-import logging
+from db.log_model import log_model
+from decorators.permission_decorators import permission_required
 
 
 
@@ -20,6 +18,7 @@ import logging
 ##############################################
 @app.route('/inquiry_list')
 @login_required 
+@permission_required(5)
 def inquiry_list():
     print('inquiry_list')
     msg = ''
@@ -28,6 +27,7 @@ def inquiry_list():
     print(inquiries)
     if not inquiries:
         msg = '0件です'
+    log_model().update_log(current_user.id,'お問い合わせ一覧表示','お問い合わせ一覧表示')    
     return render_template('inquiry_list.html',inquiries=inquiries, msg=msg)
 
 
@@ -36,6 +36,7 @@ def inquiry_list():
 ##############################################
 @app.route('/inquiry_detail/<string:inquiry_id>', methods=['GET','POST'])
 @login_required 
+@permission_required(5)
 def inquiry_detail(inquiry_id):
     if request.method == 'GET':
         print('inquiry_detail GET')
@@ -44,6 +45,7 @@ def inquiry_detail(inquiry_id):
         status = ['未確認', '対応中', '解決', '保留']
         category = ['アカウントについて','取引について','通報']
         inquiry['inquiry_category'] = category[int(inquiry['inquiry_category'])]
+        log_model().update_log(current_user.id,'お問い合わせ詳細表示',f'お問い合わせ詳細表示 ID:{inquiry_id}')    
         return render_template('inquiry_detail.html',inquiry=inquiry, status=status)
     
     if request.method == 'POST':
@@ -57,6 +59,7 @@ def inquiry_detail(inquiry_id):
         else:
             print('no')
 
+        log_model().update_log(current_user.id,'お問い合わせ詳細変更',f"変更後の情報 ID:{inquiry_id}, 状態:{data['inquiry_status']}, カテゴリー:{data['inquiry_category']}")    
         return redirect('inquiry_list')
 
 

@@ -38,7 +38,7 @@
                         <td>{{ admin.admin_name }}</td>
                         <td>{{ admin.password_expiration_date }}</td>
                         <td>
-                            {% for role in admin.admin_permissions %}
+                            {% for role in admin.admin_permissions or []%}
                                 {{ role['permission_name'] }}
                             {% endfor %}
                         </td>

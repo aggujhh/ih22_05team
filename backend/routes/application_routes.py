@@ -91,7 +91,7 @@ def application_detail(creator_application_id):
                 print(3)
                 # mail送信
 
-                log_model().update_log(current_user.id,'制作者申請 承認',f'承認情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator['creator_nickname_id']}')    
+                log_model().update_log(current_user.id,'制作者申請 承認',f'承認情報 申請id:{creator_application_id}, 制作者id:{user_id},nickname:{creator["creator_nickname_id"]}')    
             except Exception as e:
                 # エラーが発生した場合、エラーログを記録
                 logging.error(f"Error occurred: {e}")
